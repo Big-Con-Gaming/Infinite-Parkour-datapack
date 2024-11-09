@@ -10,7 +10,8 @@ setblock ~2 ~-1 ~5 gold_block
 #ParkourNextJump is a marker on the very next jump.
 #ParkourGeneratedDisplay is a block display that changes in size and is in place for the 2nd next jump.
 #ParkourGeneratedJump is a marker that is located at the 2nd next jump. This can probably be replaced with ParkourGeneratedDisplay
-execute positioned ~2 ~-1 ~5 unless entity @n[type=marker,tag=ParkourNextJump,distance=..1] run summon marker ~ ~ ~ {Tags:["ParkourNextJump"]}
-execute positioned ~2 ~-1 ~8 align xyz as @e[type=block_display,tag=ParkourGeneratedDisplay,distance=..10] run kill @s 
-execute positioned ~2 ~-1 ~8 align xyz run summon block_display ~ ~ ~ {Tags:["ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.5f,0.5f,0.5f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.25f,0.25f,0.25f]}}
-execute positioned ~2 ~-1 ~8 unless entity @n[type=marker,tag=ParkourGeneratedJump,distance=..1] run summon marker ~ ~ ~ {Tags:["ParkourGeneratedJump"]}
+execute align xyz positioned ~2.5 ~-0.5 ~5.5 unless entity @n[type=marker,tag=ParkourNextJump,distance=..1] run summon marker ~ ~ ~ {Tags:["ParkourNextJump","ParkourBlock"]}
+execute align xyz positioned ~2.5 ~-0.5 ~8.5
+  kill @e[type=block_display,tag=ParkourGeneratedDisplay,distance=..10]
+  summon block_display ~-0.5 ~-0.5 ~-0.5 {Tags:["ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"}}
+  execute unless entity @n[type=marker,tag=ParkourGeneratedJump,distance=..1] run summon marker ~ ~ ~ {Tags:["ParkourGeneratedJump","ParkourBlock"]}
