@@ -1,0 +1,13 @@
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[0f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[10f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[20f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[40f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[50f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[70f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[75f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[-10f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[-20f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[-40f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[-50f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[-70f,0f]}
+execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[-75f,0f]}

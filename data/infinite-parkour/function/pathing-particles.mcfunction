@@ -1,0 +1,2 @@
+$execute positioned $(PlayerX) $(PlayerY) $(PlayerZ) positioned ~-0.5 ~-1 ~-0.5 run particle trail{color:[1.0,0.8,0.0],target:[$(SourceX),$(SourceY),$(SourceZ)]} ~0.5 ~0.5 ~0.5 0 0 0 0.5 0 normal
+$execute positioned $(SourceX) $(SourceY) $(SourceZ) run particle trail{color:[1.0,0.8,0.0],target:[$(X),$(Y),$(Z)]} ~ ~ ~ 0 0 0 0.5 0 normal
