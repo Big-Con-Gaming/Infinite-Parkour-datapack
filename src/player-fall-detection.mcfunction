@@ -1,3 +1,8 @@
+#This function runs for all players in game (Team:ParkourPlayers) before generating the next block.
+#This includes: Getting player's Y Position in scoreboard FallDistance, Getting the next jump's Y Position into the same scoreboard, removing 150 to compare and see if the player is 1.5 blocks below their jump
+#If they are 1.5 block below, we trigger the wind particle effect and sound with infinite-parkour:particle-multi-tick-effect.mcfunction. This runs every tick for 20 ticks on its own loop.
+#Then, subtract 950 from the block's Y so we can compare to see if the player is 10 blocks below their block. If so, they get the ParkourFalling tag and everything around them is removed and they are sent back to the lobby.
+#The player's highscore is also saved here right at the end.
 execute store result score @s FallDistance run data get entity @s Pos[1] 100
 execute as @n[type=marker,tag=ParkourNextJump] at @s store result score @s FallDistance run data get entity @s Pos[1] 100
 execute as @n[type=marker,tag=ParkourNextJump] run scoreboard players remove @s FallDistance 150
