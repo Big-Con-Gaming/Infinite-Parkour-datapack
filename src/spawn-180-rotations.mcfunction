@@ -1,3 +1,4 @@
+#This command places all of the rotated markers that get randomly selected to place the next block while parkouring. Ran by infinite-parkour:geberate-next-jump.mcfunction
 execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[0f,0f]}
 execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[10f,0f]}
 execute align xyz run summon marker ~0.5 ~ ~0.5 {Tags:["ParkourDecision"],Rotation:[20f,0f]}
