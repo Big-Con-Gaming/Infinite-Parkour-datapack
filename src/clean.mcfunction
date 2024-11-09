@@ -14,15 +14,10 @@ function infinite_parkour:clean/data
 /score
   #This deletes all scoreboards defined in infinite_parkour:load
   scoreboard objectives remove Blocks
-  scoreboard objectives remove BlocksMath
-  scoreboard objectives remove FallDistance
   scoreboard objectives remove BlockCheckpoint
   scoreboard objectives remove HighScore
   scoreboard objectives remove RandomNum
-  scoreboard objectives remove BlocksCopy
   scoreboard objectives remove BlockDifficulty
-  scoreboard objectives remove DistX
-  scoreboard objectives remove DistZ
   scoreboard objectives remove math
   scoreboard objectives remove const
 /team

@@ -26,12 +26,15 @@ execute summon minecraft:block_display
   kill @s
 + with storage infinite_parkour:macro data
 scoreboard players remove d math 50
+# making sure 0 <= d <= 500
 execute if score d math matches ..0 run scoreboard players set d math 0
-execute if score d math matches 1000.. run scoreboard players set d math 1000
-scoreboard players set s math 1000
+execute if score d math matches 500.. run scoreboard players set d math 500
+# s = 500 - d
+scoreboard players set s math 500
 scoreboard players operation s math -= d math
-execute store result storage infinite_parkour:macro data.d float 0.0005 run scoreboard players get d math
-execute store result storage infinite_parkour:macro data.s float 0.001 run scoreboard players get s math
+# using 0.5 * d / 500, s / 500
+execute store result storage infinite_parkour:macro data.d float 0.001 run scoreboard players get d math
+execute store result storage infinite_parkour:macro data.s float 0.002 run scoreboard players get s math
 function infinite_parkour:scale_next_block/apply with storage infinite_parkour:macro data
 data remove storage infinite_parkour:macro data
 
