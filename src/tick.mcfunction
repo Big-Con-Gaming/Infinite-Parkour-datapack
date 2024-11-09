@@ -12,17 +12,20 @@ effect give @a[team=ParkourPlayers] saturation 1 50 true
 effect give @a[team=Highscore] instant_health 1 50 true
 effect give @a[team=ParkourPlayers] instant_health 1 50 true
 #Below are commands to make all survival players into adventure while on the game's teams, and back into survival whenever they leave said team.
-execute as @a unless entity @s[team=Highscore] unless entity @s[team=ParkourPlayers] if entity @s[gamemode=adventure] run gamemode survival @s
-execute as @a if entity @s[gamemode=survival,team=Highscore] run gamemode adventure @s
-execute as @a if entity @s[gamemode=survival,team=ParkourPlayers] run gamemode adventure @s
+gamemode survival @a[team=!Highscore,team=!ParkourPlayers,gamemode=adventure]
+gamemode adventure @a[gamemode=survival,team=Highscore]
+gamemode adventure @a[gamemode=survival,team=ParkourPlayers]
 #For every player on the Parkour Players team, we run infinite-parkour:player-in-game as them below.
 execute as @a[team=ParkourPlayers] at @s run function infinite-parkour:player-in-game
 #Below is a quick fix to make block displays disappear whenever the player is too close. I want to replace this later with a fix, just don't know what yet.
-execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ ~-45 if entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:0}
-execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ ~-45 unless entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:50.0f}
+execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ ~-45
+  execute if entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:0}
+  execute unless entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:50.0f}
 #Below, every next jump marker (The one placed at the very next jump in sequence) runs the infinite-parkour:next-block-display-size funciton at themselves. This configures the size and translation for the block display that is for the 2nd to next jump.
 execute as @e[type=marker,tag=ParkourNextJump] at @s run function infinite-parkour:next-block-display-size
 #Failsafe below to prevent any teamers from leaving the dimension with their team. Most likely needs to be changed before release in case another data pack installed uses teams
 execute as @a at @s if dimension minecraft:overworld run team leave @s
 #Below is a quick fix that places newly teleported players onto the Highscore team. Should be relocated to the teleportation command.
-execute in infinite-parkour:infinite-parkour positioned 0 100 0 as @a[dx=1,dy=2,dz=1] run team join Highscore @s
+execute in infinite-parkour:infinite-parkour run team join Highscore @a[x=0,y=100,z=0,dx=1,dy=2,dz=1]
+
+execute in infinite-parkour:infinite-parkour run function infinite-parkour:leading-block-particle-setup
