@@ -12,6 +12,7 @@ scoreboard objectives setdisplay sidebar.team.gold HighScore
 
 scoreboard players set 1 const 1
 scoreboard players set -1 const -1
+scoreboard players set 100 const 100
 
 gamerule commandModificationBlockLimit 999999999
 # TODO Do we really need commandBlockOutput to be false???

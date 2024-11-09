@@ -10,33 +10,47 @@
 #I set the temporary math storage scoreboard to 2, so that I can divide that original porportion by 2 for use in the translation math. This is because a block takes up a percentage of a full block, so if I want to scale from the center, I need to move inwards by half of the total size of one side.
 #I store all needed variables into storage so that the macro can reference it. I divide all numbers by 100 here since I scaled them by 100 to begin with, for more precision.
 #next-block-display-scale takes care of the rest.
-execute store result score dx math run data get entity @p Pos[0] 100
-execute store result score dz math run data get entity @p Pos[2] 100
-execute store result score bx math run data get entity @s Pos[0] 100
-execute store result score bz math run data get entity @s Pos[2] 100
-scoreboard players operation dx math -= bx math
-scoreboard players operation dz math -= bz math
-execute if score dx math matches ..0 run scoreboard players operation dx math *= -1 const
-execute if score dz math matches ..0 run scoreboard players operation dz math *= -1 const
-execute store result storage infinite_parkour:macro data.dx float 0.01 run scoreboard players get dx math
-execute store result storage infinite_parkour:macro data.dz float 0.01 run scoreboard players get dz math
-execute summon minecraft:block_display
-  $data modify entity @s transformation set value [$(dx)f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,$(dz)f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f]
-  execute store result score d math run data get entity @s transformation.scale[0] 100
-  kill @s
-+ with storage infinite_parkour:macro data
+execute store result score x math run data get entity @s Pos[0] 100
+execute store result score z math run data get entity @s Pos[2] 100
+execute store result score x0 math run data get entity @p Pos[0] 100
+execute store result score z0 math run data get entity @p Pos[2] 100
+execute store result score x1 math run data get entity @n[tag=ParkourPrev] Pos[0] 100
+execute store result score z1 math run data get entity @n[tag=ParkourPrev] Pos[2] 100
+scoreboard players operation x0 math -= x math
+scoreboard players operation z0 math -= z math
+scoreboard players operation x1 math -= x math
+scoreboard players operation z1 math -= z math
+execute if score x0 math matches ..0 run scoreboard players operation x0 math *= -1 const
+execute if score z0 math matches ..0 run scoreboard players operation z0 math *= -1 const
+execute if score x1 math matches ..0 run scoreboard players operation x1 math *= -1 const
+execute if score z1 math matches ..0 run scoreboard players operation z1 math *= -1 const
+execute store result storage infinite_parkour:macro data.dx float 0.01 run scoreboard players get x0 math
+execute store result storage infinite_parkour:macro data.dz float 0.01 run scoreboard players get z0 math
+execute summon minecraft:block_display run function infinite_parkour:scale_next_block/distance with storage infinite_parkour:macro data
+scoreboard players operation d math = d1 math
 scoreboard players remove d math 50
-# making sure 0 <= d <= 500
+scoreboard players operation d0 math = d math
+execute store result storage infinite_parkour:macro data.dx float 0.01 run scoreboard players get x1 math
+execute store result storage infinite_parkour:macro data.dz float 0.01 run scoreboard players get z1 math
+execute summon minecraft:block_display run function infinite_parkour:scale_next_block/distance with storage infinite_parkour:macro data
+scoreboard players operation d math *= 100 const
+scoreboard players operation d math /= d1 math
+# making sure 0 <= d <= 100
 execute if score d math matches ..0 run scoreboard players set d math 0
-execute if score d math matches 500.. run scoreboard players set d math 500
-# s = 500 - d
-scoreboard players set s math 500
+execute if score d math matches 100.. run scoreboard players set d math 100
+# s = 100 - d
+scoreboard players set s math 100
 scoreboard players operation s math -= d math
-# using 0.5 * d / 500, s / 500
-execute store result storage infinite_parkour:macro data.d float 0.001 run scoreboard players get d math
-execute store result storage infinite_parkour:macro data.s float 0.002 run scoreboard players get s math
+# using 0.5 * d / 100, s / 100
+execute store result storage infinite_parkour:macro data.d float 0.005 run scoreboard players get d math
+execute store result storage infinite_parkour:macro data.s float 0.01 run scoreboard players get s math
 function infinite_parkour:scale_next_block/apply with storage infinite_parkour:macro data
 data remove storage infinite_parkour:macro data
+
+/distance
+  $data modify entity @s transformation set value [$(dx)f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,$(dz)f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f]
+  execute store result score d1 math run data get entity @s transformation.scale[0] 100
+  kill @s
 
 /apply
   #Ahh, the one line macro that sets up the scale and translation of the block display tagged with ParkourGeneratedDisplay. This is located at the second to next jump, and this function is ran by scale_next_block.mcfunction

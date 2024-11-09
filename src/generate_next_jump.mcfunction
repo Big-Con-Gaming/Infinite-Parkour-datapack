@@ -6,7 +6,12 @@
 #We create the next block display for ParkourGeneratedJump here, then place the gold block for the very next jump (ParkourNextJump) and remove its display entity. This is a placeholder block, eventually I'll have a function choose what the next block will be based on areas/zones
 #Finally, we run generate_decorations.mcfunction to place in block displays, particles, entities, etc. at random.
 scoreboard players add @s Blocks 1
-kill @n[type=marker,tag=ParkourNextJump]
+execute as @n[type=marker,tag=ParkourPrev] at @s
+  setblock ~ ~ ~ air
+  kill @s
+execute as @n[type=marker,tag=ParkourNextJump] at @s
+  tag @s add ParkourPrev
+  tag @s remove ParkourNextJump
 execute as @n[type=marker,tag=ParkourGeneratedJump] at @s align xyz
   function infinite_parkour:generate_next_jump/rotation
   tag @s add ParkourNextJump
