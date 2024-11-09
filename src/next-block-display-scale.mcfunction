@@ -1,4 +1,0 @@
-#Ahh, the one line macro that sets up the scale and translation of the block display tagged with ParkourGeneratedDisplay. This is located at the second to next jump, and this function is ran by next-block-display-size.mcfunction
-# DistZ is the final porportion of scale so that the block represents the distance between the player and the ParkourNextJump marker, with 100% being on the block, and 0% being 10 blocks away
-# DistX is 1 - the above value, divided by 2. This is used for the translation so that it moves inwards towards the center of the block by a half of the porportion of scale, so the block looks like it scales from its center.
-$data merge entity @n[type=block_display,distance=..10,tag=ParkourGeneratedDisplay] {transformation:{scale:[$(DistZ)f,$(DistZ)f,$(DistZ)f],translation:[$(DistX)f,$(DistX)f,$(DistX)f]}}

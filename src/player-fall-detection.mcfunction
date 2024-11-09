@@ -16,9 +16,9 @@ execute if score @s FallDistance <= @n[type=marker,tag=ParkourNextJump] FallDist
   execute positioned ~-10 ~ ~-10 run kill @e[type=marker,dz=21,dy=20,dx=20,tag=ParkourNextJump]
   execute positioned ~-10 ~ ~-10 run kill @e[type=marker,dz=21,dy=20,dx=20,tag=ParkourGeneratedJump]
   execute positioned ~-10 ~ ~-10 run kill @e[type=block_display,dz=21,dy=20,dx=20,tag=ParkourGeneratedDisplay]
-  execute positioned ~-10 ~ ~-10 run kill @e[type=marker,dz=21,dy=20,dx=20,tag=ParkourDecision]
   execute positioned ~-100 ~-120 ~-10 run kill @e[dz=60,dy=200,dx=200,tag=ParkourDeco]
   tp @s @n[type=marker,tag=ParkourLobby]
   team join Highscore @s
-  execute if score @s Blocks >= @s HighScore run scoreboard players operation @s HighScore = @s Blocks
+  # Using unless in case the player doesn't have a high score yet
+  execute unless score @s HighScore > @s Blocks run scoreboard players operation @s HighScore = @s Blocks
   tag @s remove ParkourTargetCrit

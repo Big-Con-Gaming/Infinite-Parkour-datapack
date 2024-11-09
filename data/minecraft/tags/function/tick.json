@@ -1,6 +1,7 @@
 {
     "values": [
         "infinite-parkour:tick",
-        "infinite-parkour:interaction-entities-tick"
+        "infinite-parkour:interaction-entities-tick",
+        "infinite-parkour:spawn_lobby_tick"
     ]
 }
