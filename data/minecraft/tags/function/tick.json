@@ -1,8 +1,8 @@
 {
     "values": [
-        "infinite-parkour:tick",
-        "infinite-parkour:tick_portal",
-        "infinite-parkour:spawn_lobby_tick",
-        "infinite-parkour:fall_tick"
+        "infinite_parkour:tick",
+        "infinite_parkour:tick_portal",
+        "infinite_parkour:spawn_lobby_tick",
+        "infinite_parkour:fall_tick"
     ]
 }

@@ -28,6 +28,6 @@ team modify Highscore color gold
 team add ParkourPlayers {"text":"InParkour"}
 team modify ParkourPlayers color yellow
 
-execute unless data storage infinite-parkour:player_data players run data modify storage infinite-parkour:player_data players set value []
+execute unless data storage infinite_parkour:player_data players run data modify storage infinite_parkour:player_data players set value []
 
 say §aFinished loading!
