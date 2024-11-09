@@ -3,19 +3,19 @@
 #And stores the XYZ for the tagged ParkourNextJump marker (This is the very next block the player can jump to) as SourceXYZ, in macro storage
 #After all that is stored, it runs the macro macro!
 execute as @e[type=marker,tag=ParkourGeneratedJump]
-  data modify storage infinite-parkour:macro data.X set from entity @s Pos[0]
-  data modify storage infinite-parkour:macro data.Y set from entity @s Pos[1]
-  data modify storage infinite-parkour:macro data.Z set from entity @s Pos[2]
+  data modify storage infinite_parkour:macro data.X set from entity @s Pos[0]
+  data modify storage infinite_parkour:macro data.Y set from entity @s Pos[1]
+  data modify storage infinite_parkour:macro data.Z set from entity @s Pos[2]
 execute as @a
-  data modify storage infinite-parkour:macro data.PlayerX set from entity @s Pos[0]
-  data modify storage infinite-parkour:macro data.PlayerY set from entity @s Pos[1]
-  data modify storage infinite-parkour:macro data.PlayerZ set from entity @s Pos[2]
+  data modify storage infinite_parkour:macro data.PlayerX set from entity @s Pos[0]
+  data modify storage infinite_parkour:macro data.PlayerY set from entity @s Pos[1]
+  data modify storage infinite_parkour:macro data.PlayerZ set from entity @s Pos[2]
 execute as @e[type=marker,tag=ParkourNextJump]
-  data modify storage infinite-parkour:macro data.SourceX set from entity @s Pos[0]
-  data modify storage infinite-parkour:macro data.SourceY set from entity @s Pos[1]
-  data modify storage infinite-parkour:macro data.SourceZ set from entity @s Pos[2]
-function infinite-parkour:leading-block-particle-setup/apply with storage infinite-parkour:macro data
-data remove storage infinite-parkour:macro data
+  data modify storage infinite_parkour:macro data.SourceX set from entity @s Pos[0]
+  data modify storage infinite_parkour:macro data.SourceY set from entity @s Pos[1]
+  data modify storage infinite_parkour:macro data.SourceZ set from entity @s Pos[2]
+function infinite_parkour:line/apply with storage infinite_parkour:macro data
+data remove storage infinite_parkour:macro data
 
 /apply
   #This macro places all of the trail particles in between the blocks. X Y Z indicates the ParkourGeneratedJump location (the 2nd next jump),

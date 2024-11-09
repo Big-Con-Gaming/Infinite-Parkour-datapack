@@ -4,23 +4,23 @@
 #We convert ParkourGeneratedJump into ParkourNextJump, since this jump is becoming the player's very next jump.
 #Then, we choose one of the random TempRotation markers to then create the next ParkourGeneratedJump marker, at a random distance from itself. This function will also kill off all TempRotation markers.
 #We create the next block display for ParkourGeneratedJump here, then place the gold block for the very next jump (ParkourNextJump) and remove its display entity. This is a placeholder block, eventually I'll have a function choose what the next block will be based on areas/zones
-#Finally, we run generate-decorations.mcfunction to place in block displays, particles, entities, etc. at random.
+#Finally, we run generate_decorations.mcfunction to place in block displays, particles, entities, etc. at random.
 scoreboard players add @s Blocks 1
 kill @n[type=marker,tag=ParkourNextJump]
 execute as @n[type=marker,tag=ParkourGeneratedJump] at @s align xyz
-  function infinite-parkour:generate-next-jump/rotation
+  function infinite_parkour:generate_next_jump/rotation
   tag @s add ParkourNextJump
   tag @s remove ParkourGeneratedJump
-execute at @e[tag=TempRotation,limit=1,sort=random] run function infinite-parkour:generate-next-jump/pick
+execute at @e[tag=TempRotation,limit=1,sort=random] run function infinite_parkour:generate_next_jump/pick
 kill @e[tag=TempRotation]
 execute at @n[type=marker,tag=ParkourGeneratedJump] align xyz run summon block_display ~ ~ ~ {Tags:["ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.5f,0.5f,0.5f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.25f,0.25f,0.25f]}}
 execute at @n[type=marker,tag=ParkourNextJump]
   setblock ~ ~ ~ gold_block
   kill @n[type=block_display,tag=ParkourGeneratedDisplay]
-function infinite-parkour:generate-decorations
+function infinite_parkour:generate_decorations
 
 /rotation
-  #This command places all of the rotated markers that get randomly selected to place the next block while parkouring. Ran by infinite-parkour:geberate-next-jump.mcfunction
+  #This command places all of the rotated markers that get randomly selected to place the next block while parkouring. Ran by infinite_parkour:geberate-next-jump.mcfunction
   summon marker ~0.5 ~ ~0.5 {Tags:["TempRotation"],Rotation:[0f,0f]}
   summon marker ~0.5 ~ ~0.5 {Tags:["TempRotation"],Rotation:[10f,0f]}
   summon marker ~0.5 ~ ~0.5 {Tags:["TempRotation"],Rotation:[20f,0f]}
@@ -36,7 +36,7 @@ function infinite-parkour:generate-decorations
   summon marker ~0.5 ~ ~0.5 {Tags:["TempRotation"],Rotation:[-75f,0f]}
 
 /pick
-  #This function handles the physical block placing that the game as to do. This is ran by generate-next-jump.mcfunction by a random marker with tag TempRotation, they have random directions and are located on ParkourNextJump's marker.
+  #This function handles the physical block placing that the game as to do. This is ran by generate_next_jump.mcfunction by a random marker with tag TempRotation, they have random directions and are located on ParkourNextJump's marker.
   #First, we randomize a number in RandomNum based on the player's difficulty, 0 means it's really easy and blocks that are only 2-3 away and at max 3 over 1 up or 2 over 1 down are chosen.
   #1 difficulty means all jumps are in the pool, except 4 block jumps.
   #2 difficulty just includes 4 block jumps.

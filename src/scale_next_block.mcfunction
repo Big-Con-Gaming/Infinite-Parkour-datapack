@@ -18,25 +18,25 @@ scoreboard players operation dx math -= bx math
 scoreboard players operation dz math -= bz math
 execute if score dx math matches ..0 run scoreboard players operation dx math *= -1 const
 execute if score dz math matches ..0 run scoreboard players operation dz math *= -1 const
-execute store result storage infinite-parkour:macro data.dx float 0.01 run scoreboard players get dx math
-execute store result storage infinite-parkour:macro data.dz float 0.01 run scoreboard players get dz math
+execute store result storage infinite_parkour:macro data.dx float 0.01 run scoreboard players get dx math
+execute store result storage infinite_parkour:macro data.dz float 0.01 run scoreboard players get dz math
 execute summon minecraft:block_display
   $data modify entity @s transformation set value [$(dx)f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,$(dz)f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f]
   execute store result score d math run data get entity @s transformation.scale[0] 100
   kill @s
-+ with storage infinite-parkour:macro data
++ with storage infinite_parkour:macro data
 scoreboard players remove d math 50
 execute if score d math matches ..0 run scoreboard players set d math 0
 execute if score d math matches 1000.. run scoreboard players set d math 1000
 scoreboard players set s math 1000
 scoreboard players operation s math -= d math
-execute store result storage infinite-parkour:macro data.d float 0.0005 run scoreboard players get d math
-execute store result storage infinite-parkour:macro data.s float 0.001 run scoreboard players get s math
-function infinite-parkour:next-block-display-size/apply with storage infinite-parkour:macro data
-data remove storage infinite-parkour:macro data
+execute store result storage infinite_parkour:macro data.d float 0.0005 run scoreboard players get d math
+execute store result storage infinite_parkour:macro data.s float 0.001 run scoreboard players get s math
+function infinite_parkour:scale_next_block/apply with storage infinite_parkour:macro data
+data remove storage infinite_parkour:macro data
 
 /apply
-  #Ahh, the one line macro that sets up the scale and translation of the block display tagged with ParkourGeneratedDisplay. This is located at the second to next jump, and this function is ran by next-block-display-size.mcfunction
+  #Ahh, the one line macro that sets up the scale and translation of the block display tagged with ParkourGeneratedDisplay. This is located at the second to next jump, and this function is ran by scale_next_block.mcfunction
   # DistZ is the final porportion of scale so that the block represents the distance between the player and the ParkourNextJump marker, with 100% being on the block, and 0% being 10 blocks away
   # DistX is 1 - the above value, divided by 2. This is used for the translation so that it moves inwards towards the center of the block by a half of the porportion of scale, so the block looks like it scales from its center.
   $data merge entity @n[type=block_display,distance=..10,tag=ParkourGeneratedDisplay] {transformation:{scale:[$(s)f,$(s)f,$(s)f],translation:[$(d)f,$(d)f,$(d)f]}}

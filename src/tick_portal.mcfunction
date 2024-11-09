@@ -2,32 +2,32 @@
 #These just detect whenever the player is left or right clicking an interaction entity. it runs a command on the player based on attack or target, then removes the nbt from the interaction entity.
 #ParkourReturn is the interaction that is in the overworld, that brings players into the lobby. It teleports them directly to the marker tagged ParkourLobby, which is located at the exact spot I want players to enter the lobby.
 #Directly above that ParkourLobby marker, is the tagged ParkourLobbyLeave interaction entity. This one teleports the player back into the overworld. This should be modified to send the player to the teleporter they started at, but currently only teleports to the first one chosen arbitrarily.
-execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourReturn]
-  execute on attacker run function infinite-parkour:tick_portal/teleport_in
-  execute on target run function infinite-parkour:tick_portal/teleport_in
+execute in infinite_parkour:infinite_parkour as @e[type=interaction,tag=ParkourReturn]
+  execute on attacker run function infinite_parkour:tick_portal/teleport_in
+  execute on target run function infinite_parkour:tick_portal/teleport_in
   data remove entity @s attack
   data remove entity @s interaction
-execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourLobbyLeave]
-  execute on attacker run function infinite-parkour:tick_portal/teleport_out
-  execute on target run function infinite-parkour:tick_portal/teleport_out
+execute in infinite_parkour:infinite_parkour as @e[type=interaction,tag=ParkourLobbyLeave]
+  execute on attacker run function infinite_parkour:tick_portal/teleport_out
+  execute on target run function infinite_parkour:tick_portal/teleport_out
   data remove entity @s attack
   data remove entity @s interaction
 #In the future, make the above save the player inventory before tp into infinite parkour, and restore on the way out.
 #Also, store the location of the TP that brought each player in, so that they can target that one on the way out
 
 /fetch
-  $data modify storage infinite-parkour:player_data current set from storage infinite-parkour:player_data players[{UUID:$(UUID)}]
-  $data remove storage infinite-parkour:player_data players[{UUID:$(UUID)}]
+  $data modify storage infinite_parkour:player_data current set from storage infinite_parkour:player_data players[{UUID:$(UUID)}]
+  $data remove storage infinite_parkour:player_data players[{UUID:$(UUID)}]
 
 /teleport
   $execute in $(dimension) run tp @s $(x) $(y) $(z) $(yaw) $(pitch)
 
 /teleport_out
   # fetch data
-  function infinite-parkour:tick_portal/fetch with entity @s
+  function infinite_parkour:tick_portal/fetch with entity @s
 
   # retrieve inventory0
-  data modify block 0 0 0 Items set from storage infinite-parkour:player_data current.inventory0
+  data modify block 0 0 0 Items set from storage infinite_parkour:player_data current.inventory0
 
   # unload inventory0
   item replace entity @s container.0 from block 0 0 0 container.0
@@ -59,7 +59,7 @@ execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourL
   item replace entity @s container.26 from block 0 0 0 container.26
 
   # retrieve inventory1
-  data modify block 0 0 0 Items set from storage infinite-parkour:player_data current.inventory1
+  data modify block 0 0 0 Items set from storage infinite_parkour:player_data current.inventory1
 
   # unload inventory1
   item replace entity @s container.27 from block 0 0 0 container.0
@@ -80,7 +80,7 @@ execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourL
   item replace entity @s player.cursor from block 0 0 0 container.15
 
   # retrieve enderchest
-  data modify block 0 0 0 Items set from storage infinite-parkour:player_data current.enderchest
+  data modify block 0 0 0 Items set from storage infinite_parkour:player_data current.enderchest
 
   # unload enderchest
   item replace entity @s enderchest.0 from block 0 0 0 container.0
@@ -115,14 +115,14 @@ execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourL
   data remove block 0 0 0 Items
 
   # teleport
-  function infinite-parkour:tick_portal/teleport with storage infinite-parkour:player_data current.position
+  function infinite_parkour:tick_portal/teleport with storage infinite_parkour:player_data current.position
 
   # clean
-  data remove storage infinite-parkour:player_data current
+  data remove storage infinite_parkour:player_data current
 
 /teleport_in
   # store UUID
-  data modify storage infinite-parkour:player_data current.UUID set from entity @s UUID
+  data modify storage infinite_parkour:player_data current.UUID set from entity @s UUID
 
   # load inventory0
   item replace block 0 0 0 container.0 from entity @s container.0
@@ -154,7 +154,7 @@ execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourL
   item replace block 0 0 0 container.26 from entity @s container.26
 
   # store inventory0
-  data modify storage infinite-parkour:player_data current.inventory0 set from block 0 0 0 Items
+  data modify storage infinite_parkour:player_data current.inventory0 set from block 0 0 0 Items
   data remove block 0 0 0 Items
 
   # load inventory1
@@ -176,7 +176,7 @@ execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourL
   item replace block 0 0 0 container.15 from entity @s player.cursor
 
   # store inventory1
-  data modify storage infinite-parkour:player_data current.inventory1 set from block 0 0 0 Items
+  data modify storage infinite_parkour:player_data current.inventory1 set from block 0 0 0 Items
   data remove block 0 0 0 Items
 
   # load enderchest
@@ -209,7 +209,7 @@ execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourL
   item replace block 0 0 0 container.26 from entity @s enderchest.26
 
   # store enderchest
-  data modify storage infinite-parkour:player_data current.enderchest set from block 0 0 0 Items
+  data modify storage infinite_parkour:player_data current.enderchest set from block 0 0 0 Items
   data remove block 0 0 0 Items
 
   # clear inventory
@@ -245,16 +245,16 @@ execute in infinite-parkour:infinite-parkour as @e[type=interaction,tag=ParkourL
   item replace entity @s enderchest.26 with air
 
   # store position
-  data modify storage infinite-parkour:player_data current.position.dimension set from entity @s Dimension
-  data modify storage infinite-parkour:player_data current.position.x set from entity @s Pos[0]
-  data modify storage infinite-parkour:player_data current.position.y set from entity @s Pos[1]
-  data modify storage infinite-parkour:player_data current.position.z set from entity @s Pos[2]
-  data modify storage infinite-parkour:player_data current.position.yaw set from entity @s Rotation[0]
-  data modify storage infinite-parkour:player_data current.position.pitch set from entity @s Rotation[1]
+  data modify storage infinite_parkour:player_data current.position.dimension set from entity @s Dimension
+  data modify storage infinite_parkour:player_data current.position.x set from entity @s Pos[0]
+  data modify storage infinite_parkour:player_data current.position.y set from entity @s Pos[1]
+  data modify storage infinite_parkour:player_data current.position.z set from entity @s Pos[2]
+  data modify storage infinite_parkour:player_data current.position.yaw set from entity @s Rotation[0]
+  data modify storage infinite_parkour:player_data current.position.pitch set from entity @s Rotation[1]
 
   # append to players
-  data modify storage infinite-parkour:player_data players append from storage infinite-parkour:player_data current
-  data remove storage infinite-parkour:player_data current
+  data modify storage infinite_parkour:player_data players append from storage infinite_parkour:player_data current
+  data remove storage infinite_parkour:player_data current
 
   # teleport in
   tp @s @e[type=marker,tag=ParkourLobby,limit=1]
