@@ -18,6 +18,7 @@ execute as @e[type=item,nbt={Item:{id:"minecraft:diamond"}}] unless entity @s[nb
     #finally, I place in a marker (tagged ParkourEndLobby) at the furthest z block of the lobby so that the clear command that runs behind the players in game doesn't take out the lobby, and I set up the interaction and text display (both tagged ParkourLobbyLeave) that brings the player out of the lobby.
     forceload add ~ ~ ~-1 ~-1
     place template infinite-parkour:infinite-parkour-lobby -5 99 -4
+    execute in infinite-parkour:infinite-parkour run setblock 0 0 0 minecraft:barrel
     summon marker 0.5 100 0.5 {Tags:["ParkourLobby"]}
     summon marker 0.5 100 14 {Tags:["ParkourEndLobby"]}
     summon interaction 0.5 103.5 0.5 {Tags:["ParkourLobbyLeave"],width:1.5}
