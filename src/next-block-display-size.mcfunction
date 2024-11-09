@@ -10,7 +10,6 @@
 #I set the temporary math storage scoreboard to 2, so that I can divide that original porportion by 2 for use in the translation math. This is because a block takes up a percentage of a full block, so if I want to scale from the center, I need to move inwards by half of the total size of one side.
 #I store all needed variables into storage so that the macro can reference it. I divide all numbers by 100 here since I scaled them by 100 to begin with, for more precision.
 #next-block-display-scale takes care of the rest.
-scoreboard objectives setdisplay sidebar.team.yellow math
 execute store result score dx math run data get entity @p Pos[0] 100
 execute store result score dz math run data get entity @p Pos[2] 100
 execute store result score bx math run data get entity @s Pos[0] 100
