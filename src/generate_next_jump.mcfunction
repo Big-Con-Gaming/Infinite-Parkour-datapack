@@ -27,7 +27,7 @@ execute as @a[team=ParkourPlayers,nbt={OnGround:1b}] at @s positioned ~ ~-0.5 ~ 
   # generate block
   execute at @e[tag=TempRotation,limit=1,sort=random] run function infinite_parkour:generate_next_jump/pick
   kill @e[tag=TempRotation]
-  execute at @n[type=marker,tag=ParkourGeneratedJump] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+  execute at @n[type=marker,tag=ParkourGeneratedJump] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
   execute at @n[type=marker,tag=ParkourNextJump]
     setblock ~ ~ ~ barrier
     execute as @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay]

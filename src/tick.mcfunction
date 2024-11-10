@@ -22,8 +22,6 @@ execute as @a[team=ParkourPlayers] at @s
 execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ ~-45
   execute if entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:0}
   execute unless entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:50.0f}
-#Below, every next jump marker (The one placed at the very next jump in sequence) runs the infinite_parkour:scale_next_block funciton at themselves. This configures the size and translation for the block display that is for the 2nd to next jump.
-execute as @e[type=marker,tag=ParkourNextJump] at @s run function infinite_parkour:scale_next_block
 #Failsafe below to prevent any teamers from leaving the dimension with their team. Most likely needs to be changed before release in case another data pack installed uses teams
 execute as @a at @s unless dimension infinite_parkour:infinite_parkour run team leave @s 
 #Below is a quick fix that places newly teleported players onto the Highscore team. Should be relocated to the teleportation command.
