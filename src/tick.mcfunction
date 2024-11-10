@@ -16,8 +16,6 @@ gamemode adventure @a[gamemode=survival,team=ParkourPlayers]
 #For every player on the Parkour Players team, we run infinite_parkour:player-in-game as them below.
 execute as @a[team=ParkourPlayers] at @s
   #This command runs every tick for all players directly in the game, on team: ParkourPlayers
-  #Below is a command that runs the fall detection function on the player. We do this first so that if the player gets the tag ParkourFalling, we can prevent generation of the next jump since that player is exiting the game.
-  execute if entity @s[team=ParkourPlayers,nbt={OnGround:1b}] positioned ~ ~-0.5 ~ if entity @n[type=marker,tag=ParkourNextJump,distance=..1] run function infinite_parkour:generate_next_jump
   #Below cleans up all blocks and decorations behind the players. The fill command could be removed if we save the location of the most previous jump, to then delete that block and its marker at once.
   execute align xyz positioned ~-70 ~-50 ~-1 if dimension infinite_parkour:infinite_parkour run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
 #Below is a quick fix to make block displays disappear whenever the player is too close. I want to replace this later with a fix, just don't know what yet.

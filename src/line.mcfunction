@@ -2,7 +2,7 @@
 #Stores the XYZ for the Player (as PlayerXYZ, in macro storage),
 #And stores the XYZ for the tagged ParkourNextJump marker (This is the very next block the player can jump to) as SourceXYZ, in macro storage
 #After all that is stored, it runs the macro macro!
-execute as @e[type=marker,tag=ParkourPrev]
+execute as @e[type=marker,tag=ParkourCurr]
   data modify storage infinite_parkour:macro data.x0 set from entity @s Pos[0]
   data modify storage infinite_parkour:macro data.y0 set from entity @s Pos[1]
   data modify storage infinite_parkour:macro data.z0 set from entity @s Pos[2]
