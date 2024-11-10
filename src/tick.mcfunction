@@ -5,10 +5,12 @@ execute as @e[type=marker,tag=ParkourLobby] at @s positioned ~-25 ~-10 ~9 unless
 #Below does the opposite of the command above, where we check based on relatives again to see whenever the player walks down from the entrance to the game, if so we place them back on Highscore team
 execute as @e[type=marker,tag=ParkourLobby] at @s positioned ~-2 ~1 ~7 as @a[team=ParkourPlayers,dx=5,dy=3,dz=0] run team join Highscore @s
 #Below are some simple commands to keep players at full health
-effect give @a[team=Highscore] saturation 1 50 true
-effect give @a[team=ParkourPlayers] saturation 1 50 true
-effect give @a[team=Highscore] instant_health 1 50 true
-effect give @a[team=ParkourPlayers] instant_health 1 50 true
+effect give @a[team=Highscore] saturation 3 255 true
+effect give @a[team=Highscore] instant_health 3 255 true
+effect give @a[team=Highscore] resistance 3 255 true
+effect give @a[team=ParkourPlayers] saturation 3 255 true
+effect give @a[team=ParkourPlayers] instant_health 3 255 true
+effect give @a[team=ParkourPlayers] resistance 3 255 true
 #Below are commands to make all survival players into adventure while on the game's teams, and back into survival whenever they leave said team.
 gamemode survival @a[team=!Highscore,team=!ParkourPlayers,gamemode=adventure]
 gamemode adventure @a[gamemode=survival,team=Highscore]
