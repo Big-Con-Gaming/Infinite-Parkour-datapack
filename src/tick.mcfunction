@@ -32,3 +32,5 @@ execute as @a at @s unless dimension infinite_parkour:infinite_parkour run team 
 execute in infinite_parkour:infinite_parkour run team join Highscore @a[x=0,y=100,z=0,dx=1,dy=2,dz=1]
 
 execute in infinite_parkour:infinite_parkour run function infinite_parkour:line
+execute as @a[team=ParkourPlayers] run title @s actionbar {"color":"#98a3dd","extra":["[",{"score":{"name":"@s","objective":"Blocks"}},"]"],"text":""}
+execute as @a[team=Highscore] run title @s actionbar [{"color":"#98a3dd","bold":true,"extra":["SCORE ",{"score":{"name":"@s","objective":"Blocks"}}],"text":""}, "    ", {"color":"#b5bad6","bold":true,"extra":["RECORD ",{"score":{"name":"@s","objective":"HighScore"}}],"text":""}]
