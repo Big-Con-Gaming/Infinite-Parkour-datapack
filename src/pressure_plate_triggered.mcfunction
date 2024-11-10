@@ -14,5 +14,5 @@ execute align xyz positioned ~2.5 ~0.5 ~2.5 unless entity @n[type=marker,tag=Par
 execute align xyz positioned ~2.5 ~-0.5 ~5.5 unless entity @n[type=marker,tag=ParkourNextJump,distance=..1] run summon marker ~ ~ ~ {Tags:["ParkourNextJump","ParkourBlock"]}
 execute align xyz positioned ~2.5 ~-0.5 ~8.5
   kill @e[type=block_display,tag=ParkourBlockDisplay,distance=..10]
-  summon block_display ~ ~ ~ {Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"}}
+  summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
   execute unless entity @n[type=marker,tag=ParkourGeneratedJump,distance=..1] run summon marker ~ ~ ~ {Tags:["ParkourGeneratedJump","ParkourBlock"]}

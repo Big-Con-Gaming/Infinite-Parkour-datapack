@@ -4,6 +4,7 @@
         "infinite_parkour:tick_portal",
         "infinite_parkour:spawn_lobby_tick",
         "infinite_parkour:fall_tick",
-        "infinite_parkour:generate_next_jump"
+        "infinite_parkour:generate_next_jump",
+        "infinite_parkour:scale_parkour_block"
     ]
 }
