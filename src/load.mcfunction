@@ -13,6 +13,8 @@ scoreboard objectives setdisplay sidebar.team.gold HighScore
 scoreboard players set 1 const 1
 scoreboard players set -1 const -1
 scoreboard players set 100 const 100
+scoreboard players set 128 const 128
+scoreboard players set 31 const 31
 
 gamerule commandModificationBlockLimit 999999999
 # TODO Do we really need commandBlockOutput to be false???
@@ -22,6 +24,12 @@ team add Highscore {"text":"InLobby"}
 team modify Highscore color gold
 team add ParkourPlayers {"text":"InParkour"}
 team modify ParkourPlayers color yellow
+team add infpar_yellow
+team add infpar_green
+team add infpar_dark_green
+team modify infpar_yellow color yellow
+team modify infpar_green color green
+team modify infpar_dark_green color dark_green
 
 execute unless data storage infinite_parkour:player_data players run data modify storage infinite_parkour:player_data players set value []
 
