@@ -257,4 +257,4 @@ execute in infinite_parkour:infinite_parkour as @e[type=interaction,tag=ParkourL
   data remove storage infinite_parkour:player_data current
 
   # teleport in
-  tp @s @e[type=marker,tag=ParkourLobby,limit=1]
+  tp @s 0 100 0

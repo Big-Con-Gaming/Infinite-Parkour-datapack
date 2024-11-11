@@ -25,4 +25,13 @@ team modify ParkourPlayers color yellow
 
 execute unless data storage infinite_parkour:player_data players run data modify storage infinite_parkour:player_data players set value []
 
+execute in infinite_parkour:infinite_parkour positioned 0 0 0
+  forceload add ~-1 ~-1 ~ ~
+  execute unless entity @n[type=marker,tag=ParkourLobby]
+    place template infinite_parkour:infinite_parkour_lobby -5 99 -4
+    execute in infinite_parkour:infinite_parkour run setblock 0 0 0 minecraft:barrel
+    summon marker 0.5 100 0.5 {Tags:["ParkourLobby"]}
+    summon interaction 0.5 103.5 0.5 {Tags:["ParkourLobbyLeave"],width:1.5}
+    summon text_display 0 104 0 {billboard:"center",alignment:"center",Tags:["ParkourLobbyLeave"],text:'[{"color":"yellow","text":"Click to Leave"},{"bold":true,"color":"#FFBB00","text":" Infinite Parkour"}]'}
+
 say §aFinished loading!
