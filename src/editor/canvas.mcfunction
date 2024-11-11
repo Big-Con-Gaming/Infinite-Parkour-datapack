@@ -30,18 +30,6 @@ execute as @e[tag=ipe_interact] at @s if data entity @s attack
 
 execute as @e[tag=ipe_needs_block] at @s if block ~ ~ ~ air run kill @s
 
-execute as @a[gamemode=survival]
-  execute store success score jump_next math if predicate {"condition":"minecraft:entity_properties","entity":"this","predicate":{"type_specific":{"type":"minecraft:player","input":{"jump":true}}}}
-  execute store success score sneak_next math if predicate {"condition":"minecraft:entity_properties","entity":"this","predicate":{"type_specific":{"type":"minecraft:player","input":{"sneak":true}}}}
-  execute unless score jump_prev math = jump_next math run tp @s @s
-  execute unless score sneak_prev math = sneak_next math run tp @s @s
-  execute if score jump_next math matches 1 run attribute @s minecraft:gravity base set -0.08
-  execute if score sneak_next math matches 1 run attribute @s minecraft:gravity base set 0.08
-  execute unless score jump_next math matches 1 unless score sneak_next math matches 1 run attribute @s minecraft:gravity base set 0
-  scoreboard players operation jump_prev math = jump_next math
-  scoreboard players operation sneak_prev math = sneak_next math
-
-
 /create
   execute align xyz run summon marker ~ ~ ~ {Tags:["ipe_canvas"],data:{name:"Canvas"}}
   fill ~ -1 ~ ~63 -1 ~63 black_concrete
