@@ -20,6 +20,7 @@ function infinite_parkour:clean/data
   scoreboard objectives remove BlockDifficulty
   scoreboard objectives remove math
   scoreboard objectives remove const
+  scoreboard objectives remove ipe_index
 /team
   #This deletes all teams defined in infinite_parkour:load
   team remove Highscore
