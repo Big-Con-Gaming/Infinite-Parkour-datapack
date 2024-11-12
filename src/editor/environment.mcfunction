@@ -54,9 +54,12 @@
         function infinite_parkour:editor/environment/update_page
       execute if entity @s[tag=ipe_hologram_interact]
         execute store result storage infinite_parkour:macro data.index int 1 run scoreboard players get @s ipe_index
+        execute as @n[type=text_display,tag=ipe_page_num,distance=..17] run scoreboard players operation page math = @s ipe_index
+        execute store result storage infinite_parkour:macro data.page int 1 run scoreboard players get page math
         execute
-          $say $(index)
+          $say $(page) $(index)
         + with storage infinite_parkour:macro data
+        scoreboard players reset page math
         data remove storage infinite_parkour:macro data
       
       data remove entity @s interaction
