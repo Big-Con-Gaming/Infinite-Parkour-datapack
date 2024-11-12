@@ -7,6 +7,7 @@ scoreboard objectives add RandomNum dummy {"text":"This creates random numbers"}
 scoreboard objectives add BlockDifficulty dummy {"text":"Sets your personal jump difficulty"}
 scoreboard objectives add math dummy {"text":"General math calculations"}
 scoreboard objectives add const dummy {"text":"Constant values"}
+scoreboard objectives add ipe_index dummy {"text":"Index"}
 scoreboard objectives setdisplay sidebar.team.yellow Blocks
 scoreboard objectives setdisplay sidebar.team.gold HighScore
 
