@@ -1,7 +1,45 @@
 /tick
   execute in infinite_parkour:editor as @e[type=block_display,tag=ipe_hologram,distance=0..] at @s run tp @s ~ ~ ~ ~2 ~
 
-/create
+/create_grid
+  scoreboard players set #counter ipe_index 0
+  execute positioned ~21 32 ~-17 run function infinite_parkour:editor/hologram/create_row
+  execute positioned ~24 32 ~-17 run function infinite_parkour:editor/hologram/create_row
+  execute positioned ~27 32 ~-17 run function infinite_parkour:editor/hologram/create_row
+  execute positioned ~35 32 ~-17 run function infinite_parkour:editor/hologram/create_row
+  execute positioned ~38 32 ~-17 run function infinite_parkour:editor/hologram/create_row
+  execute positioned ~41 32 ~-17 run function infinite_parkour:editor/hologram/create_row
+  scoreboard players reset #counter ipe_index
+
+/create_row
+  function infinite_parkour:editor/hologram/create_one
+  execute positioned ~ ~ ~3 run function infinite_parkour:editor/hologram/create_one
+  execute positioned ~ ~ ~6 run function infinite_parkour:editor/hologram/create_one
+  execute positioned ~ ~ ~9 run function infinite_parkour:editor/hologram/create_one
+  execute positioned ~ ~ ~12 run function infinite_parkour:editor/hologram/create_one
+
+/create_one
+  setblock ~ ~ ~ light_gray_concrete
+  setblock ~ ~1 ~ orange_stained_glass
+  execute positioned ~0.5 ~1.5 ~0.5 summon block_display
+    tag @s add ipe_hologram
+    tag @s add ipe_hologram_loading
+    scoreboard players operation @s ipe_index = #counter ipe_index
+  execute positioned ~0.5 ~0.95 ~0.5 summon interaction
+    tag @s add ipe_hologram_interact
+    data merge entity @s {width:1.1,height:1.1}
+    scoreboard players operation @s ipe_index = #counter ipe_index
+  scoreboard players add #counter ipe_index 1
+
+/unload_all
+  execute as @e[type=block_display,tag=ipe_hologram,dx=20,dy=0,dz=12] at @s run function infinite_parkour:editor/hologram/unload
+
+/unload
+  execute on passengers run kill @s
+  setblock ~ ~ ~ orange_stained_glass
+  tag @s add ipe_hologram_loading
+
+/create_old
   function infinite_parkour:editor/hologram/get_dimensions
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
