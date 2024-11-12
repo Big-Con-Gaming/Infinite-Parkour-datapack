@@ -10,11 +10,13 @@ scoreboard objectives add const dummy {"text":"Constant values"}
 scoreboard objectives setdisplay sidebar.team.yellow Blocks
 scoreboard objectives setdisplay sidebar.team.gold HighScore
 
-scoreboard players set 1 const 1
 scoreboard players set -1 const -1
+scoreboard players set 1 const 1
+scoreboard players set 2 const 2
+scoreboard players set 31 const 31
 scoreboard players set 100 const 100
 scoreboard players set 128 const 128
-scoreboard players set 31 const 31
+scoreboard players set 8000 const 8000
 
 gamerule commandModificationBlockLimit 999999999
 # TODO Do we really need commandBlockOutput to be false???

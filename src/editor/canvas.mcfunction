@@ -64,16 +64,30 @@ execute in infinite_parkour:editor as @a[distance=0..] at @s
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_dst"],Invisible:1b},item_name="Destination",item_model="lime_dye"]
 
 /detect
-  data modify storage infinite_parkour:temp blocks set value []
+  data modify storage infinite_parkour:calc jump.blocks set value []
+  scoreboard players set min_x math 63
+  scoreboard players set min_y math 63
+  scoreboard players set min_z math 63
+  scoreboard players set max_x math 0
+  scoreboard players set max_y math 0
+  scoreboard players set max_z math 0
   execute as @n[tag=ipe_canvas] at @s
     execute as @e[dx=64.0,dy=64.0,dz=64.0,tag=ipe_block]
       function infinite_parkour:editor/canvas/detect/get_pos
       function infinite_parkour:editor/canvas/detect/get_type
       function infinite_parkour:editor/canvas/detect/get_extra
-      data modify storage infinite_parkour:temp blocks append from storage infinite_parkour:temp temp
-      data remove storage infinite_parkour:temp temp
+      data modify storage infinite_parkour:calc jump.blocks append from storage infinite_parkour:calc temp
+      data remove storage infinite_parkour:calc temp
+  data modify storage infinite_parkour:calc jump.min_pos set value [0,0,0]
+  execute store result storage infinite_parkour:calc jump.min_pos[0] int 1 run scoreboard players get min_x math
+  execute store result storage infinite_parkour:calc jump.min_pos[1] int 1 run scoreboard players get min_y math
+  execute store result storage infinite_parkour:calc jump.min_pos[2] int 1 run scoreboard players get min_z math
+  data modify storage infinite_parkour:calc jump.max_pos set value [0,0,0]
+  execute store result storage infinite_parkour:calc jump.max_pos[0] int 1 run scoreboard players get max_x math
+  execute store result storage infinite_parkour:calc jump.max_pos[1] int 1 run scoreboard players get max_y math
+  execute store result storage infinite_parkour:calc jump.max_pos[2] int 1 run scoreboard players get max_z math
+  data remove storage infinite_parkour:calc temp
   /get_pos
-    data modify storage infinite_parkour:temp temp set value {pos:[0,0,0]}
     execute store result score x math run data get entity @s Pos[0]
     execute store result score y math run data get entity @s Pos[1]
     execute store result score z math run data get entity @s Pos[2]
@@ -83,60 +97,20 @@ execute in infinite_parkour:editor as @a[distance=0..] at @s
     scoreboard players operation x math -= 31 const
     scoreboard players operation y math -= 31 const
     scoreboard players operation z math -= 31 const
-    execute store result storage infinite_parkour:temp temp.pos[0] int 1 run scoreboard players get x math
-    execute store result storage infinite_parkour:temp temp.pos[1] int 1 run scoreboard players get y math
-    execute store result storage infinite_parkour:temp temp.pos[2] int 1 run scoreboard players get z math
+    execute if score x math < min_x math run scoreboard players operation min_x math = x math
+    execute if score y math < min_y math run scoreboard players operation min_y math = y math
+    execute if score z math < min_z math run scoreboard players operation min_z math = z math
+    execute if score x math > max_x math run scoreboard players operation max_x math = x math
+    execute if score y math > max_y math run scoreboard players operation max_y math = y math
+    execute if score z math > max_z math run scoreboard players operation max_z math = z math
+    data modify storage infinite_parkour:calc temp set value {pos:[0,0,0]}
+    execute store result storage infinite_parkour:calc temp.pos[0] int 1 run scoreboard players get x math
+    execute store result storage infinite_parkour:calc temp.pos[1] int 1 run scoreboard players get y math
+    execute store result storage infinite_parkour:calc temp.pos[2] int 1 run scoreboard players get z math
   /get_type
-    execute if entity @s[tag=ipe_block_platform] run data modify storage infinite_parkour:temp temp.type set value "platform"
-    execute if entity @s[tag=ipe_block_blocker] run data modify storage infinite_parkour:temp temp.type set value "blocker"
-    execute if entity @s[tag=ipe_block_pickup0] run data modify storage infinite_parkour:temp temp.type set value "pickup0"
-    execute if entity @s[tag=ipe_block_pickup1] run data modify storage infinite_parkour:temp temp.type set value "pickup1"
+    execute if entity @s[tag=ipe_block_platform] run data modify storage infinite_parkour:calc temp.type set value "platform"
+    execute if entity @s[tag=ipe_block_blocker] run data modify storage infinite_parkour:calc temp.type set value "blocker"
+    execute if entity @s[tag=ipe_block_pickup0] run data modify storage infinite_parkour:calc temp.type set value "pickup0"
+    execute if entity @s[tag=ipe_block_pickup1] run data modify storage infinite_parkour:calc temp.type set value "pickup1"
   /get_extra
-    execute if entity @s[tag=ipe_block_dst] run data modify storage infinite_parkour:temp temp.dst set value true
-
-/simulation
-  function infinite_parkour:editor/canvas/simulation/reset
-  data modify storage infinite_parkour:temp build set from storage infinite_parkour:temp blocks
-  execute align xyz positioned ~0.5 ~0.5 ~0.5 run function infinite_parkour:editor/canvas/simulation/rec
-
-  /rec
-    execute unless data storage infinite_parkour:temp build[0] run return 0
-    execute store result score x math run data get storage infinite_parkour:temp build[0].pos[0] 16
-    execute store result score y math run data get storage infinite_parkour:temp build[0].pos[1] 16
-    execute store result score z math run data get storage infinite_parkour:temp build[0].pos[2] 16
-    scoreboard players set size math 16
-    data modify storage infinite_parkour:temp build[0].current set value 1b
-    execute if data storage infinite_parkour:temp build[{current:1b,type:"platform"}] run data modify storage infinite_parkour:temp block_state set value "stone"
-    execute if data storage infinite_parkour:temp build[{current:1b,type:"blocker"}] run data modify storage infinite_parkour:temp block_state set value "tuff"
-    execute if data storage infinite_parkour:temp build[{current:1b,type:"pickup0"}]
-      data modify storage infinite_parkour:temp block_state set value "gold_block"
-      scoreboard players set size math 6
-      scoreboard players add x math 5
-      scoreboard players add y math 5
-      scoreboard players add z math 5
-    execute if data storage infinite_parkour:temp build[{current:1b,type:"pickup1"}]
-      data modify storage infinite_parkour:temp block_state set value "emerald_block"
-      scoreboard players set size math 6
-      scoreboard players add x math 5
-      scoreboard players add y math 5
-      scoreboard players add z math 5
-    data modify storage infinite_parkour:temp pos set value [0d,0d,0d]
-    # minimum scale: 0.0009765625
-    execute store result storage infinite_parkour:temp pos[0] double 0.00390625 run scoreboard players get x math
-    execute store result storage infinite_parkour:temp pos[1] double 0.00390625 run scoreboard players get y math
-    execute store result storage infinite_parkour:temp pos[2] double 0.00390625 run scoreboard players get z math
-    execute store result storage infinite_parkour:temp scale float 0.00390625 run scoreboard players get size math
-    execute summon block_display
-      tag @s add ipe_simulation
-      data modify storage infinite_parkour:temp transformation set from entity @s transformation
-
-      data modify storage infinite_parkour:temp transformation.scale[0] set from storage infinite_parkour:temp scale
-      data modify storage infinite_parkour:temp transformation.scale[1] set from storage infinite_parkour:temp scale
-      data modify storage infinite_parkour:temp transformation.scale[2] set from storage infinite_parkour:temp scale
-      data modify storage infinite_parkour:temp transformation.translation set from storage infinite_parkour:temp pos
-      data modify entity @s transformation set from storage infinite_parkour:temp transformation
-      data modify entity @s block_state.Name set from storage infinite_parkour:temp block_state
-    data remove storage infinite_parkour:temp build[0]
-    function infinite_parkour:editor/canvas/simulation/rec
-  /reset
-    kill @e[tag=ipe_simulation]
+    execute if entity @s[tag=ipe_block_dst] run data modify storage infinite_parkour:calc temp.dst set value true
