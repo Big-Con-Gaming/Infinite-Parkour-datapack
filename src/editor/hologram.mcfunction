@@ -5,14 +5,21 @@
   function infinite_parkour:editor/hologram/get_dimensions
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
+  function infinite_parkour:editor/hologram/add_block_states
+
   execute align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:20,Tags:["ipe_hologram"]}
   execute align xyz positioned ~0.5 ~0.5 ~0.5 run function infinite_parkour:editor/hologram/rec
 
   data remove storage infinite_parkour:calc build
   data remove storage infinite_parkour:calc transformation
-  data remove storage infinite_parkour:calc block_state
 
   function infinite_parkour:editor/hologram/clean_score
+
+/add_block_states
+  data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {block_state:{Name:"stone"}}
+  data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {block_state:{Name:"tuff"}}
+  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {block_state:{Name:"gold_block"},small:true}
+  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {block_state:{Name:"emerald_block"},small:true}
 
 /get_dimensions
   execute store result score min_x math run data get storage infinite_parkour:calc jump.min_pos[0]
@@ -58,21 +65,12 @@
 
 /rec
   execute unless data storage infinite_parkour:calc build[0] run return 0
+  execute unless data storage infinite_parkour:calc build[0].pos run return 0
   execute store result score x math run data get storage infinite_parkour:calc build[0].pos[0] 16000
   execute store result score y math run data get storage infinite_parkour:calc build[0].pos[1] 16000
   execute store result score z math run data get storage infinite_parkour:calc build[0].pos[2] 16000
   scoreboard players set size math 16000
-  data modify storage infinite_parkour:calc build[0].current set value 1b
-  execute if data storage infinite_parkour:calc build[{current:1b,type:"platform"}] run data modify storage infinite_parkour:calc block_state set value "stone"
-  execute if data storage infinite_parkour:calc build[{current:1b,type:"blocker"}] run data modify storage infinite_parkour:calc block_state set value "tuff"
-  execute if data storage infinite_parkour:calc build[{current:1b,type:"pickup0"}]
-    data modify storage infinite_parkour:calc block_state set value "gold_block"
-    scoreboard players set size math 6000
-    scoreboard players add x math 5000
-    scoreboard players add y math 5000
-    scoreboard players add z math 5000
-  execute if data storage infinite_parkour:calc build[{current:1b,type:"pickup1"}]
-    data modify storage infinite_parkour:calc block_state set value "emerald_block"
+  execute if data storage infinite_parkour:calc build[0].small
     scoreboard players set size math 6000
     scoreboard players add x math 5000
     scoreboard players add y math 5000
@@ -94,7 +92,7 @@
     execute store result storage infinite_parkour:calc transformation.scale[1] float 0.0000625 run scoreboard players get size math
     execute store result storage infinite_parkour:calc transformation.scale[2] float 0.0000625 run scoreboard players get size math
     data modify entity @s transformation set from storage infinite_parkour:calc transformation
-    data modify entity @s block_state.Name set from storage infinite_parkour:calc block_state
+    data modify entity @s block_state set from storage infinite_parkour:calc build[0].block_state
     ride @s mount @n[type=block_display,tag=ipe_hologram,distance=..0.1]
   data remove storage infinite_parkour:calc build[0]
   function infinite_parkour:editor/hologram/rec
