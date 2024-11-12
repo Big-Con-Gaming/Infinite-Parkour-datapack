@@ -29,7 +29,11 @@
     scoreboard players reset #counter ipe_index
     # page controls
     summon text_display ~31.5 34.0 ~-17.9 {text:'"Page"',Tags:["ipe_page_ctrl"]}
-    summon text_display ~31.5 33.5 ~-17.9 {text:'"3"',Tags:["ipe_page_ctrl","ipe_page_num"]}
+    execute positioned ~31.5 33.5 ~-17.9 summon text_display
+      data merge entity @s {text:'"0"'}
+      tag @s add ipe_page_ctrl
+      tag @s add ipe_page_num
+      scoreboard players set @s ipe_index 0
     summon text_display ~31.0 33.5 ~-17.9 {text:'"\\u2190"',Tags:["ipe_page_ctrl"]}
     summon text_display ~32.0 33.5 ~-17.9 {text:'"\\u2192"',Tags:["ipe_page_ctrl"]}
     summon interaction ~31.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe_page_ctrl","ipe_page_prev"]}
@@ -70,7 +74,7 @@
       execute if entity @s[tag=ipe_page_prev] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=1..}] at @s
         scoreboard players remove @s ipe_index 1
         function infinite_parkour:editor/environment/update_page
-      execute if entity @s[tag=ipe_page_next] as @n[type=text_display,tag=ipe_page_num,distance=..1] at @s
+      execute if entity @s[tag=ipe_page_next] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=..6}] at @s
         scoreboard players add @s ipe_index 1
         function infinite_parkour:editor/environment/update_page
       execute if entity @s[tag=ipe_hologram_interact]
