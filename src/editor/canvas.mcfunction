@@ -106,6 +106,9 @@
     function infinite_parkour:editor/canvas/save/get_extra
     data modify storage infinite_parkour:calc jump.blocks append from storage infinite_parkour:calc temp
     data remove storage infinite_parkour:calc temp
+  data remove storage infinite_parkour:calc temp
+  execute unless data storage infinite_parkour:calc jump.blocks[0] run data modify storage infinite_parkour:calc jump set value {}
+  execute unless data storage infinite_parkour:calc jump.blocks[0] run return 0
   data modify storage infinite_parkour:calc jump.min_pos set value [0,0,0]
   execute store result storage infinite_parkour:calc jump.min_pos[0] int 1 run scoreboard players get min_x math
   execute store result storage infinite_parkour:calc jump.min_pos[1] int 1 run scoreboard players get min_y math
@@ -114,7 +117,6 @@
   execute store result storage infinite_parkour:calc jump.max_pos[0] int 1 run scoreboard players get max_x math
   execute store result storage infinite_parkour:calc jump.max_pos[1] int 1 run scoreboard players get max_y math
   execute store result storage infinite_parkour:calc jump.max_pos[2] int 1 run scoreboard players get max_z math
-  data remove storage infinite_parkour:calc temp
   /get_pos
     execute store result score x math run data get entity @s Pos[0]
     execute store result score y math run data get entity @s Pos[1]
