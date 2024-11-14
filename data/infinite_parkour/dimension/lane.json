@@ -1,0 +1,15 @@
+{
+  "type": "infinite_parkour:lane",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "infinite_parkour:light_blue",
+      "lakes": false,
+      "features": false,
+      "layers": [
+        { "block": "minecraft:air", "height": 1 }
+      ],
+      "structure_overrides": []
+    }
+  }
+}

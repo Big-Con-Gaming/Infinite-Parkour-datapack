@@ -8,6 +8,7 @@ scoreboard objectives add BlockDifficulty dummy {"text":"Sets your personal jump
 scoreboard objectives add math dummy {"text":"General math calculations"}
 scoreboard objectives add const dummy {"text":"Constant values"}
 scoreboard objectives add ipe_index dummy {"text":"Index"}
+scoreboard objectives add ip_data dummy {"text":"Data"}
 scoreboard objectives setdisplay sidebar.team.yellow Blocks
 scoreboard objectives setdisplay sidebar.team.gold HighScore
 
