@@ -9,6 +9,8 @@ scoreboard objectives add math dummy {"text":"General math calculations"}
 scoreboard objectives add const dummy {"text":"Constant values"}
 scoreboard objectives add ipe_index dummy {"text":"Index"}
 scoreboard objectives add ip_data dummy {"text":"Data"}
+scoreboard objectives add ip_last_online dummy {"text":"Last Online"}
+scoreboard objectives add ip_lane dummy {"text":"Lane"}
 scoreboard objectives setdisplay sidebar.team.yellow Blocks
 scoreboard objectives setdisplay sidebar.team.gold HighScore
 
@@ -19,6 +21,7 @@ scoreboard players set 5 const 5
 scoreboard players set 31 const 31
 scoreboard players set 100 const 100
 scoreboard players set 128 const 128
+scoreboard players set 1024 const 1024
 scoreboard players set 8000 const 8000
 
 gamerule commandModificationBlockLimit 999999999

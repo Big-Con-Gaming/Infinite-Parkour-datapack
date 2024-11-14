@@ -36,5 +36,7 @@
   kill @e[tag=ip_enter_freeplay]
 
 /teleport_in
+  execute in infinite_parkour:infinite_parkour run function infinite_parkour:tick_portal/teleport_in
   function infinite_parkour:lane/alloc
   execute at @s
+    tag @n[type=marker,tag=ip_lane_entry,distance=..0.1] add ip_freeplay_entry
