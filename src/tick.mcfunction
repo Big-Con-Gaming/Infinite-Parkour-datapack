@@ -32,3 +32,14 @@ execute in infinite_parkour:infinite_parkour run team join Highscore @a[x=0,y=10
 execute in infinite_parkour:infinite_parkour run function infinite_parkour:line
 execute as @a[team=ParkourPlayers] run title @s actionbar {"color":"#98a3dd","extra":["[",{"score":{"name":"@s","objective":"Blocks"}},"]"],"text":""}
 execute as @a[team=Highscore] run title @s actionbar [{"color":"#98a3dd","bold":true,"extra":["SCORE ",{"score":{"name":"@s","objective":"Blocks"}}],"text":""}, "    ", {"color":"#b5bad6","bold":true,"extra":["RECORD ",{"score":{"name":"@s","objective":"HighScore"}}],"text":""}]
+
+# detecting players that just logged in
+execute store result score #current_time ip_last_online run time query gametime
+scoreboard players operation #last_time ip_last_online = #current_time ip_last_online
+scoreboard players remove #last_time ip_last_online 1
+execute as @a unless score @s ip_last_online = #last_time ip_last_online
+  tellraw @s "welcome!"
+  execute if dimension infinite_parkour:lane in infinite_parkour:infinite_parkour run function infinite_parkour:tick_portal/teleport_out
+  scoreboard players reset @s ip_lane
+scoreboard players operation @a ip_last_online = #current_time ip_last_online
+scoreboard players reset #current_time ip_last_online
