@@ -1,45 +1,46 @@
-execute as @a at @s if dimension infinite_parkour:editor
-  return 0
 
-execute in infinite_parkour:editor as @e[type=marker,tag=ipe_env,distance=0..] at @s positioned ~31 31 ~31
-  execute if block ~ ~ ~ air
-    setblock ~ ~-1 ~ bedrock
-    execute unless entity @n[type=text_display,distance=..1] run summon text_display ~0.5 ~0.5 ~0.5 {text:'"Place starting block"',billboard:"center"}
-  execute unless block ~ ~ ~ air
-    execute if block ~ ~-1 ~ bedrock run setblock ~ ~-1 ~ air
-    kill @n[type=text_display,distance=..1]
-
-execute in infinite_parkour:editor as @a[distance=0..] at @s
-  # destroy removed blocks
-  execute as @e[type=block_display,tag=ipe_block,distance=..16] at @s if block ~ ~ ~ air run kill @s
-  # place new blocks
-  execute as @e[type=item_frame,tag=ipe_place,distance=..16] at @s
-    execute if entity @s[tag=ipe_dye] positioned ^ ^ ^-0.5 align xyz
-      tag @n[type=block_display,tag=ipe_block,distance=..0.1] remove ipe_block_dst
-      execute if entity @s[tag=ipe_place_clear] as @n[type=block_display,tag=ipe_block,distance=..0.1]
-        team leave @s
-      execute if entity @s[tag=ipe_place_dst] as @n[type=block_display,tag=ipe_block,distance=..0.1]
-        tag @s add ipe_block_dst
-        team join infpar_green @s
-    execute unless entity @s[tag=ipe_dye] positioned ^ ^ ^0.5 align xyz
-      setblock ~ ~ ~ air
-      kill @n[type=block_display,tag=ipe_block,distance=..0.1]
-      execute if entity @s[tag=ipe_place_platform]
-        setblock ~ ~ ~ barrier
-        summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_platform","ipe_needs_block"],block_state:{Name:"stone"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
-      execute if entity @s[tag=ipe_place_blocker]
-        setblock ~ ~ ~ barrier
-        summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_blocker","ipe_needs_block"],block_state:{Name:"tuff"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
-      execute if entity @s[tag=ipe_place_pickup0]
-        setblock ~ ~ ~ structure_void
-        summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_pickup0","ipe_needs_block"],block_state:{Name:"gold_block"},Glowing:1b,transformation:{translation:[0.3125f,0.3125f,0.3125f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[0.375f,0.375f,0.375f]}}
-      execute if entity @s[tag=ipe_place_pickup1]
-        setblock ~ ~ ~ structure_void
-        summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_pickup1","ipe_needs_block"],block_state:{Name:"emerald_block"},Glowing:1b,transformation:{translation:[0.3125f,0.3125f,0.3125f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[0.375f,0.375f,0.375f]}}
-      execute if entity @s[tag=ipe_load_dst] as @n[type=block_display,tag=ipe_block,distance=..0.1]
-        tag @s add ipe_block_dst
-        team join infpar_green @s
-    kill @s
+/tick
+  execute in infinite_parkour:editor as @e[type=marker,tag=ipe_env,distance=0..] at @s
+    # first block
+    execute positioned ~31 31 ~31
+      execute if block ~ ~ ~ air
+        setblock ~ ~-1 ~ bedrock
+        execute unless entity @n[type=text_display,distance=..1] run summon text_display ~0.5 ~0.5 ~0.5 {text:'"Place starting block"',billboard:"center"}
+      execute unless block ~ ~ ~ air
+        execute if block ~ ~-1 ~ bedrock run setblock ~ ~-1 ~ air
+        kill @n[type=text_display,distance=..1]
+    # place new blocks
+    execute as @e[type=item_frame,dx=64.0,dy=64.0,dz=64.0,tag=ipe_place] at @s
+      execute if entity @s[tag=ipe_dye] positioned ^ ^ ^-0.5 align xyz
+        tag @n[type=block_display,tag=ipe_block,distance=..0.1] remove ipe_block_dst
+        execute if entity @s[tag=ipe_place_clear] as @n[type=block_display,tag=ipe_block,distance=..0.1]
+          team leave @s
+        execute if entity @s[tag=ipe_place_dst] as @n[type=block_display,tag=ipe_block,distance=..0.1]
+          tag @s add ipe_block_dst
+          team join infpar_green @s
+      execute unless entity @s[tag=ipe_dye] positioned ^ ^ ^0.5 align xyz
+        setblock ~ ~ ~ air
+        kill @n[type=block_display,tag=ipe_block,distance=..0.1]
+        execute if entity @s[tag=ipe_place_platform]
+          setblock ~ ~ ~ barrier
+          summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_platform","ipe_needs_block"],block_state:{Name:"stone"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
+        execute if entity @s[tag=ipe_place_blocker]
+          setblock ~ ~ ~ barrier
+          summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_blocker","ipe_needs_block"],block_state:{Name:"tuff"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
+        execute if entity @s[tag=ipe_place_pickup0]
+          setblock ~ ~ ~ structure_void
+          summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_pickup0","ipe_needs_block"],block_state:{Name:"gold_block"},Glowing:1b,transformation:{translation:[0.3125f,0.3125f,0.3125f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[0.375f,0.375f,0.375f]}}
+        execute if entity @s[tag=ipe_place_pickup1]
+          setblock ~ ~ ~ structure_void
+          summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_pickup1","ipe_needs_block"],block_state:{Name:"emerald_block"},Glowing:1b,transformation:{translation:[0.3125f,0.3125f,0.3125f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[0.375f,0.375f,0.375f]}}
+        execute if entity @s[tag=ipe_load_dst] as @n[type=block_display,tag=ipe_block,distance=..0.1]
+          tag @s add ipe_block_dst
+          team join infpar_green @s
+      kill @s
+  
+  execute in infinite_parkour:editor as @a[distance=0..] at @s
+    # destroy removed blocks
+    execute as @e[type=block_display,tag=ipe_block,distance=..16] at @s if block ~ ~ ~ air run kill @s
 
 /items
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_place_platform"],Invisible:1b},item_name="Destination",item_model="stone"]
@@ -49,7 +50,14 @@ execute in infinite_parkour:editor as @a[distance=0..] at @s
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_clear"],Invisible:1b},item_name="Destination",item_model="white_dye"]
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_dst"],Invisible:1b},item_name="Destination",item_model="lime_dye"]
 
+/clear
+  execute as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] at @s
+    setblock ~ ~ ~ air
+    kill @s
+
 /load
+  function infinite_parkour:editor/canvas/clear
+
   execute store result score dx math run data get entity @s Pos[0]
   execute store result score dy math run data get entity @s Pos[1]
   execute store result score dz math run data get entity @s Pos[2]
@@ -92,13 +100,12 @@ execute in infinite_parkour:editor as @a[distance=0..] at @s
   scoreboard players set max_x math 0
   scoreboard players set max_y math 0
   scoreboard players set max_z math 0
-  execute as @n[tag=ipe_env] at @s
-    execute as @e[dx=64.0,dy=64.0,dz=64.0,tag=ipe_block]
-      function infinite_parkour:editor/canvas/save/get_pos
-      function infinite_parkour:editor/canvas/save/get_type
-      function infinite_parkour:editor/canvas/save/get_extra
-      data modify storage infinite_parkour:calc jump.blocks append from storage infinite_parkour:calc temp
-      data remove storage infinite_parkour:calc temp
+  execute as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block]
+    function infinite_parkour:editor/canvas/save/get_pos
+    function infinite_parkour:editor/canvas/save/get_type
+    function infinite_parkour:editor/canvas/save/get_extra
+    data modify storage infinite_parkour:calc jump.blocks append from storage infinite_parkour:calc temp
+    data remove storage infinite_parkour:calc temp
   data modify storage infinite_parkour:calc jump.min_pos set value [0,0,0]
   execute store result storage infinite_parkour:calc jump.min_pos[0] int 1 run scoreboard players get min_x math
   execute store result storage infinite_parkour:calc jump.min_pos[1] int 1 run scoreboard players get min_y math

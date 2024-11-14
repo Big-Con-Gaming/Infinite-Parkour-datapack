@@ -41,8 +41,6 @@
 
 /tick
   execute in infinite_parkour:editor as @a[distance=0..] at @s
-    execute as @n[type=block_display,tag=ipe_hologram_loading,distance=..16] at @s run function infinite_parkour:editor/environment/load_hologram
-
     execute as @e[type=interaction,distance=..10] at @s
       execute unless data entity @s interaction unless data entity @s attack run return 0
 
@@ -52,19 +50,10 @@
       execute if entity @s[tag=ipe_page_next] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=..6}] at @s
         scoreboard players add @s ipe_index 1
         function infinite_parkour:editor/environment/update_page
-      execute if entity @s[tag=ipe_hologram_interact]
-        execute store result storage infinite_parkour:macro data.index int 1 run scoreboard players get @s ipe_index
-        execute as @n[type=text_display,tag=ipe_page_num,distance=..17] run scoreboard players operation page math = @s ipe_index
-        execute store result storage infinite_parkour:macro data.page int 1 run scoreboard players get page math
-        execute
-          $say $(page) $(index)
-        + with storage infinite_parkour:macro data
-        scoreboard players reset page math
-        data remove storage infinite_parkour:macro data
+      execute if entity @s[tag=ipe_hologram_interact] run function infinite_parkour:editor/hologram/interact
       
       data remove entity @s interaction
       data remove entity @s attack
-      data remove entity @s interaction
 /update_page
   execute store result storage infinite_parkour:macro data.page int 1 run scoreboard players get @s ipe_index
   function infinite_parkour:editor/environment/update_page/macro with storage infinite_parkour:macro data
@@ -72,9 +61,6 @@
   execute positioned ~-10 33 -17 align xyz run function infinite_parkour:editor/hologram/unload_all
   /macro
     $data merge entity @s {text:'"$(page)"'}
-/load_hologram
-  setblock ~ ~ ~ glass
-  tag @s remove ipe_hologram_loading
 
 /test
   kill @e[tag=ipe_hologram_interact]
@@ -82,3 +68,4 @@
   function infinite_parkour:editor/hologram/delete_all
   function infinite_parkour:editor/environment/delete
   execute positioned 0 0 0 run function infinite_parkour:editor/environment/create
+  data merge entity @n[tag=ipe_env] {data:{jumppack_id:"my_jumppack"}}

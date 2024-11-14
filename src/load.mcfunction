@@ -14,6 +14,7 @@ scoreboard objectives setdisplay sidebar.team.gold HighScore
 scoreboard players set -1 const -1
 scoreboard players set 1 const 1
 scoreboard players set 2 const 2
+scoreboard players set 5 const 5
 scoreboard players set 31 const 31
 scoreboard players set 100 const 100
 scoreboard players set 128 const 128

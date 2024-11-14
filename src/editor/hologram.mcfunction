@@ -1,5 +1,6 @@
 /tick
   execute in infinite_parkour:editor as @e[type=block_display,tag=ipe_hologram,distance=0..] at @s run tp @s ~ ~ ~ ~2 ~
+  execute in infinite_parkour:editor as @a[distance=0..] at @s as @n[type=block_display,tag=ipe_hologram_loading,distance=..16] at @s run function infinite_parkour:editor/hologram/load
 
 /create_grid
   scoreboard players set #counter ipe_index 0
@@ -39,19 +40,60 @@
   setblock ~ ~ ~ orange_stained_glass
   tag @s add ipe_hologram_loading
 
-/create_old
+/load
+  tag @s remove ipe_hologram_loading
+  
+  function infinite_parkour:editor/hologram/prepare_macro
+  function infinite_parkour:jumppack/get_jump with storage infinite_parkour:macro data
+  data remove storage infinite_parkour:macro data
+
+  execute unless data storage infinite_parkour:calc jump.blocks
+    setblock ~ ~ ~ black_stained_glass
+    data remove storage infinite_parkour:calc jump
+  execute unless data storage infinite_parkour:calc jump run return 0
+    
+  
   function infinite_parkour:editor/hologram/get_dimensions
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
   function infinite_parkour:editor/hologram/add_block_states
 
-  execute align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:20,Tags:["ipe_hologram"]}
-  execute align xyz positioned ~0.5 ~0.5 ~0.5 run function infinite_parkour:editor/hologram/rec
+  function infinite_parkour:editor/hologram/rec
 
   data remove storage infinite_parkour:calc build
   data remove storage infinite_parkour:calc transformation
+  data remove storage infinite_parkour:calc jump
 
   function infinite_parkour:editor/hologram/clean_score
+
+  setblock ~ ~ ~ glass
+
+/interact
+  function infinite_parkour:editor/hologram/prepare_macro
+  
+  execute if data entity @s interaction
+    execute positioned ~-31.5 0 ~17.9 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/save
+    function infinite_parkour:jumppack/set_jump with storage infinite_parkour:macro data
+    execute positioned ~ ~0.55 ~ as @n[type=block_display,tag=ipe_hologram,distance=..0.1] at @s run function infinite_parkour:editor/hologram/unload
+  execute if data entity @s attack
+    function infinite_parkour:jumppack/get_jump with storage infinite_parkour:macro data
+    execute positioned ~-31.5 0 ~17.9 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/load
+  data remove storage infinite_parkour:calc jump
+  data remove storage infinite_parkour:macro data
+
+/prepare_macro
+  execute positioned ~-31.5 0 ~17.9 as @n[type=marker,tag=ipe_env,distance=..17] run data modify storage infinite_parkour:macro data.jumppack_id set from entity @s data.jumppack_id
+  execute as @n[type=text_display,tag=ipe_page_num,distance=..17] run scoreboard players operation #page math = @s ipe_index
+  scoreboard players operation #row math = @s ipe_index
+  scoreboard players operation #row math /= 5 const
+  scoreboard players operation #col math = @s ipe_index
+  scoreboard players operation #col math %= 5 const
+  execute store result storage infinite_parkour:macro data.page int 1 run scoreboard players get #page math
+  execute store result storage infinite_parkour:macro data.row int 1 run scoreboard players get #row math
+  execute store result storage infinite_parkour:macro data.col int 1 run scoreboard players get #col math
+  scoreboard players reset #page math
+  scoreboard players reset #row math
+  scoreboard players reset #col math
 
 /add_block_states
   data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {block_state:{Name:"stone"}}
