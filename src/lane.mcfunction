@@ -47,12 +47,9 @@
       scoreboard players operation #test ip_lane /= 1024 const
       execute unless score @s ip_lane = #test ip_lane run function infinite_parkour:lane/exit
       scoreboard players reset #test ip_lane
-      execute positioned 1024 0 ~-512 run tag @n[type=marker,tag=ip_lane_entry,dx=1024] remove ip_lane_remove
+      execute positioned ~-512 -0.5 -0.5 run tag @n[type=marker,tag=ip_lane_entry,dx=1024,dy=1,dz=1] remove ip_lane_remove
   execute in infinite_parkour:lane as @e[type=marker,tag=ip_lane_remove,distance=0..] at @s run function infinite_parkour:lane/free
 
 /exit
   scoreboard players reset @s ip_lane
   execute in infinite_parkour:infinite_parkour run function infinite_parkour:tick_portal/teleport_out
-
-# TODO automatically free lanes with no players
-# TODO automatically teleport players if they aren't in a matching lane
