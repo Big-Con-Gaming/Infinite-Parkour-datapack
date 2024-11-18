@@ -23,6 +23,8 @@
   data remove storage infinite_parkour:macro data
 
 /flying_tick
+  execute unless entity @s[gamemode=survival] unless entity @s[gamemode=adventure] run function infinite_parkour:flight/stop_flying
+  execute unless entity @s[gamemode=survival] unless entity @s[gamemode=adventure] run return 0
   function infinite_parkour:flight/ensure_mounted
 
   execute on vehicle
@@ -41,6 +43,7 @@
   scoreboard players reset #start_flying math
 
 /start_flying
+  execute unless entity @s[gamemode=survival] unless entity @s[gamemode=adventure] run return 0
   tag @s add ipe_flying
   data modify storage infinite_parkour:calc player_id set from entity @s UUID
   summon horse ~ ~ ~ {Tags:["ipe_new_flight"],NoAI:1b,NoGravity:1b,Invulnerable:1b,Silent:1b,Tame:1b,SaddleItem:{id:"saddle",count:1}}
