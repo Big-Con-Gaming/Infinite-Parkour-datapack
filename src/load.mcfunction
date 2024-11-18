@@ -11,6 +11,7 @@ scoreboard objectives add ipe_index dummy {"text":"Index"}
 scoreboard objectives add ip_data dummy {"text":"Data"}
 scoreboard objectives add ip_last_online dummy {"text":"Last Online"}
 scoreboard objectives add ip_lane dummy {"text":"Lane"}
+scoreboard objectives add ip_flight_cooldown dummy {"text":"Flight Cooldown"}
 scoreboard objectives setdisplay sidebar.team.yellow Blocks
 scoreboard objectives setdisplay sidebar.team.gold HighScore
 

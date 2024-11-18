@@ -25,6 +25,7 @@ function infinite_parkour:clean/data
   scoreboard objectives remove ip_data
   scoreboard objectives remove ip_last_online
   scoreboard objectives remove ip_lane
+  scoreboard objectives remove ip_flight_cooldown
 /team
   #This deletes all teams defined in infinite_parkour:load
   team remove Highscore
