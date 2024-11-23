@@ -72,3 +72,25 @@
     function infinite_parkour:editor/environment/create
     data merge entity @n[type=marker,tag=ipe_env,distance=..0.1] {data:{jumppack_id:"my_jumppack"}}
     tp @s ~31.5 32.0 -4.5 0 0
+
+/export
+  # tag @s add ipe_request_export
+
+  # data modify storage infinite_parkour:calc str set value ""
+  execute
+    # data modify storage infinite_parkour:macro data2.clickEvent.action set value 'copy_to_clipboard'
+    # $data modify storage infinite_parkour:macro data2.clickEvent.value set value '$(jumppack)'
+    $data modify storage infinite_parkour:jumppack str set value '$(jumppack)'
+  + with storage jumppack:my_jumppack
+  setblock ~ ~ ~ command_block[facing=up]{auto:1b,Command:"data get storage infinite_parkour:jumppack str"}
+  setblock ~ ~1 ~ chain_command_block[facing=up]{auto:1b,Command:"function infinite_parkour:editor/environment/export/finish"}
+  # execute
+  #   $say $(clickEvent)
+  #   # $tellraw @s {"text":"Click to copy","clickEvent":$(clickEvent),"hoverEvent":{"action":"show_text","contents":[{"text":"Click to Copy","color":"yellow"}]}}
+  #   # $tellraw @s {"text":"Click to copy","clickEvent":{"action":"copy_to_clipboard","value":"$(str)"},"hoverEvent":{"action":"show_text","contents":[{"text":"Click to Copy","color":"yellow"}]}}
+  # + with storage infinite_parkour:macro data2
+  # data remove storage infinite_parkour:macro data2
+  # $say $(jumppack)
+  /finish
+    data remove storage infinite_parkour:jumppack str
+    setblock ~ ~ ~ air
