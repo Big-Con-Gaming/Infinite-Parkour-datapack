@@ -2,6 +2,8 @@
 # executed every tick
 /tick
   execute in infinite_parkour:editor as @e[type=marker,tag=ipe_env,distance=0..] at @s
+    # teleport people that fell
+    execute positioned ~ ~-1 ~ run tp @a[dx=64,dz=64,dy=0.01] ~31.5 32.0 -0.5
     # first block
     execute positioned ~31.5 31.5 0.5
       execute if block ~ ~ ~ air
