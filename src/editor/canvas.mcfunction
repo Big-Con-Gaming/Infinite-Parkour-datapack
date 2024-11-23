@@ -6,7 +6,7 @@
     execute positioned ~31.5 31.5 0.5
       execute if block ~ ~ ~ air
         setblock ~ ~-1 ~ bedrock
-        execute unless entity @n[type=text_display,distance=..0.1] run summon text_display ~ ~ ~ {text:'"Place starting block"',billboard:"center"}
+        execute unless entity @n[type=text_display,distance=..0.1] run summon text_display ~ ~ ~ {text:'"Place starting block"',billboard:"center",Tags:["ipe"]}
       execute unless block ~ ~ ~ air
         execute if block ~ ~-1 ~ bedrock run setblock ~ ~-1 ~ air
         kill @n[type=text_display,distance=..1]
