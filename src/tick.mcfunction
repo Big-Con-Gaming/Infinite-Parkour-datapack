@@ -1,4 +1,5 @@
-# This is under the tick tag, so it will run every tick that the pack is loaded. This one function is really unorganized, so I'll go line by line.
+# this is a general tick function, I think things here should be more organized in the different places they fit
+
 #Below is the detection to see whenever a player walks up to begin the game. This works by checking position based on relative coordinates from the marker placed in the middle of the lobby. This could change now to exact cords since I place the lobby at 0 0 in the dimension, but if we plan on moving lobbies around I'll want to keep this.
 #Runs pressure_plate_triggered whenever a player is in the right zone, and no player is in front of them for 50 blocks.
 execute as @e[type=marker,tag=ParkourLobby] at @s positioned ~-25 ~-10 ~9 unless entity @a[dx=50,dy=20,dz=53,team=ParkourPlayers] positioned ~23 ~11 ~ as @a[dx=5,dy=3,dz=3] run function infinite_parkour:pressure_plate_triggered

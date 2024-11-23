@@ -1,4 +1,3 @@
-
 #Below we have the diamond detection script that makes sure it is on fire and surrounded by gold blocks on all sides before summoning in the teleportation structure with generate-tp-struct.mcfunction
 execute as @e[type=item,nbt={Item:{id:"minecraft:diamond"}}] unless entity @s[nbt={Fire:-1s}] at @s align xyz positioned ~0.5 ~ ~0.5 if block ~1 ~ ~ minecraft:gold_block if block ~ ~ ~1 minecraft:gold_block if block ~-1 ~ ~ minecraft:gold_block if block ~ ~ ~-1 minecraft:gold_block if block ~1 ~ ~1 minecraft:gold_block if block ~-1 ~ ~1 minecraft:gold_block if block ~1 ~ ~-1 minecraft:gold_block if block ~-1 ~ ~-1 minecraft:gold_block
   #This command places the interaction entity and the text display needed for teleporting the player into the lobby. It also checks if the lobby has been created, and if not, does so. This could be moved into load.mcfunction.

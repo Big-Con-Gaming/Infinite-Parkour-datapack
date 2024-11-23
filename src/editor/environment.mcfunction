@@ -1,3 +1,4 @@
+# creates a new editor environment at ~ 0 ~
 /create
   execute align xyz
     summon marker ~ ~ ~ {Tags:["ipe_env"]}
@@ -31,14 +32,15 @@
     summon text_display ~32.0 33.5 ~-17.9 {text:'"\\u2192"',Tags:["ipe_page_ctrl"]}
     summon interaction ~31.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe_page_ctrl","ipe_page_prev"]}
     summon interaction ~32.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe_page_ctrl","ipe_page_next"]}
+# deletes this environment (should be called on a marker with the tag 'ipe_env')
 /delete
-  execute as @n[type=marker,tag=ipe_env] at @s
-    fill ~-1 -1 ~-1 ~64 -1 ~64 light_gray_concrete
-    fill ~-1 0 ~-1 ~64 64 ~64 air
-    kill @s
-    execute positioned ~31 31 ~31 run kill @n[type=text_display,distance=..1]
-    fill ~19 31 ~-19 ~43 40 ~-2 air
+  fill ~-1 -1 ~-1 ~64 -1 ~64 light_gray_concrete
+  fill ~-1 0 ~-1 ~64 64 ~64 air
+  execute positioned ~31 31 ~31 run kill @n[type=text_display,distance=..1]
+  fill ~19 31 ~-19 ~43 40 ~-2 air
+  kill @s
 
+# executed every tick
 /tick
   execute in infinite_parkour:editor as @a[distance=0..] at @s
     execute as @e[type=interaction,distance=..10] at @s
@@ -62,10 +64,11 @@
   /macro
     $data merge entity @s {text:'"$(page)"'}
 
+# deletes and creates a new environment
 /test
   kill @e[tag=ipe_hologram_interact]
   kill @e[tag=ipe_page_ctrl]
   function infinite_parkour:editor/hologram/delete_all
-  function infinite_parkour:editor/environment/delete
+  execute as @n[type=marker,tag=ipe_env] at @s run function infinite_parkour:editor/environment/delete
   execute positioned 0 0 0 run function infinite_parkour:editor/environment/create
   data merge entity @n[tag=ipe_env] {data:{jumppack_id:"my_jumppack"}}

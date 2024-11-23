@@ -1,3 +1,4 @@
+# this file is used for accessing jumppacks with macros
 /fetch
   $data modify storage infinite_parkour:jumppack jumppack set from storage jumppack:$(jumppack_id) jumppack
 /store

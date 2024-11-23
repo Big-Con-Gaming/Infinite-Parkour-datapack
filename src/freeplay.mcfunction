@@ -1,3 +1,5 @@
+# this file is an incomplete rewrite of other files
+# the attempt is to use lane.mcfunction and jumppack.mcfuncton
 
 /tick
   function infinite_parkour:freeplay/teleporter_tick

@@ -1,3 +1,9 @@
+# this file is responsible for:
+# - portal click detection
+# - storing player data and retrieving it when they are out.
+# TODO, should probably move out the storing and retrieving part.
+# TODO, should probably adapt portal click detection to work with the new gamemodes, like in freeplay.mcfunction
+
 #This runs every tick due to tick.json
 #These just detect whenever the player is left or right clicking an interaction entity. it runs a command on the player based on attack or target, then removes the nbt from the interaction entity.
 #ParkourReturn is the interaction that is in the overworld, that brings players into the lobby. It teleports them directly to the marker tagged ParkourLobby, which is located at the exact spot I want players to enter the lobby.

@@ -11,6 +11,6 @@
         "infinite_parkour:editor/canvas/tick",
         "infinite_parkour:editor/hologram/tick",
         "infinite_parkour:editor/environment/tick",
-        "infinite_parkour:flight/tick"
+        "infinite_parkour:editor/flight/tick"
     ]
 }
