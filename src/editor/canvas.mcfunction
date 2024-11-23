@@ -52,6 +52,11 @@
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_clear"],Invisible:1b},item_name="Destination",item_model="white_dye"]
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_dst"],Invisible:1b},item_name="Destination",item_model="lime_dye"]
 
+/clear
+  execute as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] at @s
+    setblock ~ ~ ~ air
+    kill @s
+
 # converts data (infinite_parkour:calc jump.blocks) into blocks
 /load
   function infinite_parkour:editor/canvas/clear
