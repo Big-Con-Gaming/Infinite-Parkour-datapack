@@ -3,10 +3,10 @@
 /tick
   execute in infinite_parkour:editor as @e[type=marker,tag=ipe_env,distance=0..] at @s
     # first block
-    execute positioned ~31 31 ~31
+    execute positioned ~31.5 31.5 0.5
       execute if block ~ ~ ~ air
         setblock ~ ~-1 ~ bedrock
-        execute unless entity @n[type=text_display,distance=..1] run summon text_display ~0.5 ~0.5 ~0.5 {text:'"Place starting block"',billboard:"center"}
+        execute unless entity @n[type=text_display,distance=..0.1] run summon text_display ~ ~ ~ {text:'"Place starting block"',billboard:"center"}
       execute unless block ~ ~ ~ air
         execute if block ~ ~-1 ~ bedrock run setblock ~ ~-1 ~ air
         kill @n[type=text_display,distance=..1]
@@ -53,7 +53,7 @@
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_dst"],Invisible:1b},item_name="Destination",item_model="lime_dye"]
 
 /clear
-  execute as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] at @s
+  execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] at @s
     setblock ~ ~ ~ air
     kill @s
 
@@ -62,22 +62,24 @@
   function infinite_parkour:editor/canvas/clear
 
   execute store result score dx math run data get entity @s Pos[0]
-  execute store result score dy math run data get entity @s Pos[1]
-  execute store result score dz math run data get entity @s Pos[2]
   scoreboard players add dx math 31
-  scoreboard players add dy math 31
-  scoreboard players add dz math 31
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
-  data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {Tags:["ipe_place","ipe_place_platform"]}
-  data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {Tags:["ipe_place","ipe_place_blocker"]}
-  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {Tags:["ipe_place","ipe_place_pickup0"]}
-  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {Tags:["ipe_place","ipe_place_pickup1"]}
+  data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {Tags:["ipe_place_platform"]}
+  data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {Tags:["ipe_place_blocker"]}
+  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {Tags:["ipe_place_pickup0"]}
+  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {Tags:["ipe_place_pickup1"]}
   data modify storage infinite_parkour:calc build[{dst:true}].Tags append value "ipe_load_dst"
 
+  data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
   function infinite_parkour:editor/canvas/load/rec
 
+  data remove storage infinite_parkour:calc Pos
   data remove storage infinite_parkour:calc build
+  scoreboard players reset dx math
+  scoreboard players reset x math
+  scoreboard players reset y math
+  scoreboard players reset z math
   /rec
     execute unless data storage infinite_parkour:calc build[0] run return 0
     execute unless data storage infinite_parkour:calc build[0].pos run return 0
@@ -85,13 +87,16 @@
     execute store result score y math run data get storage infinite_parkour:calc build[0].pos[1]
     execute store result score z math run data get storage infinite_parkour:calc build[0].pos[2]
     scoreboard players operation x math += dx math
-    scoreboard players operation y math += dy math
-    scoreboard players operation z math += dz math
+    scoreboard players add y math 31
+
+    execute store result storage infinite_parkour:calc Pos[0] double 1 run scoreboard players get x math
+    execute store result storage infinite_parkour:calc Pos[1] double 1 run scoreboard players get y math
+    execute store result storage infinite_parkour:calc Pos[2] double 1 run scoreboard players get z math
+
     execute summon item_frame
-      execute store result entity @s Pos[0] double 1 run scoreboard players get x math
-      execute store result entity @s Pos[1] double 1 run scoreboard players get y math
-      execute store result entity @s Pos[2] double 1 run scoreboard players get z math
+      data modify entity @s Pos set from storage infinite_parkour:calc Pos
       data modify entity @s Tags set from storage infinite_parkour:calc build[0].Tags
+      tag @s add ipe_place
     data remove storage infinite_parkour:calc build[0]
     function infinite_parkour:editor/canvas/load/rec
 
@@ -104,33 +109,40 @@
   scoreboard players set max_x math 0
   scoreboard players set max_y math 0
   scoreboard players set max_z math 0
-  execute as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block]
+  execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block]
     function infinite_parkour:editor/canvas/save/get_pos
     function infinite_parkour:editor/canvas/save/get_type
     function infinite_parkour:editor/canvas/save/get_extra
     data modify storage infinite_parkour:calc jump.blocks append from storage infinite_parkour:calc temp
     data remove storage infinite_parkour:calc temp
   data remove storage infinite_parkour:calc temp
+
   execute unless data storage infinite_parkour:calc jump.blocks[0] run data modify storage infinite_parkour:calc jump set value {}
-  execute unless data storage infinite_parkour:calc jump.blocks[0] run return 0
-  data modify storage infinite_parkour:calc jump.min_pos set value [0,0,0]
-  execute store result storage infinite_parkour:calc jump.min_pos[0] int 1 run scoreboard players get min_x math
-  execute store result storage infinite_parkour:calc jump.min_pos[1] int 1 run scoreboard players get min_y math
-  execute store result storage infinite_parkour:calc jump.min_pos[2] int 1 run scoreboard players get min_z math
-  data modify storage infinite_parkour:calc jump.max_pos set value [0,0,0]
-  execute store result storage infinite_parkour:calc jump.max_pos[0] int 1 run scoreboard players get max_x math
-  execute store result storage infinite_parkour:calc jump.max_pos[1] int 1 run scoreboard players get max_y math
-  execute store result storage infinite_parkour:calc jump.max_pos[2] int 1 run scoreboard players get max_z math
+  
+  execute if data storage infinite_parkour:calc jump.blocks[0]
+    data modify storage infinite_parkour:calc jump.min_pos set value [0,0,0]
+    execute store result storage infinite_parkour:calc jump.min_pos[0] int 1 run scoreboard players get min_x math
+    execute store result storage infinite_parkour:calc jump.min_pos[1] int 1 run scoreboard players get min_y math
+    execute store result storage infinite_parkour:calc jump.min_pos[2] int 1 run scoreboard players get min_z math
+    data modify storage infinite_parkour:calc jump.max_pos set value [0,0,0]
+    execute store result storage infinite_parkour:calc jump.max_pos[0] int 1 run scoreboard players get max_x math
+    execute store result storage infinite_parkour:calc jump.max_pos[1] int 1 run scoreboard players get max_y math
+    execute store result storage infinite_parkour:calc jump.max_pos[2] int 1 run scoreboard players get max_z math
+    
+  scoreboard players reset min_x math
+  scoreboard players reset min_y math
+  scoreboard players reset min_z math
+  scoreboard players reset max_x math
+  scoreboard players reset max_y math
+  scoreboard players reset max_z math
+
   /get_pos
     execute store result score x math run data get entity @s Pos[0]
     execute store result score y math run data get entity @s Pos[1]
     execute store result score z math run data get entity @s Pos[2]
     scoreboard players operation x math %= 128 const
-    scoreboard players operation y math %= 128 const
-    scoreboard players operation z math %= 128 const
     scoreboard players operation x math -= 31 const
     scoreboard players operation y math -= 31 const
-    scoreboard players operation z math -= 31 const
     execute if score x math < min_x math run scoreboard players operation min_x math = x math
     execute if score y math < min_y math run scoreboard players operation min_y math = y math
     execute if score z math < min_z math run scoreboard players operation min_z math = z math
