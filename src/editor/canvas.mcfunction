@@ -1,4 +1,5 @@
 
+# executed every tick
 /tick
   execute in infinite_parkour:editor as @e[type=marker,tag=ipe_env,distance=0..] at @s
     # first block
@@ -42,6 +43,7 @@
     # destroy removed blocks
     execute as @e[type=block_display,tag=ipe_block,distance=..16] at @s if block ~ ~ ~ air run kill @s
 
+# gives the player items for editing
 /items
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_place_platform"],Invisible:1b},item_name="Destination",item_model="stone"]
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_place_blocker"],Invisible:1b},item_name="Destination",item_model="tuff"]
@@ -50,11 +52,7 @@
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_clear"],Invisible:1b},item_name="Destination",item_model="white_dye"]
   give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_dst"],Invisible:1b},item_name="Destination",item_model="lime_dye"]
 
-/clear
-  execute as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] at @s
-    setblock ~ ~ ~ air
-    kill @s
-
+# converts data (infinite_parkour:calc jump.blocks) into blocks
 /load
   function infinite_parkour:editor/canvas/clear
 
@@ -92,6 +90,7 @@
     data remove storage infinite_parkour:calc build[0]
     function infinite_parkour:editor/canvas/load/rec
 
+# converts blocks into data (infinite_parkour:calc jump.blocks)
 /save
   data modify storage infinite_parkour:calc jump.blocks set value []
   scoreboard players set min_x math 63

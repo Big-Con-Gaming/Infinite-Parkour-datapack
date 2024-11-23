@@ -1,3 +1,4 @@
+# this function is used for the falling effect and teleporting the players back
 execute as @a[team=ParkourPlayers] at @s
   execute store result score py math run data get entity @s Pos[1]
   execute store result score by math run data get entity @n[tag=ParkourNextJump] Pos[1]

@@ -1,3 +1,5 @@
+# this file lets survival players fly in the editor dimension, almost like creative flight
+
 /tick
   scoreboard players remove @a ip_flight_cooldown 1
   scoreboard players reset @a[scores={ip_flight_cooldown=..0}] ip_flight_cooldown
@@ -6,11 +8,11 @@
     execute if predicate {"condition":"entity_properties","entity":"this","predicate":{"type_specific":{"type":"player","input":{"jump":true}}}} run scoreboard players add #direction math 1
     execute if predicate {"condition":"entity_properties","entity":"this","predicate":{"type_specific":{"type":"player","input":{"sneak":true}}}} run scoreboard players remove #direction math 1
 
-    execute if entity @s[tag=ipe_flying] run function infinite_parkour:flight/flying_tick
+    execute if entity @s[tag=ipe_flying] run function infinite_parkour:editor/flight/flying_tick
 
     execute if score #direction math matches 1
       execute unless score @s ip_flight_cooldown matches 1..5 run scoreboard players set @s ip_flight_cooldown 7
-      execute if score @s ip_flight_cooldown matches 1..5 run function infinite_parkour:flight/toggle_flying
+      execute if score @s ip_flight_cooldown matches 1..5 run function infinite_parkour:editor/flight/toggle_flying
 
     scoreboard players reset #direction math
 
@@ -23,23 +25,23 @@
   data remove storage infinite_parkour:macro data
 
 /flying_tick
-  execute unless entity @s[gamemode=survival] unless entity @s[gamemode=adventure] run function infinite_parkour:flight/stop_flying
+  execute unless entity @s[gamemode=survival] unless entity @s[gamemode=adventure] run function infinite_parkour:editor/flight/stop_flying
   execute unless entity @s[gamemode=survival] unless entity @s[gamemode=adventure] run return 0
-  function infinite_parkour:flight/ensure_mounted
+  function infinite_parkour:editor/flight/ensure_mounted
 
   execute on vehicle
     execute if score #direction math matches 1 run data modify entity @s Motion[1] set value 0.7d
     execute if score #direction math matches 0 run data modify entity @s Motion[1] set value 0.0d
     execute if score #direction math matches -1 run data modify entity @s Motion[1] set value -0.7d
     execute store result score #on_ground math run data get entity @s OnGround
-  execute if score #on_ground math matches 1 run function infinite_parkour:flight/stop_flying
+  execute if score #on_ground math matches 1 run function infinite_parkour:editor/flight/stop_flying
   scoreboard players reset #on_ground math
 
 /toggle_flying
   scoreboard players reset @s ip_flight_cooldown
   execute store success score #start_flying math unless entity @s[tag=ipe_flying]
-  execute if score #start_flying math matches 0 run function infinite_parkour:flight/stop_flying
-  execute if score #start_flying math matches 1 run function infinite_parkour:flight/start_flying
+  execute if score #start_flying math matches 0 run function infinite_parkour:editor/flight/stop_flying
+  execute if score #start_flying math matches 1 run function infinite_parkour:editor/flight/start_flying
   scoreboard players reset #start_flying math
 
 /start_flying

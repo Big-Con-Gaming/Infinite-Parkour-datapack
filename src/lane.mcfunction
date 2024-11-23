@@ -1,3 +1,5 @@
+# this file is used for allocating lanes for specific players, so they won't be in the same path
+
 # This function needs to be called on a player
 # the player will be teleported to a newly allocated lane
 /alloc
