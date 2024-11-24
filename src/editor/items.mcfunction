@@ -1,5 +1,5 @@
 /tick
-  execute in infinite_parkour:editor as @a[distance=0..]
+  execute in infinite_parkour:editor as @a[distance=0..] run
     function infinite_parkour:editor/items/give_bundles
     # function infinite_parkour:editor/items/read_items
     # function infinite_parkour:editor/items/write_items
@@ -7,7 +7,7 @@
   return 0
 
 /read_items
-  execute positioned 29 32 -4
+  execute positioned 29 32 -4 run
     execute unless items block ~ ~ ~ container.0 * if items entity @s container.0 * run function infinite_parkour:editor/items/memorize_item {bi:0,pi:0}
     execute unless items block ~ ~ ~ container.1 * if items entity @s container.1 * run function infinite_parkour:editor/items/memorize_item {bi:1,pi:1}
     execute unless items block ~ ~ ~ container.2 * if items entity @s container.2 * run function infinite_parkour:editor/items/memorize_item {bi:2,pi:2}
@@ -37,7 +37,7 @@
     execute unless items block ~ ~ ~ container.26 * if items entity @s container.35 * run function infinite_parkour:editor/items/memorize_item {bi:26,pi:35}
 
 /write_items
-  execute positioned 29 32 -4
+  execute positioned 29 32 -4 run
     item replace entity @s container.0 from block ~ ~ ~ container.0
     item replace entity @s container.1 from block ~ ~ ~ container.1
     item replace entity @s container.2 from block ~ ~ ~ container.2

@@ -1,14 +1,14 @@
 # this function is used for the falling effect and teleporting the players back
-execute as @a[team=ParkourPlayers] at @s
+execute as @a[team=ParkourPlayers] at @s run
   execute store result score py math run data get entity @s Pos[1]
   execute store result score by math run data get entity @n[tag=ParkourNextJump] Pos[1]
 
-  execute if score py math >= by math
+  execute if score py math >= by math run
     tag @s remove ParkourFalling
     stopsound @s ambient minecraft:item.elytra.flying
   execute if score py math >= by math run return 0
 
-  execute if entity @s[tag=!ParkourFalling]
+  execute if entity @s[tag=!ParkourFalling] run
     tag @s add ParkourFalling
     playsound minecraft:item.elytra.flying ambient @s ~ ~ ~ 0.4 2
   particle crit ~4 ~-5 ~4 -2 10 -2 0.5 0 normal
@@ -21,7 +21,7 @@ execute as @a[team=ParkourPlayers] at @s
 
   tag @s remove ParkourFalling
   stopsound @s ambient minecraft:item.elytra.flying
-  execute positioned ~-10 ~ ~-10 as @e[tag=ParkourBlock,dz=21,dy=20,dx=20] at @s
+  execute positioned ~-10 ~ ~-10 as @e[tag=ParkourBlock,dz=21,dy=20,dx=20] at @s run
     setblock ~ ~ ~ air
     kill @n[type=block_display,distance=..0.9]
     kill @s

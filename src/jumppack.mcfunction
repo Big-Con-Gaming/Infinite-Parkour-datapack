@@ -36,7 +36,7 @@
 
   scoreboard players remove #selecting math 1
   execute store result storage infinite_parkour:macro data.max int 1 run scoreboard players get #selecting math
-  execute if score #selecting math matches 1..
+  execute if score #selecting math matches 1.. run
     $execute store result score #selecting math run random value 0..$(max)
   + with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data

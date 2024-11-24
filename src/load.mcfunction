@@ -42,9 +42,9 @@ team modify infpar_dark_green color dark_green
 
 execute unless data storage infinite_parkour:player_data players run data modify storage infinite_parkour:player_data players set value []
 
-execute in infinite_parkour:infinite_parkour positioned 0 0 0
+execute in infinite_parkour:infinite_parkour positioned 0 0 0 run
   forceload add ~-1 ~-1 ~ ~
-  execute unless entity @n[type=marker,tag=ParkourLobby]
+  execute unless entity @n[type=marker,tag=ParkourLobby] run
     place template infinite_parkour:infinite_parkour_lobby -5 99 -4
     execute in infinite_parkour:infinite_parkour run setblock 0 0 0 minecraft:barrel
     summon marker 0.5 100 0.5 {Tags:["ParkourLobby"]}

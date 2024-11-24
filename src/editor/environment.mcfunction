@@ -23,7 +23,7 @@
   function infinite_parkour:editor/hologram/create_grid
   # page controls
   summon text_display ~31.5 34.0 ~-17.9 {text:'"Page"',Tags:["ipe","ipe_page_ctrl"]}
-  execute positioned ~31.5 33.5 ~-17.9 summon text_display
+  execute positioned ~31.5 33.5 ~-17.9 summon text_display run
     data merge entity @s {text:'"0"'}
     tag @s add ipe
     tag @s add ipe_page_ctrl
@@ -43,14 +43,14 @@
 
 # executed every tick
 /tick
-  execute in infinite_parkour:editor as @a[distance=0..] at @s
-    execute as @e[type=interaction,distance=..10] at @s
+  execute in infinite_parkour:editor as @a[distance=0..] at @s run
+    execute as @e[type=interaction,distance=..10] at @s run
       execute unless data entity @s interaction unless data entity @s attack run return 0
 
-      execute if entity @s[tag=ipe_page_prev] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=1..}] at @s
+      execute if entity @s[tag=ipe_page_prev] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=1..}] at @s run
         scoreboard players remove @s ipe_index 1
         function infinite_parkour:editor/environment/update_page
-      execute if entity @s[tag=ipe_page_next] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=..6}] at @s
+      execute if entity @s[tag=ipe_page_next] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=..6}] at @s run
         scoreboard players add @s ipe_index 1
         function infinite_parkour:editor/environment/update_page
       execute if entity @s[tag=ipe_hologram_interact] run function infinite_parkour:editor/hologram/interact
@@ -67,7 +67,7 @@
 
 # deletes and creates a new environment
 /test
-  execute in infinite_parkour:editor positioned 0.0 0.0 0.0
+  execute in infinite_parkour:editor positioned 0.0 0.0 0.0 run
     execute as @n[type=marker,tag=ipe_env,distance=..0.1] at @s run function infinite_parkour:editor/environment/delete
     function infinite_parkour:editor/environment/create
     data merge entity @n[type=marker,tag=ipe_env,distance=..0.1] {data:{jumppack_id:"my_jumppack"}}
@@ -77,7 +77,7 @@
   # tag @s add ipe_request_export
 
   # data modify storage infinite_parkour:calc str set value ""
-  execute
+  %EMPTY%
     # data modify storage infinite_parkour:macro data2.clickEvent.action set value 'copy_to_clipboard'
     # $data modify storage infinite_parkour:macro data2.clickEvent.value set value '$(jumppack)'
     $data modify storage infinite_parkour:jumppack str set value '$(jumppack)'
