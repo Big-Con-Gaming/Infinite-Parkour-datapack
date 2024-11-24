@@ -8,12 +8,12 @@
 #These just detect whenever the player is left or right clicking an interaction entity. it runs a command on the player based on attack or target, then removes the nbt from the interaction entity.
 #ParkourReturn is the interaction that is in the overworld, that brings players into the lobby. It teleports them directly to the marker tagged ParkourLobby, which is located at the exact spot I want players to enter the lobby.
 #Directly above that ParkourLobby marker, is the tagged ParkourLobbyLeave interaction entity. This one teleports the player back into the overworld. This should be modified to send the player to the teleporter they started at, but currently only teleports to the first one chosen arbitrarily.
-execute in infinite_parkour:infinite_parkour as @e[type=interaction,tag=ParkourReturn]
+execute in infinite_parkour:infinite_parkour as @e[type=interaction,tag=ParkourReturn] run
   execute on attacker run function infinite_parkour:tick_portal/teleport_in
   execute on target run function infinite_parkour:tick_portal/teleport_in
   data remove entity @s attack
   data remove entity @s interaction
-execute in infinite_parkour:infinite_parkour as @e[type=interaction,tag=ParkourLobbyLeave]
+execute in infinite_parkour:infinite_parkour as @e[type=interaction,tag=ParkourLobbyLeave] run
   execute on attacker run function infinite_parkour:tick_portal/teleport_out
   execute on target run function infinite_parkour:tick_portal/teleport_out
   data remove entity @s attack

@@ -3,14 +3,14 @@
 /tick
   scoreboard players remove @a ip_flight_cooldown 1
   scoreboard players reset @a[scores={ip_flight_cooldown=..0}] ip_flight_cooldown
-  execute in infinite_parkour:editor as @a[distance=0..] at @s
+  execute in infinite_parkour:editor as @a[distance=0..] at @s run
     scoreboard players set #direction math 0
     execute if predicate {"condition":"entity_properties","entity":"this","predicate":{"type_specific":{"type":"player","input":{"jump":true}}}} run scoreboard players add #direction math 1
     execute if predicate {"condition":"entity_properties","entity":"this","predicate":{"type_specific":{"type":"player","input":{"sneak":true}}}} run scoreboard players remove #direction math 1
 
     execute if entity @s[tag=ipe_flying] run function infinite_parkour:editor/flight/flying_tick
 
-    execute if score #direction math matches 1
+    execute if score #direction math matches 1 run
       execute unless score @s ip_flight_cooldown matches 1..5 run scoreboard players set @s ip_flight_cooldown 7
       execute if score @s ip_flight_cooldown matches 1..5 run function infinite_parkour:editor/flight/toggle_flying
 
@@ -19,7 +19,7 @@
 /ensure_mounted
   execute on vehicle run return 0
   data modify storage infinite_parkour:macro data.player_id set from entity @s UUID
-  execute
+  %EMPTY%
     $ride @s mount @n[type=horse,nbt={Owner:$(player_id)},distance=..5]
   + with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
@@ -29,7 +29,7 @@
   execute unless entity @s[gamemode=survival] unless entity @s[gamemode=adventure] run return 0
   function infinite_parkour:editor/flight/ensure_mounted
 
-  execute on vehicle
+  execute on vehicle run
     execute if score #direction math matches 1 run data modify entity @s Motion[1] set value 0.7d
     execute if score #direction math matches 0 run data modify entity @s Motion[1] set value 0.0d
     execute if score #direction math matches -1 run data modify entity @s Motion[1] set value -0.7d
@@ -50,7 +50,7 @@
   data modify storage infinite_parkour:calc player_id set from entity @s UUID
   summon horse ~ ~ ~ {Tags:["ipe_new_flight"],NoAI:1b,NoGravity:1b,Invulnerable:1b,Silent:1b,Tame:1b,SaddleItem:{id:"saddle",count:1}}
   ride @s mount @n[type=horse,distance=..0.1,tag=ipe_new_flight]
-  execute on vehicle
+  execute on vehicle run
     tag @s remove ipe_new_flight
     data modify entity @s Owner set from storage infinite_parkour:calc player_id
     attribute @s movement_speed base set 1

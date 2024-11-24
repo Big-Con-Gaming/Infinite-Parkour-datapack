@@ -3,17 +3,17 @@
 # This function needs to be called on a player
 # the player will be teleported to a newly allocated lane
 /alloc
-  execute unless data storage infinite_parkour:lane free_positions[0]
+  execute unless data storage infinite_parkour:lane free_positions[0] run
     scoreboard players add #lobby_count ip_data 1
     execute store result storage infinite_parkour:macro data.lobby_x int 1024 run scoreboard players get #lobby_count ip_data
-  execute if data storage infinite_parkour:lane free_positions[0]
+  execute if data storage infinite_parkour:lane free_positions[0] run
     data modify storage infinite_parkour:macro data.lobby_x set from storage infinite_parkour:lane free_positions[0]
     data remove storage infinite_parkour:lane free_positions[0]
   function infinite_parkour:lane/alloc/claim with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
 
   /claim
-    $execute in infinite_parkour:lane positioned $(lobby_x) 0 0
+    $execute in infinite_parkour:lane positioned $(lobby_x) 0 0 run
       tp @s ~ ~ ~ 0 0
       execute store result score @s ip_lane run data get entity @s Pos[0] 0.0009765625
       forceload add ~-32 ~-32 ~31 ~31
@@ -36,11 +36,11 @@
 
 /tick
   execute in infinite_parkour:lane run tag @e[type=marker,tag=ip_lane_entry,distance=0..] add ip_lane_remove
-  execute as @a at @s
-    execute unless score @s ip_lane matches 1..
+  execute as @a at @s run
+    execute unless score @s ip_lane matches 1.. run
       # make sure the player is not in a lane
       execute if dimension infinite_parkour:lane run function infinite_parkour:lane/exit
-    execute if score @s ip_lane matches 1..
+    execute if score @s ip_lane matches 1.. run
       # make sure the player is in the correct lane
       execute unless dimension infinite_parkour:lane run function infinite_parkour:lane/exit
       execute unless dimension infinite_parkour:lane run return 0

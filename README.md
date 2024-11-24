@@ -23,9 +23,9 @@ You can declare multiple functions within a file like so
 ```
 This produces 3 functions, each with only 1 command.
 ### Anonymous (internal) functions
-You can declare anonymous functions by nesting, the preprocessor will change it to `run function {namespace}:{path}/internal{n}`
+You can declare anonymous functions by nesting, the preprocessor will change it to `function {namespace}:{path}/internal{n}`
 ```
-execute as @a
+execute as @a run
   say hello
   say world
 ```
@@ -47,7 +47,16 @@ execute in minecraft:nether
 + as @n[type=hoglin]
 + run say Hello
 
-execute as @a
+execute if
+  execute if entity @s[tag=evil] run return 1
+  say I am not evil.
+  return 0
++ run
+  say I am evil!
+
+%EMPTY%
   $say $(word)
 + with storage ns:path
+# %EMPTY% will be converted to nothing. The generated code will be:
+# function ns:func/internal0 with storage ns:path
 ```

@@ -1,5 +1,5 @@
 # this function scales the block displays based on the distance of the player to the next block.
-execute as @e[type=marker,tag=ParkourNextJump] at @s
+execute as @e[type=marker,tag=ParkourNextJump] at @s run
   execute store result score x math run data get entity @s Pos[0] 100
   execute store result score z math run data get entity @s Pos[2] 100
   execute store result score x0 math run data get entity @p Pos[0] 100

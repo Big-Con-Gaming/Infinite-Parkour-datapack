@@ -24,12 +24,12 @@
 /create_one
   setblock ~ ~ ~ light_gray_concrete
   setblock ~ ~1 ~ orange_stained_glass
-  execute positioned ~0.5 ~1.5 ~0.5 summon block_display
+  execute positioned ~0.5 ~1.5 ~0.5 summon block_display run
     tag @s add ipe
     tag @s add ipe_hologram
     tag @s add ipe_hologram_loading
     scoreboard players operation @s ipe_index = #counter ipe_index
-  execute positioned ~0.5 ~0.95 ~0.5 summon interaction
+  execute positioned ~0.5 ~0.95 ~0.5 summon interaction run
     tag @s add ipe
     tag @s add ipe_hologram_interact
     data merge entity @s {width:1.1,height:1.1}
@@ -51,7 +51,7 @@
   function infinite_parkour:jumppack/get_jump with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
 
-  execute unless data storage infinite_parkour:calc jump.blocks
+  execute unless data storage infinite_parkour:calc jump.blocks run
     setblock ~ ~ ~ black_stained_glass
     data remove storage infinite_parkour:calc jump
   execute unless data storage infinite_parkour:calc jump run return 0
@@ -75,11 +75,11 @@
 /interact
   function infinite_parkour:editor/hologram/prepare_macro
   
-  execute if data entity @s interaction
+  execute if data entity @s interaction run
     execute positioned ~-31.5 0 ~17.9 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/save
     function infinite_parkour:jumppack/set_jump with storage infinite_parkour:macro data
     execute positioned ~ ~0.55 ~ as @n[type=block_display,tag=ipe_hologram,distance=..0.1] at @s run function infinite_parkour:editor/hologram/unload
-  execute if data entity @s attack
+  execute if data entity @s attack run
     function infinite_parkour:jumppack/get_jump with storage infinite_parkour:macro data
     execute positioned ~-31.5 0 ~17.9 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/load
   data remove storage infinite_parkour:calc jump
@@ -154,7 +154,7 @@
   execute store result score y math run data get storage infinite_parkour:calc build[0].pos[1] 16000
   execute store result score z math run data get storage infinite_parkour:calc build[0].pos[2] 16000
   scoreboard players set size math 16000
-  execute if data storage infinite_parkour:calc build[0].small
+  execute if data storage infinite_parkour:calc build[0].small run
     scoreboard players set size math 6000
     scoreboard players add x math 5000
     scoreboard players add y math 5000
@@ -166,7 +166,7 @@
   scoreboard players operation y math /= max_len math
   scoreboard players operation z math /= max_len math
   scoreboard players operation size math /= max_len math
-  execute summon block_display
+  execute summon block_display run
     tag @s add ipe
     data modify storage infinite_parkour:calc transformation set from entity @s transformation
     # 0.0000625 = 1/16000
@@ -183,12 +183,12 @@
   function infinite_parkour:editor/hologram/rec
 
 /delete_all
-  execute as @e[type=block_display,tag=ipe_hologram]
+  execute as @e[type=block_display,tag=ipe_hologram] run
     execute on passengers run kill @s
     kill @s
 
 /delete_near
-  execute as @n[type=block_display,tag=ipe_hologram]
+  execute as @n[type=block_display,tag=ipe_hologram] run
     execute on passengers run kill @s
     kill @s
 
