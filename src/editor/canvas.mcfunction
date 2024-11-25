@@ -128,7 +128,13 @@
     execute store result storage infinite_parkour:calc jump.max_pos[0] int 1 run scoreboard players get max_x math
     execute store result storage infinite_parkour:calc jump.max_pos[1] int 1 run scoreboard players get max_y math
     execute store result storage infinite_parkour:calc jump.max_pos[2] int 1 run scoreboard players get max_z math
-    
+
+    data modify storage infinite_parkour:calc jump.dst set from storage infinite_parkour:calc jump.blocks[{dst:true}].pos
+    #TODO calculate jump.dir.w
+    #TODO calculate jump.dir.e
+    #TODO calculate jump.dir.u
+    #TODO calculate jump.dir.d
+  
   scoreboard players reset min_x math
   scoreboard players reset min_y math
   scoreboard players reset min_z math
