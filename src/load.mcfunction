@@ -26,8 +26,6 @@ scoreboard players set 1024 const 1024
 scoreboard players set 8000 const 8000
 
 gamerule commandModificationBlockLimit 999999999
-# TODO Do we really need commandBlockOutput to be false???
-gamerule commandBlockOutput false
 
 team add Highscore {"text":"InLobby"}
 team modify Highscore color gold
