@@ -14,36 +14,34 @@
         kill @n[type=text_display,distance=..1]
     # place new blocks
     execute as @e[type=item_frame,dx=64.0,dy=64.0,dz=64.0,tag=ipe_place] at @s run
-      execute if entity @s[tag=ipe_dye] positioned ^ ^ ^-0.5 align xyz run
-        tag @n[type=block_display,tag=ipe_block,distance=..0.1] remove ipe_block_dst
-        execute if entity @s[tag=ipe_place_clear] as @n[type=block_display,tag=ipe_block,distance=..0.1] run
-          team leave @s
-        execute if entity @s[tag=ipe_place_dst] as @n[type=block_display,tag=ipe_block,distance=..0.1] run
-          tag @s add ipe_block_dst
-          team join infpar_green @s
-      execute unless entity @s[tag=ipe_dye] positioned ^ ^ ^0.5 align xyz run
-        setblock ~ ~ ~ air
-        kill @n[type=block_display,tag=ipe_block,distance=..0.1]
-        execute if entity @s[tag=ipe_place_platform] run
-          setblock ~ ~ ~ barrier
-          summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_platform","ipe_needs_block"],block_state:{Name:"stone"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
-        execute if entity @s[tag=ipe_place_blocker] run
-          setblock ~ ~ ~ barrier
-          summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_blocker","ipe_needs_block"],block_state:{Name:"tuff"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
-        execute if entity @s[tag=ipe_place_pickup0] run
-          setblock ~ ~ ~ structure_void
-          summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_pickup0","ipe_needs_block"],block_state:{Name:"gold_block"},Glowing:1b,transformation:{translation:[0.3125f,0.3125f,0.3125f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[0.375f,0.375f,0.375f]}}
-        execute if entity @s[tag=ipe_place_pickup1] run
-          setblock ~ ~ ~ structure_void
-          summon block_display ~ ~ ~ {Tags:["ipe_block","ipe_block_pickup1","ipe_needs_block"],block_state:{Name:"emerald_block"},Glowing:1b,transformation:{translation:[0.3125f,0.3125f,0.3125f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[0.375f,0.375f,0.375f]}}
-        execute if entity @s[tag=ipe_load_dst] as @n[type=block_display,tag=ipe_block,distance=..0.1] run
-          tag @s add ipe_block_dst
-          team join infpar_green @s
-      kill @s
+      execute if entity @s[tag=ipe_place_inside] positioned ^ ^ ^-0.5 align xyz run function infinite_parkour:editor/canvas/place_block
+      execute if entity @s[tag=!ipe_place_inside] positioned ^ ^ ^0.5 align xyz run function infinite_parkour:editor/canvas/place_block
+    kill @e[type=item_frame,tag=ipe_place]
   
   execute in infinite_parkour:editor as @a[distance=0..] at @s run
     # destroy removed blocks
     execute as @e[type=block_display,tag=ipe_block,distance=..16] at @s if block ~ ~ ~ air run kill @s
+
+/place_block
+  execute unless entity @n[type=block_display,tag=ipe_block,distance=..0.1] run summon block_display ~ ~ ~ {Tags:["ipe_block"],block_state:{Name:"reinforced_deepslate"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
+  ride @s mount @n[type=block_display,tag=ipe_block,distance=..0.1]
+  execute on vehicle run team leave @s
+  execute if entity @s[tag=ipe_place_0] run
+    execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
+    setblock ~ ~ ~ barrier
+    execute if entity @s[tag=ipe_place_00] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_platform"],block_state:{Name:"stone"}}
+    execute if entity @s[tag=ipe_place_01] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_blocker"],block_state:{Name:"tuff"}}
+  execute if entity @s[tag=ipe_place_1] run
+    execute on vehicle run data merge entity @s {transformation:{translation:[0.3125f,0.3125f,0.3125f],scale:[0.375f,0.375f,0.375f]}}
+    setblock ~ ~ ~ structure_void
+    execute if entity @s[tag=ipe_place_10] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup0"],block_state:{Name:"gold_block"}}
+    execute if entity @s[tag=ipe_place_11] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup1"],block_state:{Name:"emerald_block"}}
+  execute if entity @s[tag=ipe_place_8] run
+    execute on vehicle run
+      tag @s remove ipe_block_dst
+    execute if entity @s[tag=ipe_place_81] on vehicle run
+      tag @s add ipe_block_dst
+      team join infpar_green @s
 
 # gives the player items for editing
 /items
@@ -67,10 +65,10 @@
   scoreboard players add dx math 31
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
-  data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {Tags:["ipe_place_platform"]}
-  data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {Tags:["ipe_place_blocker"]}
-  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {Tags:["ipe_place_pickup0"]}
-  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {Tags:["ipe_place_pickup1"]}
+  data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {Tags:["ipe_place_0","ipe_place_00"]}
+  data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {Tags:["ipe_place_0","ipe_place_01"]}
+  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {Tags:["ipe_place_0","ipe_place_10"]}
+  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {Tags:["ipe_place_0","ipe_place_11"]}
   data modify storage infinite_parkour:calc build[{dst:true}].Tags append value "ipe_load_dst"
 
   data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
