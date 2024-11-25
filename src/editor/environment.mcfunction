@@ -33,6 +33,8 @@
   summon text_display ~32.0 33.5 ~-17.9 {text:'"\\u2192"',Tags:["ipe","ipe_page_ctrl"]}
   summon interaction ~31.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe","ipe_page_ctrl","ipe_page_prev"]}
   summon interaction ~32.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe","ipe_page_ctrl","ipe_page_next"]}
+  # items
+  setblock ~-1 ~ ~-1 chest
 # deletes this environment (should be called on a marker with the tag 'ipe_env')
 /delete
   execute positioned ~-0.5 -0.5 -32.5 run kill @e[tag=ipe,dx=64,dy=64,dz=96]
@@ -66,7 +68,7 @@
     $data merge entity @s {text:'"$(page)"'}
 
 # deletes and creates a new environment
-/test
+/test_setup
   execute in infinite_parkour:editor positioned 0.0 0.0 0.0 run
     execute as @n[type=marker,tag=ipe_env,distance=..0.1] at @s run function infinite_parkour:editor/environment/delete
     function infinite_parkour:editor/environment/create
