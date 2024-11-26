@@ -11,16 +11,23 @@
     data remove storage infinite_parkour:lane free_positions[0]
   function infinite_parkour:lane/alloc/claim with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
+  data remove storage infinite_parkour:calc lane_tag
 
   /claim
     $execute in infinite_parkour:lane positioned $(lobby_x) 0 0 run
       tp @s ~ ~ ~ 0 0
       execute store result score @s ip_lane run data get entity @s Pos[0] 0.0009765625
+      scoreboard players operation #temp ip_lane = @s ip_lane
       forceload add ~-32 ~-32 ~31 ~31
-      summon marker ~ ~ ~ {Tags:["ip_lane_entry"]}
-      data modify entity @n[type=marker,tag=ip_lane_entry,distance=..0.1] data.player set from entity @s UUID
+      execute summon marker run
+        tag @s add ip_lane_entry
+        data modify entity @s data.player set from entity @s UUID
+        data modify entity @s Tags append from storage infinite_parkour:calc lane_tag
+        scoreboard players operation @s ip_lane = #temp ip_lane
+        #as a placeholder, I have the old lobby being placed in here.
+        place template infinite_parkour:infinite_parkour_lobby ~-5 ~-1 ~-4
       # 1/1024 = 0.0009765625
-      scoreboard players operation @n[type=marker,tag=ip_lane_entry,distance=..0.1] ip_lane = @s ip_lane
+      scoreboard players reset #temp ip_lane
 
 # This function needs to be called on the lane marker (tagged ip_lane_entry)
 /free
