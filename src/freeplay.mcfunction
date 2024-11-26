@@ -46,17 +46,16 @@
 
 /teleport_in
   execute in infinite_parkour:infinite_parkour run function infinite_parkour:tick_portal/teleport_in
+  data modify storage infinite_parkour:calc lane_tag set value "ip_freeplay_entry"
   function infinite_parkour:lane/alloc
-  execute at @s run
-    #TODO fix
-    tag @n[type=marker,tag=ip_lane_entry,distance=..0.1] add ip_freeplay_entry
 
 # Lobby
 /lobby_tick
-  execute in infinite_parkour:lane as @e[type=marker,tag=ip_freeplay_entry,distance=0..] run
-    execute store success score #player_in_lobby math positioned ~-15 ~-15 ~-15 if entity @p[dx=31,dy=31,dz=31]
-    execute if score #player_in_lobby math matches 1 run say inside
-    execute unless score #player_in_lobby math matches 1 run say outside
+  execute in infinite_parkour:lane as @e[type=marker,tag=ip_freeplay_entry,distance=0..] at @s run
+    execute store success score #player_in_lobby math positioned ~-8 ~-8 ~-8 if entity @p[dx=15,dy=15,dz=15]
+    execute if score #player_in_lobby math matches 1 as @p[distance=..1023] run team join Highscore
+    execute if score #player_in_lobby math matches 0 as @p[distance=..1023] run team join ParkourPlayers
+
   return 0
 
 # Game

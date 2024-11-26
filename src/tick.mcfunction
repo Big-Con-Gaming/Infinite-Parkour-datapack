@@ -26,7 +26,7 @@ execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ 
   execute if entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:0}
   execute unless entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:50.0f}
 #Failsafe below to prevent any teamers from leaving the dimension with their team. Most likely needs to be changed before release in case another data pack installed uses teams
-execute as @a at @s unless dimension infinite_parkour:infinite_parkour run team leave @s 
+execute as @a at @s if dimension minecraft:overworld run team leave @s 
 #Below is a quick fix that places newly teleported players onto the Highscore team. Should be relocated to the teleportation command.
 execute in infinite_parkour:infinite_parkour run team join Highscore @a[x=0,y=100,z=0,dx=1,dy=2,dz=1]
 
