@@ -1,6 +1,6 @@
 # Sets up things to be used generally
 
-scoreboard objectives add Blocks dummy {"text":"Infinite Parkour - Jumps Made"}
+scoreboard objectives add Blocks dummy {"text":"Infinite Parkour - Distance (M)"}
 scoreboard objectives add BlockCheckpoint dummy {"text":"Infinite Parkour - Current Checkpoint"}
 scoreboard objectives add HighScore dummy {"text":"Infinite Parkour - High Score"}
 scoreboard objectives add RandomNum dummy {"text":"This creates random numbers"}
