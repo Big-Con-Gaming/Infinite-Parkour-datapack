@@ -113,6 +113,10 @@
       function infinite_parkour:jumppack/fetch {jumppack_id:"my_jumppack"}
       function infinite_parkour:jumppack/random_jump
       data modify storage infinite_parkour:calc temp_blocks_list set from storage infinite_parkour:jumppack jump.blocks
+      # Below gets a random number between 0 and 1, multiplies by 2, and then subtracts 1. This gives a random value of -1 or 1, which will be multiplied by every X value to randomly mirror jumps across the X axis, 50-50.
+      execute store result storage infinite_parkour:calc jump_mirror_math int 2 run random value 0..1
+      execute store result score #jump_mirror_math math run data get storage infinite_parkour:calc jump_mirror_math
+      scoreboard players remove #jump_mirror_math math 1
       execute at @n[type=marker,tag=ParkourGenPos,distance=..512] run function infinite_parkour:freeplay/summon_jump_markers
       execute as @n[type=marker,tag=ParkourGenPos,tag=ParkourGoal,distance=..512] run tag @s remove ParkourGenPos
       execute at @e[type=marker,tag=ParkourGeneratedJump,distance=..512] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
@@ -166,7 +170,11 @@
   #This runs through each block in the jump's list and runs the function place_jump_objects in their position.
   execute unless data storage infinite_parkour:calc temp_blocks_list[0] run return 0
   data modify storage infinite_parkour:calc temp_current_block set from storage infinite_parkour:calc temp_blocks_list[0]
-  data modify storage infinite_parkour:macro x set from storage infinite_parkour:calc temp_current_block.pos[0]
+  #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.
+  execute store result score #jump_current_x math run data get storage infinite_parkour:calc temp_current_block.pos[0]
+  scoreboard players operation #jump_current_x math *= #jump_mirror_math math
+  execute store result storage infinite_parkour:calc temp_current_x int 1 run scoreboard players get #jump_current_x math
+  data modify storage infinite_parkour:macro x set from storage infinite_parkour:calc temp_current_x
   data modify storage infinite_parkour:macro y set from storage infinite_parkour:calc temp_current_block.pos[1]
   data modify storage infinite_parkour:macro z set from storage infinite_parkour:calc temp_current_block.pos[2]
   %EMPTY%
