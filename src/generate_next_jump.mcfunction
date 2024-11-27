@@ -9,36 +9,37 @@
 #Then, we choose one of the random TempRotation markers to then create the next ParkourGeneratedJump marker, at a random distance from itself. This function will also kill off all TempRotation markers.
 #We create the next block display for ParkourGeneratedJump here, then place the gold block for the very next jump (ParkourNextJump) and remove its display entity. This is a placeholder block, eventually I'll have a function choose what the next block will be based on areas/zones
 #Finally, we run generate_decorations.mcfunction to place in block displays, particles, entities, etc. at random.
-execute as @a[team=ParkourPlayers,nbt={OnGround:1b}] at @s positioned ~ ~-0.5 ~ if entity @n[type=marker,tag=ParkourNextJump,distance=..1] run
-  # increase score
-  scoreboard players add @s Blocks 1
-  # cycle all markers back
-  execute as @n[type=marker,tag=ParkourPrev] at @s run
-    kill @n[type=block_display,tag=ParkourBlockDisplay,distance=..0.5]
-    kill @s
-  execute as @n[type=marker,tag=ParkourCurr] at @s run
-    tag @s add ParkourPrev
-    tag @s remove ParkourCurr
-    setblock ~ ~ ~ air
-    tag @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay] add ParkourPrevDisplay
-  execute as @n[type=marker,tag=ParkourNextJump] at @s run
-    tag @s add ParkourCurr
-    tag @s remove ParkourNextJump
-  execute as @n[type=marker,tag=ParkourGeneratedJump] at @s align xyz run
-    function infinite_parkour:generate_next_jump/rotation
-    tag @s add ParkourNextJump
-    tag @s remove ParkourGeneratedJump
-  # generate block
-  execute at @e[tag=TempRotation,limit=1,sort=random] run function infinite_parkour:generate_next_jump/pick
-  kill @e[tag=TempRotation]
-  execute at @n[type=marker,tag=ParkourGeneratedJump] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
-  execute at @n[type=marker,tag=ParkourNextJump] run
-    setblock ~ ~ ~ barrier
-    execute as @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay] run
-      data merge entity @s {transformation:{scale:[1f,1f,1f],translation:[-0.5f,-0.5f,-0.5f]}}
-      tag @s remove ParkourGeneratedDisplay
-  # generate decoration
-  function infinite_parkour:generate_decorations
+execute if dimension infinite_parkour:infinite_parkour run
+  execute as @a[team=ParkourPlayers,nbt={OnGround:1b}] at @s positioned ~ ~-0.5 ~ if entity @n[type=marker,tag=ParkourNextJump,distance=..1] run
+    # increase score
+    scoreboard players add @s Blocks 1
+    # cycle all markers back
+    execute as @n[type=marker,tag=ParkourPrev] at @s run
+      kill @n[type=block_display,tag=ParkourBlockDisplay,distance=..0.5]
+      kill @s
+    execute as @n[type=marker,tag=ParkourCurr] at @s run
+      tag @s add ParkourPrev
+      tag @s remove ParkourCurr
+      setblock ~ ~ ~ air
+      tag @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay] add ParkourPrevDisplay
+    execute as @n[type=marker,tag=ParkourNextJump] at @s run
+      tag @s add ParkourCurr
+      tag @s remove ParkourNextJump
+    execute as @n[type=marker,tag=ParkourGeneratedJump] at @s align xyz run
+      function infinite_parkour:generate_next_jump/rotation
+      tag @s add ParkourNextJump
+      tag @s remove ParkourGeneratedJump
+    # generate block
+    execute at @e[tag=TempRotation,limit=1,sort=random] run function infinite_parkour:generate_next_jump/pick
+    kill @e[tag=TempRotation]
+    execute at @n[type=marker,tag=ParkourGeneratedJump] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+    execute at @n[type=marker,tag=ParkourNextJump] run
+      setblock ~ ~ ~ barrier
+      execute as @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay] run
+        data merge entity @s {transformation:{scale:[1f,1f,1f],translation:[-0.5f,-0.5f,-0.5f]}}
+        tag @s remove ParkourGeneratedDisplay
+    # generate decoration
+    function infinite_parkour:generate_decorations
 
 /rotation
   #This command places all of the rotated markers that get randomly selected to place the next block while parkouring. Ran by infinite_parkour:geberate-next-jump.mcfunction

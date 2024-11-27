@@ -19,8 +19,9 @@ gamemode adventure @a[gamemode=survival,team=ParkourPlayers]
 #For every player on the Parkour Players team, we run infinite_parkour:player-in-game as them below.
 execute as @a[team=ParkourPlayers] at @s run
   #This command runs every tick for all players directly in the game, on team: ParkourPlayers
-  #Below cleans up all blocks and decorations behind the players. The fill command could be removed if we save the location of the most previous jump, to then delete that block and its marker at once.
+  #Below cleans up all blocks and decorations behind the players. The fill command could be removed if we save the location of the most previous jump, to then delete that block and its marker at once. The line directly below can be removed once old code is removed
   execute align xyz positioned ~-70 ~-50 ~-1 if dimension infinite_parkour:infinite_parkour run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
+  execute align xyz positioned ~-70 ~-50 ~-1 if dimension infinite_parkour:lane run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
 #Below is a quick fix to make block displays disappear whenever the player is too close. I want to replace this later with a fix, just don't know what yet.
 execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ ~-45 run
   execute if entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:0}
@@ -29,7 +30,8 @@ execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ 
 execute as @a at @s if dimension minecraft:overworld run team leave @s 
 #Below is a quick fix that places newly teleported players onto the Highscore team. Should be relocated to the teleportation command.
 execute in infinite_parkour:infinite_parkour run team join Highscore @a[x=0,y=100,z=0,dx=1,dy=2,dz=1]
-
+execute in infinite_parkour:lane run function infinite_parkour:line
+#In the future, the bottom line can be removed (when phasing out old code)
 execute in infinite_parkour:infinite_parkour run function infinite_parkour:line
 execute as @a[team=ParkourPlayers] run title @s actionbar {"color":"#98a3dd","extra":["[",{"score":{"name":"@s","objective":"Blocks"}},"]"],"text":""}
 execute as @a[team=Highscore] run title @s actionbar [{"color":"#98a3dd","bold":true,"extra":["SCORE ",{"score":{"name":"@s","objective":"Blocks"}}],"text":""}, "    ", {"color":"#b5bad6","bold":true,"extra":["RECORD ",{"score":{"name":"@s","objective":"HighScore"}}],"text":""}]
