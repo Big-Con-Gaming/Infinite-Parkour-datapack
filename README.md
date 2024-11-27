@@ -1,6 +1,6 @@
 # Infinite Parkour
 Infinite parkour is a datapack that generates parkour as you go.<br>
-Check out [BGC's videos](https://www.youtube.com/playlist?list=PLSZguD4jJp5oo_iQR-9B0YJo7vNYdANNP
+Check out [BCG's videos](https://www.youtube.com/playlist?list=PLSZguD4jJp5oo_iQR-9B0YJo7vNYdANNP
 )
 
 ## Building
