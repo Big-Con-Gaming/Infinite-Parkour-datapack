@@ -84,6 +84,7 @@
 /game_tick
   execute as @a[team=ParkourPlayers] at @s run
     function infinite_parkour:freeplay/fall_tick
+    function infinite_parkour:freeplay/set_distance_score
     #Below cleans up all blocks and decorations behind the players. The fill command could be removed if we save the location of the most previous jump, to then delete that block and its marker at once.
     execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
     execute if entity @s[nbt={OnGround:1b}] positioned ~ ~-0.5 ~ if entity @n[type=marker,tag=ParkourGoal,distance=..1] run
@@ -160,8 +161,6 @@
     kill @e[tag=ParkourDeco,distance=..512]
     tp @s @n[type=marker,tag=ip_freeplay_entry]
     team join Highscore @s
-    # Using unless in case the player doesn't have a high score yet
-    execute unless score @s HighScore > @s Blocks run scoreboard players operation @s HighScore = @s Blocks
 
   stopsound @a[team=Highscore] ambient minecraft:item.elytra.flying
   tag @a[team=Highscore] remove ParkourFalling
@@ -188,3 +187,10 @@
   execute if data storage infinite_parkour:calc temp_current_block{type:"platform"} run summon marker ~ ~ ~ {Tags:["ParkourGeneratedJump","ParkourBlock"]}
   execute if data storage infinite_parkour:calc temp_current_block{dst:1b} run tag @n[type=marker,distance=..1] add ParkourGenPos
   execute if data storage infinite_parkour:calc temp_current_block{type:"blocker"} run summon marker ~ ~ ~ {Tags:["ParkourBlock","ParkourBlocker","ParkourGeneratedJump"]}
+
+/set_distance_score
+  execute store result score @s Blocks run data get entity @s Pos[2] 1
+  scoreboard players remove @s Blocks 12
+  execute if score @s Blocks matches ..0 run scoreboard players set @s Blocks 0
+  # Using unless in case the player doesn't have a high score yet
+  execute unless score @s HighScore > @s Blocks run scoreboard players operation @s HighScore = @s Blocks
