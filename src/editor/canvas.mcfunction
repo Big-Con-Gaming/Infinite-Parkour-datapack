@@ -67,8 +67,8 @@
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
   data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {Tags:["ipe_place_0","ipe_place_00"]}
   data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {Tags:["ipe_place_0","ipe_place_01"]}
-  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {Tags:["ipe_place_0","ipe_place_10"]}
-  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {Tags:["ipe_place_0","ipe_place_11"]}
+  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {Tags:["ipe_place_1","ipe_place_10"]}
+  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {Tags:["ipe_place_1","ipe_place_11"]}
   data modify storage infinite_parkour:calc build[{dst:true}].Tags append value "ipe_load_dst"
 
   data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
