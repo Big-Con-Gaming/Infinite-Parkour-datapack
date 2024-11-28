@@ -87,48 +87,52 @@
     function infinite_parkour:freeplay/set_distance_score
     #Below cleans up all blocks and decorations behind the players. The fill command could be removed if we save the location of the most previous jump, to then delete that block and its marker at once.
     execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
-    execute if entity @s[nbt={OnGround:1b}] positioned ~ ~-0.5 ~ if entity @n[type=marker,tag=ParkourGoal,distance=..1] run
-      # increase score
-      scoreboard players add @s Blocks 1
-      # cycle all markers back
-      execute as @e[type=marker,tag=ParkourPrev,distance=..512] at @s run
-        kill @n[type=block_display,tag=ParkourBlockDisplay,distance=..0.5]
-        kill @s
-      execute as @e[type=marker,tag=ParkourCurr,distance=..512] at @s run
-        tag @s add ParkourPrev
-        tag @s remove ParkourCurr
-        tag @s remove ParkourPrevGoal
-        setblock ~ ~ ~ air
-        tag @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay] add ParkourPrevDisplay
-      execute as @e[type=marker,tag=ParkourNextJump,distance=..512] run
-        tag @s add ParkourCurr
-        execute if entity @s[tag=ParkourGoal] run tag @s add ParkourPrevGoal
-        tag @s remove ParkourGoal
-        tag @s remove ParkourNextJump
-      execute as @e[type=marker,tag=ParkourGeneratedJump,distance=..512] run
-        tag @s add ParkourNextJump
-        tag @s remove ParkourGeneratedJump
-        execute if entity @s[tag=ParkourGenPos] run tag @s add ParkourGoal
+    execute if entity @s[nbt={OnGround:1b}] positioned ~ ~-0.5 ~ run 
+      execute if entity @n[type=marker,tag=ParkourGoal,distance=..1] run
+        # increase score
+        scoreboard players add @s Blocks 1
+        # cycle all markers back
+        execute as @e[type=marker,tag=ParkourPrev,distance=..512] at @s run
+          kill @n[type=block_display,tag=ParkourBlockDisplay,distance=..0.5]
+          kill @s
+        execute as @e[type=marker,tag=ParkourCurr,distance=..512] at @s run
+          tag @s add ParkourPrev
+          tag @s remove ParkourCurr
+          tag @s remove ParkourPrevGoal
+          setblock ~ ~ ~ air
+          tag @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay] add ParkourPrevDisplay
+        execute as @e[type=marker,tag=ParkourNextJump,distance=..512] run
+          tag @s add ParkourCurr
+          execute if entity @s[tag=ParkourGoal] run tag @s add ParkourPrevGoal
+          tag @s remove ParkourGoal
+          tag @s remove ParkourNextJump
+        execute as @e[type=marker,tag=ParkourGeneratedJump,distance=..512] run
+          tag @s add ParkourNextJump
+          tag @s remove ParkourGeneratedJump
+          execute if entity @s[tag=ParkourGenPos] run tag @s add ParkourGoal
 
-      # generate jump, this is placeholder and TODO: allow for randomization between different jump packs, and selection of a jumppack
-      function infinite_parkour:jumppack/fetch {jumppack_id:"my_jumppack"}
-      function infinite_parkour:jumppack/random_jump
-      data modify storage infinite_parkour:calc temp_blocks_list set from storage infinite_parkour:jumppack jump.blocks
-      # Below gets a random number between 0 and 1, multiplies by 2, and then subtracts 1. This gives a random value of -1 or 1, which will be multiplied by every X value to randomly mirror jumps across the X axis, 50-50.
-      execute store result storage infinite_parkour:calc jump_mirror_math int 2 run random value 0..1
-      execute store result score #jump_mirror_math math run data get storage infinite_parkour:calc jump_mirror_math
-      scoreboard players remove #jump_mirror_math math 1
-      execute at @n[type=marker,tag=ParkourGenPos,distance=..512] run function infinite_parkour:freeplay/summon_jump_markers
-      execute as @n[type=marker,tag=ParkourGenPos,tag=ParkourGoal,distance=..512] run tag @s remove ParkourGenPos
-      execute at @e[type=marker,tag=ParkourGeneratedJump,distance=..512] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
-      execute at @e[type=marker,tag=ParkourBlocker,distance=..512] as @n[type=block_display,distance=..1] run data merge entity @s {block_state:{Name:"minecraft:yellow_stained_glass"}}
-      execute at @e[type=marker,tag=ParkourNextJump,distance=..512] run
-        setblock ~ ~ ~ barrier
-        execute as @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay] run
-          data merge entity @s {transformation:{scale:[1f,1f,1f],translation:[-0.5f,-0.5f,-0.5f]}}
-          tag @s remove ParkourGeneratedDisplay
-      # generate decoration, will be included here in the future on the next line
-      function infinite_parkour:generate_decorations
+        # generate jump, this is placeholder and TODO: allow for randomization between different jump packs, and selection of a jumppack
+        function infinite_parkour:jumppack/fetch {jumppack_id:"my_jumppack"}
+        function infinite_parkour:jumppack/random_jump
+        data modify storage infinite_parkour:calc temp_blocks_list set from storage infinite_parkour:jumppack jump.blocks
+        # Below gets a random number between 0 and 1, multiplies by 2, and then subtracts 1. This gives a random value of -1 or 1, which will be multiplied by every X value to randomly mirror jumps across the X axis, 50-50.
+        execute store result storage infinite_parkour:calc jump_mirror_math int 2 run random value 0..1
+        execute store result score #jump_mirror_math math run data get storage infinite_parkour:calc jump_mirror_math
+        scoreboard players remove #jump_mirror_math math 1
+        execute at @n[type=marker,tag=ParkourGenPos,distance=..512] run function infinite_parkour:freeplay/summon_jump_markers
+        execute as @n[type=marker,tag=ParkourGenPos,tag=ParkourGoal,distance=..512] run tag @s remove ParkourGenPos
+        execute at @e[type=marker,tag=ParkourGeneratedJump,distance=..512] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ParkourBlockDisplay","ParkourGeneratedDisplay"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+        execute at @e[type=marker,tag=ParkourBlocker,distance=..512] as @n[type=block_display,distance=..1] run data merge entity @s {block_state:{Name:"minecraft:yellow_stained_glass"}}
+        execute at @e[type=marker,tag=ParkourNextJump,distance=..512] run
+          setblock ~ ~ ~ barrier
+          execute as @n[type=block_display,distance=..0.5,tag=ParkourBlockDisplay] run
+            data merge entity @s {transformation:{scale:[1f,1f,1f],translation:[-0.5f,-0.5f,-0.5f]}}
+            tag @s remove ParkourGeneratedDisplay
+        # generate decoration, will be included here in the future on the next line
+      execute if entity @n[type=marker,tag=ParkourBlock,distance=..1, tag=!ParkourDecoComplete] run
+        tag @n[type=marker,tag=ParkourBlock,distance=..1,tag=!ParkourDecoComplete] add ParkourDecoComplete
+        function infinite_parkour:generate_decorations
+
   return 0
 
 
@@ -166,7 +170,8 @@
   tag @a[team=Highscore] remove ParkourFalling
 
 /summon_jump_markers
-  #This runs through each block in the jump's list and runs the function place_jump_objects in their position.
+  #This runs through each block in the jump's list and runs the function place_jump_objects in their position. We remove the first point since it will always overlap with the location of the previous block!
+  data remove storage infinite_parkour:calc temp_blocks_list[0]
   execute unless data storage infinite_parkour:calc temp_blocks_list[0] run return 0
   data modify storage infinite_parkour:calc temp_current_block set from storage infinite_parkour:calc temp_blocks_list[0]
   #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.
@@ -179,7 +184,6 @@
   %EMPTY%
     $execute positioned ~$(x) ~$(y) ~$(z) run function infinite_parkour:freeplay/place_jump_objects
   + with storage infinite_parkour:macro
-  data remove storage infinite_parkour:calc temp_blocks_list[0]
   function infinite_parkour:freeplay/summon_jump_markers
 
 /place_jump_objects
