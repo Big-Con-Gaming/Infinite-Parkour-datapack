@@ -69,7 +69,9 @@
       execute store result score y1 math run data get storage infinite_parkour:calc trail[0].dst[1]
       execute store result score z1 math run data get storage infinite_parkour:calc trail[0].dst[2]
       
-      # TODO multiply x0 and x1 by -1 if needed
+      execute if score #jump_mirror_math math matches ..-1 run
+        scoreboard players operation x0 math *= #jump_mirror_math math
+        scoreboard players operation x1 math *= #jump_mirror_math math
 
       scoreboard players operation x0 math += x math
       scoreboard players operation y0 math += y math

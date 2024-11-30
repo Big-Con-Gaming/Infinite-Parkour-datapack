@@ -30,7 +30,6 @@ execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ 
 execute as @a at @s if dimension minecraft:overworld run team leave @s 
 #Below is a quick fix that places newly teleported players onto the Highscore team. Should be relocated to the teleportation command.
 execute in infinite_parkour:infinite_parkour run team join Highscore @a[x=0,y=100,z=0,dx=1,dy=2,dz=1]
-execute in infinite_parkour:lane run function infinite_parkour:line
 #In the future, the bottom line can be removed (when phasing out old code)
 execute in infinite_parkour:infinite_parkour run function infinite_parkour:line
 execute as @a[team=ParkourPlayers] run title @s actionbar {"color":"#98a3dd","extra":["[",{"score":{"name":"@s","objective":"Blocks"}},"]"],"text":""}
