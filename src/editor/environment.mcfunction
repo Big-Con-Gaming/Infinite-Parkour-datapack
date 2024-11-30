@@ -1,7 +1,7 @@
 # creates a new editor environment at ~ 0 ~
 /create
   forceload add ~ -32 ~63 63
-  summon marker ~ ~ ~ {Tags:["ipe","ipe_env"]}
+  summon marker ~ ~ ~ {Tags:["ipe_env"]}
   # canvas room
   fill ~ -1 ~ ~63 -1 ~63 black_concrete
   fill ~-1 0 ~-1 ~64 63 ~-1 white_concrete
@@ -22,22 +22,21 @@
   # holograms
   function infinite_parkour:editor/hologram/create_grid
   # page controls
-  summon text_display ~31.5 34.0 ~-17.9 {text:'"Page"',Tags:["ipe","ipe_page_ctrl"]}
+  summon text_display ~31.5 34.0 ~-17.9 {text:'"Page"',Tags:["ipe_page_ctrl"]}
   execute positioned ~31.5 33.5 ~-17.9 summon text_display run
     data merge entity @s {text:'"0"'}
-    tag @s add ipe
     tag @s add ipe_page_ctrl
     tag @s add ipe_page_num
     scoreboard players set @s ipe_index 0
-  summon text_display ~31.0 33.5 ~-17.9 {text:'"\\u2190"',Tags:["ipe","ipe_page_ctrl"]}
-  summon text_display ~32.0 33.5 ~-17.9 {text:'"\\u2192"',Tags:["ipe","ipe_page_ctrl"]}
-  summon interaction ~31.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe","ipe_page_ctrl","ipe_page_prev"]}
-  summon interaction ~32.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe","ipe_page_ctrl","ipe_page_next"]}
+  summon text_display ~31.0 33.5 ~-17.9 {text:'"\\u2190"',Tags:["ipe_page_ctrl"]}
+  summon text_display ~32.0 33.5 ~-17.9 {text:'"\\u2192"',Tags:["ipe_page_ctrl"]}
+  summon interaction ~31.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe_page_ctrl","ipe_page_prev"]}
+  summon interaction ~32.0 33.5 ~-17.9 {width:0.3,height:0.3,Tags:["ipe_page_ctrl","ipe_page_next"]}
   # items
   setblock ~-1 ~ ~-1 chest
 # deletes this environment (should be called on a marker with the tag 'ipe_env')
 /delete
-  execute positioned ~-0.5 -0.5 -32.5 run kill @e[tag=ipe,dx=64,dy=64,dz=96]
+  execute positioned ~-0.5 -0.5 -32.5 run kill @e[type=!player,dx=64,dy=64,dz=96]
   fill ~-1 -1 -1 ~64 -1 64 light_gray_concrete
   fill ~-1 0 -1 ~64 64 64 air
   fill ~19 31 -19 ~43 40 -2 air

@@ -8,21 +8,41 @@
     execute positioned ~31.5 31.5 0.5 run
       execute if block ~ ~ ~ air run
         setblock ~ ~-1 ~ bedrock
-        execute unless entity @n[type=text_display,distance=..0.1] run summon text_display ~ ~ ~ {text:'"Place starting block"',billboard:"center",Tags:["ipe"]}
+        execute unless entity @n[type=text_display,distance=..0.1] run summon text_display ~ ~ ~ {text:'"Place starting block"',billboard:"center"}
       execute unless block ~ ~ ~ air run
         execute if block ~ ~-1 ~ bedrock run setblock ~ ~-1 ~ air
         kill @n[type=text_display,distance=..1]
     # place new blocks
     execute as @e[type=item_frame,dx=64.0,dy=64.0,dz=64.0,tag=ipe_place] at @s run
-      execute if entity @s[tag=ipe_place_inside] positioned ^ ^ ^-0.5 align xyz run function infinite_parkour:editor/canvas/place_block
+      execute if entity @s[tag=ipe_place_inside] positioned ^ ^ ^-0.5 align xyz if entity @n[type=block_display,tag=ipe_block,distance=..0.1] run function infinite_parkour:editor/canvas/place_block
       execute if entity @s[tag=!ipe_place_inside] positioned ^ ^ ^0.5 align xyz run function infinite_parkour:editor/canvas/place_block
     kill @e[type=item_frame,tag=ipe_place]
+    # play trail start particle
+    execute as @e[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start] at @s run particle witch ~ ~1 ~
+    # connect trails
+    execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=ipe_trail_start_new] run
+      execute unless entity @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run return 0
+      data modify storage infinite_parkour:calc dst set from entity @s Pos
+      execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run 
+        tag @s add ip_trail
+        tag @s remove ipe_trail_start
+        data modify entity @s data.color set value [0.8,0.2,0.3]
+        data modify entity @s data.target set from storage infinite_parkour:calc dst
+      data remove storage infinite_parkour:calc dst
+      kill @s
+    tag @e[type=marker,dx=64,dy=64,dz=64] remove ipe_trail_start_new
+    # destroy removed trails
+    execute as @e[type=marker,dx=64,dy=64,dz=64,tag=ip_trail] at @s if block ~ ~ ~ air run kill @s
   
   execute in infinite_parkour:editor as @a[distance=0..] at @s run
     # destroy removed blocks
     execute as @e[type=block_display,tag=ipe_block,distance=..16] at @s if block ~ ~ ~ air run kill @s
 
 /place_block
+  execute if entity @s[tag=ipe_place_82] run
+    summon marker ~0.5 ~0.5 ~0.5 {Tags:["ipe_trail_start","ipe_trail_start_new"]}
+  execute if entity @s[tag=ipe_place_82] run return 0
+
   execute unless entity @n[type=block_display,tag=ipe_block,distance=..0.1] run summon block_display ~ ~ ~ {Tags:["ipe_block"],block_state:{Name:"reinforced_deepslate"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
   ride @s mount @n[type=block_display,tag=ipe_block,distance=..0.1]
   execute on vehicle run team leave @s
@@ -43,19 +63,12 @@
       tag @s add ipe_block_dst
       team join infpar_green @s
 
-# gives the player items for editing
-/items
-  give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_place_platform"],Invisible:1b},item_name="Destination",item_model="stone"]
-  give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_place_blocker"],Invisible:1b},item_name="Destination",item_model="tuff"]
-  give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_place_pickup0"],Invisible:1b},item_name='"Simple Pickup"',item_model="gold_nugget"]
-  give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_place_pickup1"],Invisible:1b},item_name='"Advanced Pickup"',item_model="emerald"]
-  give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_clear"],Invisible:1b},item_name="Destination",item_model="white_dye"]
-  give @s item_frame[entity_data={id:"",Tags:["ipe_place","ipe_dye","ipe_place_dst"],Invisible:1b},item_name="Destination",item_model="lime_dye"]
-
 /clear
   execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] at @s run
     setblock ~ ~ ~ air
     kill @s
+  kill @e[type=marker,dx=64.0,dy=64.0,dz=64.0,tag=ip_trail]
+  kill @e[type=marker,dx=64.0,dy=64.0,dz=64.0,tag=ipe_trail_start]
 
 # converts data (infinite_parkour:calc jump.blocks) into blocks
 /load
@@ -73,6 +86,9 @@
 
   data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
   function infinite_parkour:editor/canvas/load/rec
+
+  data modify storage infinite_parkour:calc trail set from storage infinite_parkour:calc jump.trail
+  execute positioned ~31.5 31.5 0.5 run function infinite_parkour:trail/load
 
   data remove storage infinite_parkour:calc Pos
   data remove storage infinite_parkour:calc build
@@ -134,6 +150,13 @@
     #TODO calculate jump.dir.e
     #TODO calculate jump.dir.u
     #TODO calculate jump.dir.d
+
+    function infinite_parkour:trail/save
+    %EMPTY%
+      $say $(trail)
+    + with storage infinite_parkour:calc
+    data modify storage infinite_parkour:calc jump.trail set from storage infinite_parkour:calc trail
+    data remove storage infinite_parkour:calc trail
   
   scoreboard players reset min_x math
   scoreboard players reset min_y math
