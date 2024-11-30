@@ -82,12 +82,12 @@
   data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {Tags:["ipe_place_0","ipe_place_01"]}
   data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {Tags:["ipe_place_1","ipe_place_10"]}
   data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {Tags:["ipe_place_1","ipe_place_11"]}
-  data modify storage infinite_parkour:calc build[{dst:true}].Tags append value "ipe_load_dst"
 
   data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
   function infinite_parkour:editor/canvas/load/rec
 
   data modify storage infinite_parkour:calc trail set from storage infinite_parkour:calc jump.trail
+  data modify storage infinite_parkour:calc trail_color set value [0.8,0.2,0.3]
   execute positioned ~31.5 31.5 0.5 run function infinite_parkour:trail/load
 
   data remove storage infinite_parkour:calc Pos
@@ -125,6 +125,8 @@
   scoreboard players set max_x math 0
   scoreboard players set max_y math 0
   scoreboard players set max_z math 0
+  scoreboard players set dst_x math 0
+  scoreboard players set dst_y math 0
   execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] run
     function infinite_parkour:editor/canvas/save/get_pos
     function infinite_parkour:editor/canvas/save/get_type
@@ -144,17 +146,17 @@
     execute store result storage infinite_parkour:calc jump.max_pos[0] int 1 run scoreboard players get max_x math
     execute store result storage infinite_parkour:calc jump.max_pos[1] int 1 run scoreboard players get max_y math
     execute store result storage infinite_parkour:calc jump.max_pos[2] int 1 run scoreboard players get max_z math
-
-    data modify storage infinite_parkour:calc jump.dst set from storage infinite_parkour:calc jump.blocks[{dst:true}].pos
-    #TODO calculate jump.dir.w
-    #TODO calculate jump.dir.e
-    #TODO calculate jump.dir.u
-    #TODO calculate jump.dir.d
+    data modify storage infinite_parkour:calc jump.dst set value [0,0,0]
+    execute store result storage infinite_parkour:calc jump.dst[0] int 1 run scoreboard players get dst_x math
+    execute store result storage infinite_parkour:calc jump.dst[1] int 1 run scoreboard players get dst_y math
+    execute store result storage infinite_parkour:calc jump.dst[2] int 1 run scoreboard players get max_z math
+    data modify storage infinite_parkour:calc jump.dir set value {}
+    execute if score dst_x math matches 1.. run data modify storage infinite_parkour:calc jump.dst.e set value true
+    execute if score dst_x math matches ..-1 run data modify storage infinite_parkour:calc jump.dst.w set value true
+    execute if score dst_y math matches 1.. run data modify storage infinite_parkour:calc jump.dst.u set value true
+    execute if score dst_y math matches ..-1 run data modify storage infinite_parkour:calc jump.dst.d set value true
 
     function infinite_parkour:trail/save
-    %EMPTY%
-      $say $(trail)
-    + with storage infinite_parkour:calc
     data modify storage infinite_parkour:calc jump.trail set from storage infinite_parkour:calc trail
     data remove storage infinite_parkour:calc trail
   
@@ -164,6 +166,8 @@
   scoreboard players reset max_x math
   scoreboard players reset max_y math
   scoreboard players reset max_z math
+  scoreboard players reset dst_x math
+  scoreboard players reset dst_y math
 
   /get_pos
     execute store result score x math run data get entity @s Pos[0]
@@ -177,7 +181,10 @@
     execute if score z math < min_z math run scoreboard players operation min_z math = z math
     execute if score x math > max_x math run scoreboard players operation max_x math = x math
     execute if score y math > max_y math run scoreboard players operation max_y math = y math
-    execute if score z math > max_z math run scoreboard players operation max_z math = z math
+    execute if score z math > max_z math run
+      scoreboard players operation dst_x math = x math
+      scoreboard players operation dst_y math = y math
+      scoreboard players operation max_z math = z math
     data modify storage infinite_parkour:calc temp set value {pos:[0,0,0]}
     execute store result storage infinite_parkour:calc temp.pos[0] int 1 run scoreboard players get x math
     execute store result storage infinite_parkour:calc temp.pos[1] int 1 run scoreboard players get y math
@@ -187,5 +194,3 @@
     execute if entity @s[tag=ipe_block_blocker] run data modify storage infinite_parkour:calc temp.type set value "blocker"
     execute if entity @s[tag=ipe_block_pickup0] run data modify storage infinite_parkour:calc temp.type set value "pickup0"
     execute if entity @s[tag=ipe_block_pickup1] run data modify storage infinite_parkour:calc temp.type set value "pickup1"
-  /get_extra
-    execute if entity @s[tag=ipe_block_dst] run data modify storage infinite_parkour:calc temp.dst set value true
