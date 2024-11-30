@@ -25,12 +25,10 @@
   setblock ~ ~ ~ light_gray_concrete
   setblock ~ ~1 ~ orange_stained_glass
   execute positioned ~0.5 ~1.5 ~0.5 summon block_display run
-    tag @s add ipe
     tag @s add ipe_hologram
     tag @s add ipe_hologram_loading
     scoreboard players operation @s ipe_index = #counter ipe_index
   execute positioned ~0.5 ~0.95 ~0.5 summon interaction run
-    tag @s add ipe
     tag @s add ipe_hologram_interact
     data merge entity @s {width:1.1,height:1.1}
     scoreboard players operation @s ipe_index = #counter ipe_index
@@ -167,7 +165,6 @@
   scoreboard players operation z math /= max_len math
   scoreboard players operation size math /= max_len math
   execute summon block_display run
-    tag @s add ipe
     data modify storage infinite_parkour:calc transformation set from entity @s transformation
     # 0.0000625 = 1/16000
     execute store result storage infinite_parkour:calc transformation.translation[0] float 0.0000625 run scoreboard players get x math
