@@ -14,8 +14,8 @@
         kill @n[type=text_display,distance=..1]
     # place new blocks
     execute as @e[type=item_frame,dx=64.0,dy=64.0,dz=64.0,tag=ipe_place] at @s run
-      execute if entity @s[tag=ipe_place_inside] positioned ^ ^ ^-0.5 align xyz if entity @n[type=block_display,tag=ipe_block,distance=..0.1] run function infinite_parkour:editor/canvas/place_block
-      execute if entity @s[tag=!ipe_place_inside] positioned ^ ^ ^0.5 align xyz run function infinite_parkour:editor/canvas/place_block
+      execute if entity @s[tag=ipe_place_inside] positioned ^ ^ ^-0.5 align xyz if entity @n[type=block_display,tag=ipe_block,distance=..0.1] run %FILE%/place_block
+      execute if entity @s[tag=!ipe_place_inside] positioned ^ ^ ^0.5 align xyz run %FILE%/place_block
     kill @e[type=item_frame,tag=ipe_place]
     # play trail start particle
     execute as @e[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start] at @s run particle witch ~ ~1 ~
@@ -72,31 +72,19 @@
 
 # converts data (infinite_parkour:calc jump.blocks) into blocks
 /load
-  function infinite_parkour:editor/canvas/clear
+  %FILE%/clear
 
   execute store result score dx math run data get entity @s Pos[0]
   scoreboard players add dx math 31
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
-  data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {Tags:["ipe_place_0","ipe_place_00"]}
-  data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {Tags:["ipe_place_0","ipe_place_01"]}
-  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {Tags:["ipe_place_1","ipe_place_10"]}
-  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {Tags:["ipe_place_1","ipe_place_11"]}
+  data modify storage infinite_parkour:calc build[{type:"platform"}].Tags set value ["ipe_place_0","ipe_place_00"]
+  data modify storage infinite_parkour:calc build[{type:"blocker"}].Tags set value ["ipe_place_0","ipe_place_01"]
+  data modify storage infinite_parkour:calc build[{type:"pickup0"}].Tags set value ["ipe_place_1","ipe_place_10"]
+  data modify storage infinite_parkour:calc build[{type:"pickup1"}].Tags set value ["ipe_place_1","ipe_place_11"]
 
   data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
-  function infinite_parkour:editor/canvas/load/rec
-
-  data modify storage infinite_parkour:calc trail set from storage infinite_parkour:calc jump.trail
-  data modify storage infinite_parkour:calc trail_color set value [0.8,0.2,0.3]
-  execute positioned ~31.5 31.5 0.5 run function infinite_parkour:trail/load
-
-  data remove storage infinite_parkour:calc Pos
-  data remove storage infinite_parkour:calc build
-  scoreboard players reset dx math
-  scoreboard players reset x math
-  scoreboard players reset y math
-  scoreboard players reset z math
-  /rec
+  %EMPTY%
     execute unless data storage infinite_parkour:calc build[0] run return 0
     execute unless data storage infinite_parkour:calc build[0].pos run return 0
     execute store result score x math run data get storage infinite_parkour:calc build[0].pos[0]
@@ -114,7 +102,18 @@
       data modify entity @s Tags set from storage infinite_parkour:calc build[0].Tags
       tag @s add ipe_place
     data remove storage infinite_parkour:calc build[0]
-    function infinite_parkour:editor/canvas/load/rec
+    %FUNC%
+
+  data modify storage infinite_parkour:calc trail set from storage infinite_parkour:calc jump.trail
+  data modify storage infinite_parkour:calc trail_color set value [0.8,0.2,0.3]
+  execute positioned ~31.5 31.5 0.5 run function infinite_parkour:trail/load
+
+  data remove storage infinite_parkour:calc Pos
+  data remove storage infinite_parkour:calc build
+  scoreboard players reset dx math
+  scoreboard players reset x math
+  scoreboard players reset y math
+  scoreboard players reset z math
 
 # converts blocks into data (infinite_parkour:calc jump.blocks)
 /save
@@ -128,12 +127,10 @@
   scoreboard players set dst_x math 0
   scoreboard players set dst_y math 0
   execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] run
-    function infinite_parkour:editor/canvas/save/get_pos
-    function infinite_parkour:editor/canvas/save/get_type
-    function infinite_parkour:editor/canvas/save/get_extra
+    %FILE%/save/get_pos
+    %FILE%/save/get_type
     data modify storage infinite_parkour:calc jump.blocks append from storage infinite_parkour:calc temp
     data remove storage infinite_parkour:calc temp
-  data remove storage infinite_parkour:calc temp
 
   execute unless data storage infinite_parkour:calc jump.blocks[0] run data modify storage infinite_parkour:calc jump set value {}
   

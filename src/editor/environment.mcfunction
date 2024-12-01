@@ -50,27 +50,27 @@
 
       execute if entity @s[tag=ipe_page_prev] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=1..}] at @s run
         scoreboard players remove @s ipe_index 1
-        function infinite_parkour:editor/environment/update_page
+        %FILE%/update_page
       execute if entity @s[tag=ipe_page_next] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=..6}] at @s run
         scoreboard players add @s ipe_index 1
-        function infinite_parkour:editor/environment/update_page
+        %FILE%/update_page
       execute if entity @s[tag=ipe_hologram_interact] run function infinite_parkour:editor/hologram/interact
       
       data remove entity @s interaction
       data remove entity @s attack
 /update_page
   execute store result storage infinite_parkour:macro data.page int 1 run scoreboard players get @s ipe_index
-  function infinite_parkour:editor/environment/update_page/macro with storage infinite_parkour:macro data
+  %EMPTY%
+    $data merge entity @s {text:'"$(page)"'}
+  + with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
   execute positioned ~-10 33 -17 align xyz run function infinite_parkour:editor/hologram/unload_all
-  /macro
-    $data merge entity @s {text:'"$(page)"'}
 
 # deletes and creates a new environment
 /test_setup
   execute in infinite_parkour:editor positioned 0.0 0.0 0.0 run
-    execute as @n[type=marker,tag=ipe_env,distance=..0.1] at @s run function infinite_parkour:editor/environment/delete
-    function infinite_parkour:editor/environment/create
+    execute as @n[type=marker,tag=ipe_env,distance=..0.1] at @s run %FILE%/delete
+    %FILE%/create
     data merge entity @n[type=marker,tag=ipe_env,distance=..0.1] {data:{jumppack_id:"my_jumppack"}}
     tp @s ~31.5 32.0 -4.5 0 0
 
@@ -84,7 +84,7 @@
     $data modify storage infinite_parkour:jumppack str set value '$(jumppack)'
   + with storage jumppack:my_jumppack
   setblock ~ ~ ~ command_block[facing=up]{auto:1b,Command:"data get storage infinite_parkour:jumppack str"}
-  setblock ~ ~1 ~ chain_command_block[facing=up]{auto:1b,Command:"function infinite_parkour:editor/environment/export/finish"}
+  setblock ~ ~1 ~ chain_command_block[facing=up]{auto:1b,Command:"%FUNC%/finish"}
   # execute
   #   $say $(clickEvent)
   #   # $tellraw @s {"text":"Click to copy","clickEvent":$(clickEvent),"hoverEvent":{"action":"show_text","contents":[{"text":"Click to Copy","color":"yellow"}]}}

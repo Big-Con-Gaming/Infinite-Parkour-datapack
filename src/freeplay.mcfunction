@@ -2,50 +2,45 @@
 # the attempt is to use lane.mcfunction and jumppack.mcfuncton
 
 /tick
-  function infinite_parkour:freeplay/teleporter_tick
-  function infinite_parkour:freeplay/lobby_tick
-  function infinite_parkour:freeplay/game_tick
+  # %FILE%/teleporter_tick
+  %FILE%/lobby_tick
+  %FILE%/game_tick
 
 # Teleporter
 /teleporter_tick
-  execute as @e[type=item,nbt={Item:{id:"minecraft:gold_ingot"}}] unless entity @s[nbt={Fire:-1s}] at @s
-  + align xyz positioned ~0.5 ~ ~0.5
-  + if block ~-1 ~ ~-1 gold_block
-  + if block ~ ~ ~-1 gold_block
-  + if block ~1 ~ ~-1 gold_block
-  + if block ~1 ~ ~ gold_block
-  + if block ~ ~ ~ fire
-  + if block ~-1 ~ ~ gold_block
-  + if block ~-1 ~ ~1 gold_block
-  + if block ~ ~ ~1 gold_block
-  + if block ~1 ~ ~1 gold_block run
+  execute as @e[type=item,nbt={Item:{id:"minecraft:gold_ingot"}}]
+  + at @s
+  + align xyz positioned ~0.5 ~0.5 ~0.5
+  + unless entity @s[nbt={Fire:-1s}]
+  + if %FILE%/test_structure run
     kill @s
     summon interaction ~ ~1 ~ {Tags:["ip_enter_freeplay"],width:1.5}
     summon text_display ~ ~1.8 ~ {billboard:"center",alignment:"center",Tags:["ip_enter_freeplay"],text:'{"color":"yellow","text":"Click to enter"}'}
     summon text_display ~ ~1.5 ~ {billboard:"center",alignment:"center",Tags:["ip_enter_freeplay"],text:'{"bold":true,"color":"#FFBB00","text":"Infinite Parkour Freeplay"}'}
   execute as @e[type=interaction,tag=ip_enter_freeplay] at @s run
-    execute on attacker run function infinite_parkour:freeplay/teleport_in
-    execute on target run function infinite_parkour:freeplay/teleport_in
+    execute on attacker run %FILE%/teleport_in
+    execute on target run %FILE%/teleport_in
     data remove entity @s attack
     data remove entity @s interaction
-    execute unless block ~-1 ~-1 ~-1 gold_block run function infinite_parkour:freeplay/delete_teleporter
-    execute unless block ~ ~-1 ~-1 gold_block run function infinite_parkour:freeplay/delete_teleporter
-    execute unless block ~1 ~-1 ~-1 gold_block run function infinite_parkour:freeplay/delete_teleporter
-    execute unless block ~-1 ~-1 ~ gold_block run function infinite_parkour:freeplay/delete_teleporter
-    execute unless block ~ ~-1 ~ fire run function infinite_parkour:freeplay/delete_teleporter
-    execute unless block ~1 ~-1 ~ gold_block run function infinite_parkour:freeplay/delete_teleporter
-    execute unless block ~-1 ~-1 ~1 gold_block run function infinite_parkour:freeplay/delete_teleporter
-    execute unless block ~ ~-1 ~1 gold_block run function infinite_parkour:freeplay/delete_teleporter
-    execute unless block ~1 ~-1 ~1 gold_block run function infinite_parkour:freeplay/delete_teleporter
+    execute positioned ~ ~-1 ~ unless %FILE%/test_structure positioned ~ ~1 ~ run kill @e[tag=ip_enter_freeplay,distance=..1,limit=3]
 
-/delete_teleporter
-  kill @e[tag=ip_enter_freeplay,distance=..1,limit=3]
+/test_structure
+  execute unless block ~-1 ~ ~-1 gold_block run return 0
+  execute unless block ~ ~ ~-1 gold_block run return 0
+  execute unless block ~1 ~ ~-1 gold_block run return 0
+  execute unless block ~-1 ~ ~ gold_block run return 0
+  execute unless block ~ ~ ~ fire run return 0
+  execute unless block ~1 ~ ~ gold_block run return 0
+  execute unless block ~-1 ~ ~1 gold_block run return 0
+  execute unless block ~ ~ ~1 gold_block run return 0
+  execute unless block ~1 ~ ~1 gold_block run return 0
+  return 1
 
 /delete_all_teleporters
   kill @e[tag=ip_enter_freeplay]
 
 /teleport_in
-  execute in infinite_parkour:infinite_parkour run function infinite_parkour:tick_portal/teleport_in
+  execute in infinite_parkour:infinite_parkour run function infinite_parkour:player_saver/store
   data modify storage infinite_parkour:calc lane_tag set value "ip_freeplay_entry"
   function infinite_parkour:lane/alloc
 
@@ -55,7 +50,7 @@
     execute store success score #player_in_lobby math positioned ~-8 ~-8 ~-8 if entity @p[dx=15,dy=15,dz=15]
     execute as @p if score #player_in_lobby math matches 1 run team join Highscore
     #Checks below to see if the first 2 blocks have been generated, if not, then they are created. The player is also tossed on ParkourPlayers team. I'm not sure if this is working intended actually since in theory the player could walk backwards, rejoin team Highscore, and then wouldn't be back on team ParkourPlayers when walking back forwards, but this doesn't happen.
-    execute align xyz unless block ~ ~1 ~12 minecraft:barrier positioned ~-10 ~ ~ as @p[dx=20,dy=10,dz=12] if score #player_in_lobby math matches 0 positioned ~10 ~1 ~10 run function infinite_parkour:freeplay/setup_first_jump
+    execute align xyz unless block ~ ~1 ~12 minecraft:barrier positioned ~-10 ~ ~ as @p[dx=20,dy=10,dz=12] if score #player_in_lobby math matches 0 positioned ~10 ~1 ~10 run %FILE%/setup_first_jump
 
   return 0
 #Command below is a direct port over from pressure_plate_triggered.mcfunction (you know the confusing function that set up the first few jumps). It has also now been modified to set the blocks up correctly.
@@ -83,8 +78,8 @@
 # Game
 /game_tick
   execute as @a[team=ParkourPlayers] at @s run
-    function infinite_parkour:freeplay/fall_tick
-    function infinite_parkour:freeplay/set_distance_score
+    %FILE%/fall_tick
+    %FILE%/set_distance_score
     #Below cleans up all blocks and decorations behind the players. The fill command could be removed if we save the location of the most previous jump, to then delete that block and its marker at once.
     execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
     execute if entity @s[nbt={OnGround:1b}] positioned ~ ~-0.5 ~ run 
@@ -130,10 +125,10 @@
           # TODO allow editing of trail color
           data modify storage infinite_parkour:calc trail_color set value [1.0,0.8,0.0]
           function infinite_parkour:trail/load
-          function infinite_parkour:freeplay/summon_jump_markers
+          %FILE%/summon_jump_markers
           # Define the destination block
           data modify storage infinite_parkour:macro pos set from storage infinite_parkour:jumppack jump.dst
-          function infinite_parkour:freeplay/macro_pos
+          %FILE%/macro_pos
           %EMPTY%
             $execute positioned ~$(x) ~$(y) ~$(z) run tag @n[type=marker,distance=..0.1] add ParkourGenPos
           + with storage infinite_parkour:macro data
@@ -206,12 +201,12 @@
   data modify storage infinite_parkour:calc temp_current_block set from storage infinite_parkour:calc temp_blocks_list[0]
   #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.
   data modify storage infinite_parkour:macro pos set from storage infinite_parkour:calc temp_current_block.pos
-  function infinite_parkour:freeplay/macro_pos
+  %FILE%/macro_pos
   %EMPTY%
-    $execute positioned ~$(x) ~$(y) ~$(z) run function infinite_parkour:freeplay/place_jump_objects
+    $execute positioned ~$(x) ~$(y) ~$(z) run %FILE%/place_jump_objects
   + with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
-  function infinite_parkour:freeplay/summon_jump_markers
+  %FUNC%
 
 /place_jump_objects
   #This places the different kinds of objects found in jumps. Currently, this includes platforms, blockers, and end destinations which are platforms as well. Mostly just places and modifies markers.

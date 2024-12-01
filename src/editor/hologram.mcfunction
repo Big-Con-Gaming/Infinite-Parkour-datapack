@@ -2,24 +2,24 @@
 
 /tick
   execute in infinite_parkour:editor as @e[type=block_display,tag=ipe_hologram,distance=0..] at @s run tp @s ~ ~ ~ ~2 ~
-  execute in infinite_parkour:editor as @a[distance=0..] at @s as @n[type=block_display,tag=ipe_hologram_loading,distance=..16] at @s run function infinite_parkour:editor/hologram/load
+  execute in infinite_parkour:editor as @a[distance=0..] at @s as @n[type=block_display,tag=ipe_hologram_loading,distance=..16] at @s run %FILE%/load
 
 /create_grid
   scoreboard players set #counter ipe_index 0
-  execute positioned ~21 32 ~-17 run function infinite_parkour:editor/hologram/create_row
-  execute positioned ~24 32 ~-17 run function infinite_parkour:editor/hologram/create_row
-  execute positioned ~27 32 ~-17 run function infinite_parkour:editor/hologram/create_row
-  execute positioned ~35 32 ~-17 run function infinite_parkour:editor/hologram/create_row
-  execute positioned ~38 32 ~-17 run function infinite_parkour:editor/hologram/create_row
-  execute positioned ~41 32 ~-17 run function infinite_parkour:editor/hologram/create_row
+  execute positioned ~21 32 ~-17 run %FILE%/create_row
+  execute positioned ~24 32 ~-17 run %FILE%/create_row
+  execute positioned ~27 32 ~-17 run %FILE%/create_row
+  execute positioned ~35 32 ~-17 run %FILE%/create_row
+  execute positioned ~38 32 ~-17 run %FILE%/create_row
+  execute positioned ~41 32 ~-17 run %FILE%/create_row
   scoreboard players reset #counter ipe_index
 
 /create_row
-  function infinite_parkour:editor/hologram/create_one
-  execute positioned ~ ~ ~3 run function infinite_parkour:editor/hologram/create_one
-  execute positioned ~ ~ ~6 run function infinite_parkour:editor/hologram/create_one
-  execute positioned ~ ~ ~9 run function infinite_parkour:editor/hologram/create_one
-  execute positioned ~ ~ ~12 run function infinite_parkour:editor/hologram/create_one
+  %FILE%/create_one
+  execute positioned ~ ~ ~3 run %FILE%/create_one
+  execute positioned ~ ~ ~6 run %FILE%/create_one
+  execute positioned ~ ~ ~9 run %FILE%/create_one
+  execute positioned ~ ~ ~12 run %FILE%/create_one
 
 /create_one
   setblock ~ ~ ~ light_gray_concrete
@@ -35,7 +35,7 @@
   scoreboard players add #counter ipe_index 1
 
 /unload_all
-  execute as @e[type=block_display,tag=ipe_hologram,dx=20,dy=0,dz=12] at @s run function infinite_parkour:editor/hologram/unload
+  execute as @e[type=block_display,tag=ipe_hologram,dx=20,dy=0,dz=12] at @s run %FILE%/unload
 
 /unload
   execute on passengers run kill @s
@@ -45,7 +45,7 @@
 /load
   tag @s remove ipe_hologram_loading
   
-  function infinite_parkour:editor/hologram/prepare_macro
+  %FILE%/prepare_macro
   function infinite_parkour:jumppack/get_jump with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
 
@@ -55,28 +55,28 @@
   execute unless data storage infinite_parkour:calc jump run return 0
     
   
-  function infinite_parkour:editor/hologram/get_dimensions
+  %FILE%/get_dimensions
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
-  function infinite_parkour:editor/hologram/add_block_states
+  %FILE%/add_block_states
 
-  function infinite_parkour:editor/hologram/rec
+  %FILE%/rec
 
   data remove storage infinite_parkour:calc build
   data remove storage infinite_parkour:calc transformation
   data remove storage infinite_parkour:calc jump
 
-  function infinite_parkour:editor/hologram/clean_score
+  %FILE%/clean_score
 
   setblock ~ ~ ~ glass
 
 /interact
-  function infinite_parkour:editor/hologram/prepare_macro
+  %FILE%/prepare_macro
   
   execute if data entity @s interaction run
     execute positioned ~-31.5 0 ~17.9 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/save
     function infinite_parkour:jumppack/set_jump with storage infinite_parkour:macro data
-    execute positioned ~ ~0.55 ~ as @n[type=block_display,tag=ipe_hologram,distance=..0.1] at @s run function infinite_parkour:editor/hologram/unload
+    execute positioned ~ ~0.55 ~ as @n[type=block_display,tag=ipe_hologram,distance=..0.1] at @s run %FILE%/unload
   execute if data entity @s attack run
     function infinite_parkour:jumppack/get_jump with storage infinite_parkour:macro data
     execute positioned ~-31.5 0 ~17.9 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/load
@@ -177,7 +177,7 @@
     data modify entity @s block_state set from storage infinite_parkour:calc build[0].block_state
     ride @s mount @n[type=block_display,tag=ipe_hologram,distance=..0.1]
   data remove storage infinite_parkour:calc build[0]
-  function infinite_parkour:editor/hologram/rec
+  %FILE%/rec
 
 /delete_all
   execute as @e[type=block_display,tag=ipe_hologram] run

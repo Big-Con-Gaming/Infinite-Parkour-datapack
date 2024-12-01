@@ -4,12 +4,12 @@
     execute at @e[type=marker,tag=ipe_env,distance=0..] run
       execute positioned ~ ~ ~-1 as @a[dx=64,dy=64,dz=65] unless entity @s[tag=ipe_player_canvas] run
         tag @s add ipe_player_canvas
-        execute positioned ~-1 ~ ~ run function infinite_parkour:editor/items/retrieve_items
+        execute positioned ~-1 ~ ~ run %FILE%/retrieve_items
       execute positioned ~ ~ ~-18 as @a[dx=64,dy=64,dz=13.4] if entity @s[tag=ipe_player_canvas] run
         tag @s remove ipe_player_canvas
-        execute positioned ~-1 ~ ~17 run function infinite_parkour:editor/items/store_items
-    execute as @a[distance=0..,tag=ipe_player_canvas] run function infinite_parkour:editor/items/give_bundles
-    execute as @a[distance=0..,tag=!ipe_player_canvas] run function infinite_parkour:editor/items/give_hologram_controls
+        execute positioned ~-1 ~ ~17 run %FILE%/store_items
+    execute as @a[distance=0..,tag=ipe_player_canvas] run %FILE%/give_bundles
+    execute as @a[distance=0..,tag=!ipe_player_canvas] run %FILE%/give_hologram_controls
 
   return 0
 
