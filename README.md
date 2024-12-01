@@ -60,3 +60,8 @@ execute if
 # %EMPTY% will be converted to nothing. The generated code will be:
 # function ns:func/internal0 with storage ns:path
 ```
+### Macros
+Currently custom macros aren't supported, there are 3 macros:
+ - `%EMPTY%` - will be converted into empty text: ` `
+ - `%FILE%` - will be converted into a function call of the file `function <namespace>:<path>`
+ - `%FUNC%` - will be converted into a function call of the function `function <namespace>:<path>/<innerpath>`

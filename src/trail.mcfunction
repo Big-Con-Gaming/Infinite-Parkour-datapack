@@ -41,21 +41,7 @@
   data modify storage infinite_parkour:calc trail_data.color set from storage infinite_parkour:calc trail_color
   data remove storage infinite_parkour:calc trail_color
 
-  function infinite_parkour:trail/load/rec
-
-  data remove storage infinite_parkour:calc trail
-  data remove storage infinite_parkour:calc trail_data
-  scoreboard players reset x math
-  scoreboard players reset y math
-  scoreboard players reset z math
-  scoreboard players reset x0 math
-  scoreboard players reset y0 math
-  scoreboard players reset z0 math
-  scoreboard players reset x1 math
-  scoreboard players reset y1 math
-  scoreboard players reset z1 math
-
-  /rec
+  %EMPTY%
     execute unless data storage infinite_parkour:calc trail[0] run return 0
     execute summon marker run
       tag @s add ip_trail
@@ -103,4 +89,16 @@
       execute store result storage infinite_parkour:calc trail_data.target[2] double 0.5 run scoreboard players get z1 math
       data modify entity @s data set from storage infinite_parkour:calc trail_data
     data remove storage infinite_parkour:calc trail[0]
-    function infinite_parkour:trail/load/rec
+    %FUNC%
+
+  data remove storage infinite_parkour:calc trail
+  data remove storage infinite_parkour:calc trail_data
+  scoreboard players reset x math
+  scoreboard players reset y math
+  scoreboard players reset z math
+  scoreboard players reset x0 math
+  scoreboard players reset y0 math
+  scoreboard players reset z0 math
+  scoreboard players reset x1 math
+  scoreboard players reset y1 math
+  scoreboard players reset z1 math

@@ -17,13 +17,13 @@ execute as @e[type=marker,tag=ParkourGoal] at @s run
     execute if score z1 math matches ..0 run scoreboard players operation z1 math *= -1 const
     execute store result storage infinite_parkour:macro data.dx float 0.01 run scoreboard players get x0 math
     execute store result storage infinite_parkour:macro data.dz float 0.01 run scoreboard players get z0 math
-    execute summon minecraft:block_display run function infinite_parkour:scale_parkour_block/distance with storage infinite_parkour:macro data
+    execute summon minecraft:block_display run %FILE%/distance with storage infinite_parkour:macro data
     scoreboard players operation d math = d1 math
     scoreboard players remove d math 50
     scoreboard players operation d0 math = d math
     execute store result storage infinite_parkour:macro data.dx float 0.01 run scoreboard players get x1 math
     execute store result storage infinite_parkour:macro data.dz float 0.01 run scoreboard players get z1 math
-    execute summon minecraft:block_display run function infinite_parkour:scale_parkour_block/distance with storage infinite_parkour:macro data
+    execute summon minecraft:block_display run %FILE%/distance with storage infinite_parkour:macro data
     scoreboard players operation d math *= 100 const
     scoreboard players operation d math /= d1 math
     # making sure 0 <= d <= 100
@@ -40,7 +40,7 @@ execute as @e[type=marker,tag=ParkourGoal] at @s run
     execute store result storage infinite_parkour:macro data.d2 float 0.005 run scoreboard players get d math
     execute store result storage infinite_parkour:macro data.s float 0.01 run scoreboard players get s math
     execute store result storage infinite_parkour:macro data.s2 float 0.005 run scoreboard players get s math
-    execute as @e[type=block_display,distance=..512] at @s run function infinite_parkour:scale_parkour_block/apply with storage infinite_parkour:macro data
+    execute as @e[type=block_display,distance=..512] at @s run %FILE%/apply with storage infinite_parkour:macro data
     data remove storage infinite_parkour:macro data
 
 # this function scales the block displays based on the distance of the player to the next block. The one below is old, only for use in the old version of the game.
@@ -61,13 +61,13 @@ execute as @e[type=marker,tag=ParkourGoal] at @s run
     execute if score z1 math matches ..0 run scoreboard players operation z1 math *= -1 const
     execute store result storage infinite_parkour:macro data.dx float 0.01 run scoreboard players get x0 math
     execute store result storage infinite_parkour:macro data.dz float 0.01 run scoreboard players get z0 math
-    execute summon minecraft:block_display run function infinite_parkour:scale_parkour_block/distance with storage infinite_parkour:macro data
+    execute summon minecraft:block_display run %FILE%/distance with storage infinite_parkour:macro data
     scoreboard players operation d math = d1 math
     scoreboard players remove d math 50
     scoreboard players operation d0 math = d math
     execute store result storage infinite_parkour:macro data.dx float 0.01 run scoreboard players get x1 math
     execute store result storage infinite_parkour:macro data.dz float 0.01 run scoreboard players get z1 math
-    execute summon minecraft:block_display run function infinite_parkour:scale_parkour_block/distance with storage infinite_parkour:macro data
+    execute summon minecraft:block_display run %FILE%/distance with storage infinite_parkour:macro data
     scoreboard players operation d math *= 100 const
     scoreboard players operation d math /= d1 math
     # making sure 0 <= d <= 100
@@ -84,7 +84,7 @@ execute as @e[type=marker,tag=ParkourGoal] at @s run
     execute store result storage infinite_parkour:macro data.d2 float 0.005 run scoreboard players get d math
     execute store result storage infinite_parkour:macro data.s float 0.01 run scoreboard players get s math
     execute store result storage infinite_parkour:macro data.s2 float 0.005 run scoreboard players get s math
-    function infinite_parkour:scale_parkour_block/apply with storage infinite_parkour:macro data
+    %FILE%/apply with storage infinite_parkour:macro data
     data remove storage infinite_parkour:macro data
 
 /distance
