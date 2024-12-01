@@ -30,5 +30,5 @@
   execute unless block ~1 ~-1 ~1 gold_block run return 0
   return 1
 
-/delete_all_teleporters
+/delete_all
   kill @e[tag=ip_enter_freeplay]

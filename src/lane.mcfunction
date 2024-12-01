@@ -4,42 +4,41 @@
 # the player will be teleported to a newly allocated lane
 /alloc
   execute unless data storage infinite_parkour:lane free_positions[0] run
-    scoreboard players add #lobby_count ip_data 1
-    execute store result storage infinite_parkour:macro data.lobby_x int 1024 run scoreboard players get #lobby_count ip_data
+    scoreboard players add lobby_count ip_data 1
+    scoreboard players operation #new ip_lane = lobby_count ip_data
   execute if data storage infinite_parkour:lane free_positions[0] run
-    data modify storage infinite_parkour:macro data.lobby_x set from storage infinite_parkour:lane free_positions[0]
+    execute store result score #new ip_lane run data get storage infinite_parkour:lane free_positions[0]
     data remove storage infinite_parkour:lane free_positions[0]
+  execute store result storage infinite_parkour:macro data.lobby_x int 1024 run scoreboard players get #new ip_lane
+
   %FUNC%/claim with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
-  data remove storage infinite_parkour:calc lane_tag
+  
+  scoreboard players reset #new ip_lane
 
   /claim
     $execute in infinite_parkour:lane positioned $(lobby_x) 0 0 run
       tp @s ~ ~ ~ 0 0
-      execute store result score @s ip_lane run data get entity @s Pos[0] 0.0009765625
-      scoreboard players operation #temp ip_lane = @s ip_lane
+      scoreboard players operation @s ip_lane = #new ip_lane
       forceload add ~-32 ~-32 ~31 ~31
       execute summon marker run
         tag @s add ip_lane_entry
         data modify entity @s data.player set from entity @s UUID
         data modify entity @s Tags append from storage infinite_parkour:calc lane_tag
-        scoreboard players operation @s ip_lane = #temp ip_lane
-        #as a placeholder, I have the old lobby being placed in here.
-        place template infinite_parkour:infinite_parkour_lobby ~-5 ~-1 ~-4
-      # 1/1024 = 0.0009765625
-      scoreboard players reset #temp ip_lane
+        scoreboard players operation @s ip_lane = #new ip_lane
 
 # This function needs to be called on the lane marker (tagged ip_lane_entry)
 /free
   execute unless data storage infinite_parkour:lane free_positions run data modify storage infinite_parkour:lane free_positions set value []
-  data modify storage infinite_parkour:lane free_positions append from entity @s Pos[0]
+  data modify storage infinite_parkour:lane free_positions insert 0 value 0
+  execute store result storage infinite_parkour:lane free_positions[0] int 1 run scoreboard players get @s ip_lane
   forceload remove ~-32 ~-32 ~31 ~31
   kill @s
 
 /free_all
   execute in infinite_parkour:lane as @e[type=marker,tag=ip_lane_entry,distance=0..] at @s run %FILE%/free
   data remove storage infinite_parkour:lane free_positions
-  scoreboard players reset #lobby_count
+  scoreboard players reset lobby_count
 
 /tick
   execute in infinite_parkour:lane run tag @e[type=marker,tag=ip_lane_entry,distance=0..] add ip_lane_remove
