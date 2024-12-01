@@ -77,16 +77,6 @@
 
   function infinite_parkour:jump/increment
 
-/macro_pos
-  #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.
-  execute store result score #jump_current_x math run data get storage infinite_parkour:macro pos[0]
-  scoreboard players operation #jump_current_x math *= #jump_mirror_math math
-  execute store result storage infinite_parkour:macro data.x int 1 run scoreboard players get #jump_current_x math
-  data modify storage infinite_parkour:macro data.y set from storage infinite_parkour:macro pos[1]
-  data modify storage infinite_parkour:macro data.z set from storage infinite_parkour:macro pos[2]
-  data remove storage infinite_parkour:macro pos
-  scoreboard players reset #jump_current_x math
-
 /fall_tick
   # this function is used for the falling effect and teleporting the players back
   execute as @a[team=ParkourPlayers] at @s run
