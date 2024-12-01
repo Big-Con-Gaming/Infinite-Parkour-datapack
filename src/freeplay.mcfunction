@@ -68,12 +68,16 @@
 /finished_jump
   # generate jump, this is placeholder and TODO: allow for randomization between different jump packs, and selection of a jumppack
   function infinite_parkour:jumppack/fetch {jumppack_id:"my_jumppack"}
+  # TODO filter jumps based on y value
+  # - if y <= -64, remove up jumps
+  # - if y >= 64 remove down jumps
   function infinite_parkour:jumppack/random_jump
   data modify storage infinite_parkour:calc temp_blocks_list set from storage infinite_parkour:jumppack jump.blocks
   # Below gets a random number between 0 and 1, multiplies by 2, and then subtracts 1. This gives a random value of -1 or 1, which will be multiplied by every X value to randomly mirror jumps across the X axis, 50-50.
   execute store result storage infinite_parkour:calc jump_mirror_math int 2 run random value 0..1
   execute store result score #jump_mirror_math math run data get storage infinite_parkour:calc jump_mirror_math
   scoreboard players remove #jump_mirror_math math 1
+  # TODO select a direction in case the current x value is too far from the center
 
   function infinite_parkour:jump/increment
 
