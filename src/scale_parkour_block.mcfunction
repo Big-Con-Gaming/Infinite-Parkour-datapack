@@ -1,12 +1,12 @@
 # this function scales the block displays based on the distance of the player to the next block.
-execute as @e[type=marker,tag=ip_jump_end] at @s run
+execute as @e[type=marker,tag=ip_jump_goal] at @s run
   execute if dimension infinite_parkour:lane run
     execute store result score x math run data get entity @s Pos[0] 100
     execute store result score z math run data get entity @s Pos[2] 100
     execute store result score x0 math run data get entity @p Pos[0] 100
     execute store result score z0 math run data get entity @p Pos[2] 100
-    execute store result score x1 math run data get entity @n[tag=ip_jump_start] Pos[0] 100
-    execute store result score z1 math run data get entity @n[tag=ip_jump_start] Pos[2] 100
+    execute store result score x1 math run data get entity @n[tag=ip_jump_connect,tag=ip_jump_curr] Pos[0] 100
+    execute store result score z1 math run data get entity @n[tag=ip_jump_connect,tag=ip_jump_curr] Pos[2] 100
     scoreboard players operation x0 math -= x math
     scoreboard players operation z0 math -= z math
     scoreboard players operation x1 math -= x math
