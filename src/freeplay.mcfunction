@@ -2,47 +2,18 @@
 # the attempt is to use lane.mcfunction and jumppack.mcfuncton
 
 /tick
-  # %FILE%/teleporter_tick
   %FILE%/lobby_tick
   %FILE%/game_tick
 
-# Teleporter
-/teleporter_tick
-  execute as @e[type=item,nbt={Item:{id:"minecraft:gold_ingot"}}]
-  + at @s
-  + align xyz positioned ~0.5 ~0.5 ~0.5
-  + unless entity @s[nbt={Fire:-1s}]
-  + if %FILE%/test_structure run
-    kill @s
-    summon interaction ~ ~1 ~ {Tags:["ip_enter_freeplay"],width:1.5}
-    summon text_display ~ ~1.8 ~ {billboard:"center",alignment:"center",Tags:["ip_enter_freeplay"],text:'{"color":"yellow","text":"Click to enter"}'}
-    summon text_display ~ ~1.5 ~ {billboard:"center",alignment:"center",Tags:["ip_enter_freeplay"],text:'{"bold":true,"color":"#FFBB00","text":"Infinite Parkour Freeplay"}'}
-  execute as @e[type=interaction,tag=ip_enter_freeplay] at @s run
-    execute on attacker run %FILE%/teleport_in
-    execute on target run %FILE%/teleport_in
-    data remove entity @s attack
-    data remove entity @s interaction
-    execute positioned ~ ~-1 ~ unless %FILE%/test_structure positioned ~ ~1 ~ run kill @e[tag=ip_enter_freeplay,distance=..1,limit=3]
-
-/test_structure
-  execute unless block ~-1 ~ ~-1 gold_block run return 0
-  execute unless block ~ ~ ~-1 gold_block run return 0
-  execute unless block ~1 ~ ~-1 gold_block run return 0
-  execute unless block ~-1 ~ ~ gold_block run return 0
-  execute unless block ~ ~ ~ fire run return 0
-  execute unless block ~1 ~ ~ gold_block run return 0
-  execute unless block ~-1 ~ ~1 gold_block run return 0
-  execute unless block ~ ~ ~1 gold_block run return 0
-  execute unless block ~1 ~ ~1 gold_block run return 0
-  return 1
-
-/delete_all_teleporters
-  kill @e[tag=ip_enter_freeplay]
-
 /teleport_in
   execute in infinite_parkour:infinite_parkour run function infinite_parkour:player_saver/store
+  
   data modify storage infinite_parkour:calc lane_tag set value "ip_freeplay_entry"
   function infinite_parkour:lane/alloc
+  data remove storage infinite_parkour:calc lane_tag
+
+  execute at @s run
+    place template infinite_parkour:infinite_parkour_lobby ~-5 ~-1 ~-4
 
 # Lobby
 /lobby_tick
