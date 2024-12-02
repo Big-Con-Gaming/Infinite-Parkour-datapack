@@ -22,12 +22,6 @@
   %FILE%/random_jump
   data remove storage infinite_parkour:jumppack jumppack
 
-/test_0
-  return 0
-
-/test_1
-  return 1
-
 # this function should be called after calling infinite_parkour:jumppack/fetch
 # the result is in {storage infinite_parkour:jumppack jump}
 /random_jump
