@@ -1,42 +1,39 @@
 
-# executed every tick
+# executed every tick on @e[tag=ipe_env]
 /tick
-  execute in infinite_parkour:editor as @e[type=marker,tag=ipe_env,distance=0..] at @s run
-    # teleport people that fell
-    execute positioned ~ ~-1 ~ run tp @a[dx=64,dz=64,dy=0.01] ~31.5 32.0 -0.5
-    # first block
-    execute positioned ~31.5 31.5 0.5 run
-      execute if block ~ ~ ~ air run
-        setblock ~ ~-1 ~ bedrock
-        execute unless entity @n[type=text_display,distance=..0.1] run summon text_display ~ ~ ~ {text:'"Place starting block"',billboard:"center"}
-      execute unless block ~ ~ ~ air run
-        execute if block ~ ~-1 ~ bedrock run setblock ~ ~-1 ~ air
-        kill @n[type=text_display,distance=..1]
-    # place new blocks
-    execute as @e[type=item_frame,dx=64.0,dy=64.0,dz=64.0,tag=ipe_place] at @s run
-      execute if entity @s[tag=ipe_place_inside] positioned ^ ^ ^-0.5 align xyz if entity @n[type=block_display,tag=ipe_block,distance=..0.1] run %FILE%/place_block
-      execute if entity @s[tag=!ipe_place_inside] positioned ^ ^ ^0.5 align xyz run %FILE%/place_block
-    kill @e[type=item_frame,tag=ipe_place]
-    # play trail start particle
-    execute as @e[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start] at @s run particle witch ~ ~1 ~
-    # connect trails
-    execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=ipe_trail_start_new] run
-      execute unless entity @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run return 0
-      data modify storage infinite_parkour:calc dst set from entity @s Pos
-      execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run 
-        tag @s add ip_trail
-        tag @s remove ipe_trail_start
-        data modify entity @s data.color set value [0.8,0.2,0.3]
-        data modify entity @s data.target set from storage infinite_parkour:calc dst
-      data remove storage infinite_parkour:calc dst
-      kill @s
-    tag @e[type=marker,dx=64,dy=64,dz=64] remove ipe_trail_start_new
-    # destroy removed trails
-    execute as @e[type=marker,dx=64,dy=64,dz=64,tag=ip_trail] at @s if block ~ ~ ~ air run kill @s
-  
-  execute in infinite_parkour:editor as @a[distance=0..] at @s run
-    # destroy removed blocks
-    execute as @e[type=block_display,tag=ipe_block,distance=..16] at @s if block ~ ~ ~ air run kill @s
+  # teleport people that fell
+  execute positioned ~ ~-1 ~ run tp @a[dx=64,dz=64,dy=0.01] ~31.5 32.0 -0.5
+  # first block
+  execute positioned ~31.5 31.5 0.5 run
+    execute if block ~ ~ ~ air run
+      setblock ~ ~-1 ~ bedrock
+      execute unless entity @n[type=text_display,distance=..0.1] run summon text_display ~ ~ ~ {text:'"Place starting block"',billboard:"center"}
+    execute unless block ~ ~ ~ air run
+      execute if block ~ ~-1 ~ bedrock run setblock ~ ~-1 ~ air
+      kill @n[type=text_display,distance=..1]
+  # place new blocks
+  execute as @e[type=item_frame,dx=64.0,dy=64.0,dz=64.0,tag=ipe_place] at @s run
+    execute if entity @s[tag=ipe_place_inside] positioned ^ ^ ^-0.5 align xyz if entity @n[type=block_display,tag=ipe_block,distance=..0.1] run %FILE%/place_block
+    execute if entity @s[tag=!ipe_place_inside] positioned ^ ^ ^0.5 align xyz run %FILE%/place_block
+    kill @s
+  # play trail start particle
+  execute as @e[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start] at @s run particle witch ~ ~1 ~
+  # connect trails
+  execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=ipe_trail_start_new] run
+    execute unless entity @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run return 0
+    data modify storage infinite_parkour:calc dst set from entity @s Pos
+    execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run 
+      tag @s add ip_trail
+      tag @s remove ipe_trail_start
+      data modify entity @s data.color set value [0.8,0.2,0.3]
+      data modify entity @s data.target set from storage infinite_parkour:calc dst
+    data remove storage infinite_parkour:calc dst
+    kill @s
+  tag @e[type=marker,dx=64,dy=64,dz=64] remove ipe_trail_start_new
+  # destroy removed trails
+  execute as @e[type=marker,dx=64,dy=64,dz=64,tag=ip_trail] at @s if block ~ ~ ~ air run kill @s
+  # destroy removed blocks
+  execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,tag=ipe_block,dx=64,dy=64,dz=64] at @s if block ~ ~ ~ air run kill @s
 
 /place_block
   execute if entity @s[tag=ipe_place_80] run

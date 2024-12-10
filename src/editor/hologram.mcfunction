@@ -3,6 +3,34 @@
 /tick
   execute in infinite_parkour:editor as @e[type=block_display,tag=ipe_hologram,distance=0..] at @s run tp @s ~ ~ ~ ~2 ~
   execute in infinite_parkour:editor as @a[distance=0..] at @s as @n[type=block_display,tag=ipe_hologram_loading,distance=..16] at @s run %FILE%/load
+  execute in infinite_parkour:editor as @e[type=item_frame,tag=ipe_hologram_apply,distance=0..] at @s positioned ^ ^ ^-0.5 align xyz positioned ~0.5 ~0.5 ~0.5 run %FILE%/modify
+
+/modify
+  execute if entity @s[tag=ipe_hologram_apply0] as @n[type=block_display,tag=ipe_hologram,distance=..0.1] run %FUNC%/load
+  execute if entity @s[tag=ipe_hologram_apply1] as @n[type=block_display,tag=ipe_hologram,distance=..0.1] run %FUNC%/save
+  execute if entity @s[tag=ipe_hologram_apply2] as @n[type=block_display,tag=ipe_hologram,distance=..0.1] run %FUNC%/delete
+  kill @s
+
+  /load
+    %FILE%/prepare_macro
+    function infinite_parkour:jumppack/get_jump with storage infinite_parkour:macro data
+    execute positioned ~-31.5 0.0 0.0 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/load
+    data remove storage infinite_parkour:calc jump
+    data remove storage infinite_parkour:macro data
+  /save
+    %FILE%/prepare_macro
+    execute positioned ~-31.5 0.0 0.0 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/save
+    function infinite_parkour:jumppack/set_jump with storage infinite_parkour:macro data
+    %FILE%/unload
+    data remove storage infinite_parkour:calc jump
+    data remove storage infinite_parkour:macro data
+  /delete
+    %FILE%/prepare_macro
+    data modify storage infinite_parkour:calc jump set value {}
+    function infinite_parkour:jumppack/set_jump with storage infinite_parkour:macro data
+    %FILE%/unload
+    data remove storage infinite_parkour:calc jump
+    data remove storage infinite_parkour:macro data
 
 /create_grid
   scoreboard players set #counter ipe_index 0
@@ -28,10 +56,10 @@
     tag @s add ipe_hologram
     tag @s add ipe_hologram_loading
     scoreboard players operation @s ipe_index = #counter ipe_index
-  execute positioned ~0.5 ~0.95 ~0.5 summon interaction run
-    tag @s add ipe_hologram_interact
-    data merge entity @s {width:1.1,height:1.1}
-    scoreboard players operation @s ipe_index = #counter ipe_index
+  # execute positioned ~0.5 ~0.95 ~0.5 summon interaction run
+  #   tag @s add ipe_hologram_interact
+  #   data merge entity @s {width:1.1,height:1.1}
+  #   scoreboard players operation @s ipe_index = #counter ipe_index
   scoreboard players add #counter ipe_index 1
 
 /unload_all
