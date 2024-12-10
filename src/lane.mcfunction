@@ -78,4 +78,4 @@
 
 /exit
   scoreboard players reset @s ip_lane
-  execute in infinite_parkour:infinite_parkour run function infinite_parkour:player_saver/retrieve
+  function infinite_parkour:player_saver/retrieve

@@ -12,8 +12,8 @@
       summon text_display ~ ~.5 ~ {Tags:["ip_portal"],billboard:"center",alignment:"center",text:'{"color":"#FFBB00","text":"Infinite Parkour Freeplay","bold":true}'}
   execute as @e[type=interaction,tag=ip_portal] at @s run
     execute if entity @s[tag=ip_portal_freeplay] run
-      execute on attacker run function infinite_parkour:freeplay/teleport_in
-      execute on target run function infinite_parkour:freeplay/teleport_in
+      execute on attacker run function infinite_parkour:freeplay
+      execute on target run function infinite_parkour:freeplay
     data remove entity @s attack
     data remove entity @s interaction
     execute unless %FILE%/test_structure run kill @e[tag=ip_portal,distance=..1,limit=3]
