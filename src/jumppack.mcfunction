@@ -1,21 +1,29 @@
 # this file is used for accessing jumppacks with macros
 /fetch
   $data modify storage infinite_parkour:jumppack jumppack set from storage jumppack:$(jumppack_id) jumppack
-/store
-  $data modify storage jumppack:$(jumppack_id) jumppack set from storage infinite_parkour:jumppack jumppack
 /delete
   $data remove storage jumppack:$(jumppack_id) jumppack
 /get_jump
   $data modify storage infinite_parkour:calc jump set from storage jumppack:$(jumppack_id) jumppack.jumps[$(page)][$(row)][$(col)]
 /set_jump
+  # make sure there is a spot for the jump
   $execute unless data storage jumppack:$(jumppack_id) jumppack run data modify storage jumppack:$(jumppack_id) jumppack set value {jumps:[]}
   $execute unless data storage jumppack:$(jumppack_id) jumppack.jumps[$(page)] run data modify storage jumppack:$(jumppack_id) jumppack.jumps set value [[],[],[],[],[],[],[],[]]
   $execute unless data storage jumppack:$(jumppack_id) jumppack.jumps[$(page)][$(row)] run data modify storage jumppack:$(jumppack_id) jumppack.jumps[$(page)] set value [[],[],[],[],[],[]]
   $execute unless data storage jumppack:$(jumppack_id) jumppack.jumps[$(page)][$(row)][$(col)] run data modify storage jumppack:$(jumppack_id) jumppack.jumps[$(page)][$(row)] set value [{},{},{},{},{}]
+  # place jump
   $data modify storage jumppack:$(jumppack_id) jumppack.jumps[$(page)][$(row)][$(col)] set from storage infinite_parkour:calc jump
+  # clean up if possible
   $execute unless data storage jumppack:$(jumppack_id) jumppack.jumps[$(page)][$(row)][].blocks run data modify storage jumppack:$(jumppack_id) jumppack.jumps[$(page)][$(row)] set value []
   $execute unless data storage jumppack:$(jumppack_id) jumppack.jumps[$(page)][][].blocks run data modify storage jumppack:$(jumppack_id) jumppack.jumps[$(page)] set value []
-  $execute unless data storage jumppack:$(jumppack_id) jumppack.jumps[][][].blocks run data modify storage jumppack:$(jumppack_id) jumppack.jumps set value []
+  $execute unless data storage jumppack:$(jumppack_id) jumppack.jumps[][][].blocks run data remove storage jumppack:$(jumppack_id) jumppack
+  # updating list
+  $%FILE%/update_list {jumppack_id:'$(jumppack_id)'}
+
+/update_list
+  execute unless data storage infinite_parkour:jumppack list run data modify storage infinite_parkour:jumppack list set value []
+  $execute if data storage jumppack:$(jumppack_id) jumppack unless data storage infinite_parkour:jumppack list[{name:'$(jumppack_id)'}] run data modify storage infinite_parkour:jumppack list append value {name:'$(jumppack_id)'}
+  $execute unless data storage jumppack:$(jumppack_id) jumppack run data remove storage infinite_parkour:jumppack list[{name:'$(jumppack_id)'}]
 
 /test_random_jump
   %FILE%/fetch {jumppack_id:"my_jumppack"}
