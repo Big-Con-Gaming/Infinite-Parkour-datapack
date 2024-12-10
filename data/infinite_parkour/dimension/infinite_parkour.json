@@ -1,19 +1,19 @@
 {
-    "type": "minecraft:overworld",
-    "generator": {
-      "type": "minecraft:flat",
-      "settings": {
-        "biome": "minecraft:the_void",
-        "lakes": false,
-        "features": false,
-        "layers": [
-          {
-            "block": "minecraft:air",
-            "height": 500
-          }
-        ],
-        "structure_overrides": []
-      }
+  "type": "minecraft:overworld",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "minecraft:the_void",
+      "lakes": false,
+      "features": false,
+      "layers": [
+        {
+          "block": "minecraft:air",
+          "height": 500
+        }
+      ],
+      "structure_overrides": []
     }
   }
+}
   
