@@ -121,6 +121,8 @@
     data modify storage infinite_parkour:player_data current.position.z set from entity @s Pos[2]
     data modify storage infinite_parkour:player_data current.position.yaw set from entity @s Rotation[0]
     data modify storage infinite_parkour:player_data current.position.pitch set from entity @s Rotation[1]
+    # store gamemode
+    data modify storage infinite_parkour:player_data current.gamemode set from entity @s playerGameType
     # append to players
     data modify storage infinite_parkour:player_data players append from storage infinite_parkour:player_data current
     data remove storage infinite_parkour:player_data current
@@ -217,5 +219,12 @@
     %EMPTY%
       $execute in $(dimension) run tp @s $(x) $(y) $(z) $(yaw) $(pitch)
     + with storage infinite_parkour:player_data current.position
+    # gamemode
+    execute store result score #mode math run data get storage infinite_parkour:player_data current.gamemode
+    execute if score #mode math matches 0 run gamemode survival @s
+    execute if score #mode math matches 1 run gamemode creative @s
+    execute if score #mode math matches 2 run gamemode adventure @s
+    execute if score #mode math matches 3 run gamemode spectator @s
+    scoreboard players reset #mode math
     # clean
     data remove storage infinite_parkour:player_data current
