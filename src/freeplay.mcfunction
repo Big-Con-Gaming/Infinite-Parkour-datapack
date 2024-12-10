@@ -8,6 +8,7 @@
 
 /teleport_in
   execute in infinite_parkour:infinite_parkour run function infinite_parkour:player_saver/store
+  gamemode adventure @s
   
   data modify storage infinite_parkour:calc lane_tag set value "ip_freeplay_entry"
   function infinite_parkour:lane/alloc

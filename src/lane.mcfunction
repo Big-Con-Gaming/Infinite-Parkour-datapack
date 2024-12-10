@@ -27,6 +27,8 @@
         data modify entity @s data.player set from storage infinite_parkour:calc lane_player
         data modify entity @s Tags append from storage infinite_parkour:calc lane_tag
         scoreboard players operation @s ip_lane = #new ip_lane
+      summon interaction ~ ~3 ~ {Tags:["ip_leave"],width:1.5,height:1}
+      summon text_display ~ ~3.5 ~ {billboard:"center",alignment:"center",Tags:["ParkourLobbyLeave"],text:'[{"color":"yellow","text":"Click to Leave","bold":true}]'}
       data remove storage infinite_parkour:calc lane_player
 
 # This function needs to be called on the lane marker (tagged ip_lane_entry)
@@ -34,6 +36,7 @@
   execute unless data storage infinite_parkour:lane free_positions run data modify storage infinite_parkour:lane free_positions set value []
   data modify storage infinite_parkour:lane free_positions insert 0 value 0
   execute store result storage infinite_parkour:lane free_positions[0] int 1 run scoreboard players get @s ip_lane
+  execute positioned ~-32 -12800 ~-32 run kill @e[type=!player,dx=64,dy=25600,dz=64]
   forceload remove ~-32 ~-32 ~31 ~31
   kill @s
 
@@ -59,6 +62,12 @@
       scoreboard players reset #test ip_lane
       execute positioned ~-512 -0.5 -0.5 run tag @n[type=marker,tag=ip_lane_entry,dx=1024,dy=1,dz=1] remove ip_lane_remove
   execute in infinite_parkour:lane as @e[type=marker,tag=ip_lane_remove,distance=0..] at @s run %FILE%/free
+  
+  execute in infinite_parkour:lane as @e[type=interaction,tag=ip_leave,distance=0..] run
+    execute on attacker run function infinite_parkour:lane/exit
+    execute on target run function infinite_parkour:lane/exit
+    data remove entity @s attack
+    data remove entity @s interaction
 
 /teleport_entry
   execute store result storage infinite_parkour:macro data.lobby_x int 1024 run scoreboard players get @s ip_lane

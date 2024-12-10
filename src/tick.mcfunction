@@ -9,10 +9,6 @@ effect give @a[team=Highscore] resistance 3 255 true
 effect give @a[team=ParkourPlayers] saturation 3 255 true
 effect give @a[team=ParkourPlayers] instant_health 3 255 true
 effect give @a[team=ParkourPlayers] resistance 3 255 true
-#Below are commands to make all survival players into adventure while on the game's teams, and back into survival whenever they leave said team.
-gamemode survival @a[team=!Highscore,team=!ParkourPlayers,gamemode=adventure]
-gamemode adventure @a[gamemode=survival,team=Highscore]
-gamemode adventure @a[gamemode=survival,team=ParkourPlayers]
 #For every player on the Parkour Players team, we run infinite_parkour:player-in-game as them below.
 execute as @a[team=ParkourPlayers] at @s run
   #This command runs every tick for all players directly in the game, on team: ParkourPlayers
