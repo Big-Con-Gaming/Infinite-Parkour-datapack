@@ -73,8 +73,8 @@
 
 /give_bundles
   item replace entity @s container.9 with green_bundle[item_name="SolidBlocks",bundle_contents=[
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_00"]},item_model:"stone",item_name:"Platform"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_01"]},item_model:"tuff",item_name:"Blocker"}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_00"]},item_model:"stone",item_name:"Platform",lore:['{"text":"Simple blocks the player will jump on","italic":false,"color":"gray"}']}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_01"]},item_model:"tuff",item_name:"Blocker",lore:['{"text":"Blocks to stop the player","italic":false,"color":"gray"}']}},
   +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_02"]},item_model:"black_stained_glass_pane",item_name:"'2'"}},
   +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_03"]},item_model:"black_stained_glass_pane",item_name:"'3'"}},
   +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_04"]},item_model:"black_stained_glass_pane",item_name:"'4'"}},
@@ -120,9 +120,9 @@
   item replace entity @s container.15 with white_bundle[item_name="'Future Category'"]
   item replace entity @s container.16 with white_bundle[item_name="'Future Category'"]
   item replace entity @s container.17 with pink_bundle[item_name="Modifiers",bundle_contents=[
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_80","ipe_place_inside"]},item_model:"white_dye",item_name:"Clear"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_81","ipe_place_inside"]},item_model:"lime_dye",item_name:"Destination"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_82","ipe_place_inside"]},item_model:"redstone",item_name:"Trail"}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_80","ipe_place_inside"]},item_model:"redstone",item_name:"Trail",lore:['{"text":"Creates a trail between blocks","italic":false,"color":"gray"}','{"text":"To remove break the starting block","italic":false,"color":"gray"}']}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_81","ipe_place_inside"]},item_model:"black_stained_glass_pane",item_name:"'1'"}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_82","ipe_place_inside"]},item_model:"black_stained_glass_pane",item_name:"'2'"}},
   +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_83","ipe_place_inside"]},item_model:"black_stained_glass_pane",item_name:"'3'"}},
   +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_84","ipe_place_inside"]},item_model:"black_stained_glass_pane",item_name:"'4'"}},
   +{id:"item_frame",Count:1,components:{entity_data:{id:"",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_85","ipe_place_inside"]},item_model:"black_stained_glass_pane",item_name:"'5'"}},
