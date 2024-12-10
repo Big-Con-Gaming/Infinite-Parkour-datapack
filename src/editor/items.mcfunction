@@ -135,9 +135,9 @@
   +]]
 
 /give_hologram_controls
-  item replace entity @s container.0 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply0"]},item_model="lead",item_name="Load",lore=['{"text":"Right click an hologram to load it","italic":false,"color":"gray"}']]
-  item replace entity @s container.1 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply1"]},item_model="writable_book",item_name="Save",lore=['{"text":"Right click an hologram to save into it","italic":false,"color":"gray"}']]
-  item replace entity @s container.2 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply2"]},item_model="tnt",item_name="Delete",lore=['{"text":"Right click an hologram to delete it","italic":false,"color":"gray"}']]
+  item replace entity @s container.0 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply0"]},item_model="lead",item_name="Load",lore=['{"text":"Right click a hologram to load it","italic":false,"color":"gray"}']]
+  item replace entity @s container.1 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply1"]},item_model="writable_book",item_name="Save",lore=['{"text":"Right click a hologram to save into it","italic":false,"color":"gray"}']]
+  item replace entity @s container.2 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply2"]},item_model="tnt",item_name="Delete",lore=['{"text":"Right click a hologram to delete it","italic":false,"color":"gray"}']]
   item replace entity @s container.3 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply3"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.4 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply4"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.5 with item_frame[entity_data={id:"",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply5"]},item_model="air",item_name="''",lore=[]]
