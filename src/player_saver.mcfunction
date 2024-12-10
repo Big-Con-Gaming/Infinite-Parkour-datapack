@@ -1,5 +1,16 @@
+/test
+  %EMPTY%
+    $data modify storage infinite_parkour:player_data current set from storage infinite_parkour:player_data players[{UUID:$(UUID)}]
+  + with entity @s
+  execute unless data storage infinite_parkour:player_data current run return 0
+  data remove storage infinite_parkour:player_data current
+  return 1
+
+
 /store
   execute in infinite_parkour:infinite_parkour run
+    # test if already exists
+    execute if %FILE%/test run return 0
     # store UUID
     data modify storage infinite_parkour:player_data current.UUID set from entity @s UUID
     # load inventory0
@@ -84,36 +95,6 @@
     # store enderchest
     data modify storage infinite_parkour:player_data current.enderchest set from block 0 0 0 Items
     data remove block 0 0 0 Items
-    # clear inventory
-    clear @s
-    # clear enderchest
-    item replace entity @s enderchest.0 with air
-    item replace entity @s enderchest.1 with air
-    item replace entity @s enderchest.2 with air
-    item replace entity @s enderchest.3 with air
-    item replace entity @s enderchest.4 with air
-    item replace entity @s enderchest.5 with air
-    item replace entity @s enderchest.6 with air
-    item replace entity @s enderchest.7 with air
-    item replace entity @s enderchest.8 with air
-    item replace entity @s enderchest.9 with air
-    item replace entity @s enderchest.10 with air
-    item replace entity @s enderchest.11 with air
-    item replace entity @s enderchest.12 with air
-    item replace entity @s enderchest.13 with air
-    item replace entity @s enderchest.14 with air
-    item replace entity @s enderchest.15 with air
-    item replace entity @s enderchest.16 with air
-    item replace entity @s enderchest.17 with air
-    item replace entity @s enderchest.18 with air
-    item replace entity @s enderchest.19 with air
-    item replace entity @s enderchest.20 with air
-    item replace entity @s enderchest.21 with air
-    item replace entity @s enderchest.22 with air
-    item replace entity @s enderchest.23 with air
-    item replace entity @s enderchest.24 with air
-    item replace entity @s enderchest.25 with air
-    item replace entity @s enderchest.26 with air
     # store position
     data modify storage infinite_parkour:player_data current.position.dimension set from entity @s Dimension
     data modify storage infinite_parkour:player_data current.position.x set from entity @s Pos[0]
@@ -126,6 +107,40 @@
     # append to players
     data modify storage infinite_parkour:player_data players append from storage infinite_parkour:player_data current
     data remove storage infinite_parkour:player_data current
+
+/clear
+  # clear inventory
+  clear @s
+  # clear enderchest
+  item replace entity @s enderchest.0 with air
+  item replace entity @s enderchest.1 with air
+  item replace entity @s enderchest.2 with air
+  item replace entity @s enderchest.3 with air
+  item replace entity @s enderchest.4 with air
+  item replace entity @s enderchest.5 with air
+  item replace entity @s enderchest.6 with air
+  item replace entity @s enderchest.7 with air
+  item replace entity @s enderchest.8 with air
+  item replace entity @s enderchest.9 with air
+  item replace entity @s enderchest.10 with air
+  item replace entity @s enderchest.11 with air
+  item replace entity @s enderchest.12 with air
+  item replace entity @s enderchest.13 with air
+  item replace entity @s enderchest.14 with air
+  item replace entity @s enderchest.15 with air
+  item replace entity @s enderchest.16 with air
+  item replace entity @s enderchest.17 with air
+  item replace entity @s enderchest.18 with air
+  item replace entity @s enderchest.19 with air
+  item replace entity @s enderchest.20 with air
+  item replace entity @s enderchest.21 with air
+  item replace entity @s enderchest.22 with air
+  item replace entity @s enderchest.23 with air
+  item replace entity @s enderchest.24 with air
+  item replace entity @s enderchest.25 with air
+  item replace entity @s enderchest.26 with air
+
+
 /retrieve
   execute in infinite_parkour:infinite_parkour run
     # fetch data

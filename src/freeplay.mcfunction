@@ -1,21 +1,24 @@
-# this file is an incomplete rewrite of other files
-# the attempt is to use lane.mcfunction and jumppack.mcfuncton
+# this file contains custom behaviors unique to freeplay
+# calling this function directly teleports the player to a new freeplay lobby
+
+# test the player is not in a lobby
+execute at @s if dimension infinite_parkour:lane run return 0
+
+execute in infinite_parkour:infinite_parkour run function infinite_parkour:player_saver/store
+function infinite_parkour:player_saver/clear
+gamemode adventure @s
+
+data modify storage infinite_parkour:calc lane_tag set value "ip_freeplay_entry"
+function infinite_parkour:lane/alloc
+data remove storage infinite_parkour:calc lane_tag
+
+execute at @s run
+  place template infinite_parkour:infinite_parkour_lobby ~-5 ~-1 ~-4
 
 /tick
   %FILE%/lobby_tick
   %FILE%/game_tick
   %FILE%/fall_tick
-
-/teleport_in
-  execute in infinite_parkour:infinite_parkour run function infinite_parkour:player_saver/store
-  gamemode adventure @s
-  
-  data modify storage infinite_parkour:calc lane_tag set value "ip_freeplay_entry"
-  function infinite_parkour:lane/alloc
-  data remove storage infinite_parkour:calc lane_tag
-
-  execute at @s run
-    place template infinite_parkour:infinite_parkour_lobby ~-5 ~-1 ~-4
 
 # Lobby
 /lobby_tick
@@ -60,15 +63,20 @@
   # Clean decorations behind the player
   execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
 
-  execute if entity @s[nbt={OnGround:1b}] positioned ~-0.8 ~-1 ~-0.8 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,dx=0.6,dy=1,dz=0.6] at @s run
+  execute if function infinite_parkour:freeplay/test_landed positioned ~-0.8 ~-1 ~-0.8 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,dx=0.6,dy=1,dz=0.6] at @s run
     tag @s add ip_block_reached
     execute if entity @s[tag=ip_jump_goal] run function infinite_parkour:freeplay/finished_jump
     execute at @s run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"raw_gold_block"}}
     function infinite_parkour:generate_decorations
 
+/test_landed
+  execute if entity @s[nbt={OnGround:1b}] run return 1
+  # TODO detect when the player is close to the ground and has upwards movement
+  return 0
+
 /finished_jump
   # generate jump, this is placeholder and TODO: allow for randomization between different jump packs, and selection of a jumppack
-  function infinite_parkour:jumppack/fetch {jumppack_id:"my_jumppack"}
+  function infinite_parkour:jumppack/fetch {jumppack_id:"base"}
   # TODO filter jumps based on y value
   # - if y <= -64, remove up jumps
   # - if y >= 64 remove down jumps
