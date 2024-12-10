@@ -64,6 +64,11 @@
       
       data remove entity @s interaction
       data remove entity @s attack
+  function infinite_parkour:editor/hologram/tick
+  execute in infinite_parkour:editor as @e[type=marker,tag=ipe_env,distance=0..] at @s run
+    function infinite_parkour:editor/canvas/tick
+  kill @e[type=item_frame]
+    
 
 /update_page
   execute store result storage infinite_parkour:macro data.page int 1 run scoreboard players get @s ipe_index
