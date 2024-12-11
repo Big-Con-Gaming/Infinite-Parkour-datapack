@@ -24,7 +24,7 @@ execute at @s run
   summon text_display ~-8.49 2.0 -1.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon interaction ~-8.6 2.0 -1.0 {width:0.4,height:0.25}
   summon text_display ~-8.49 1.3 0.5 {text:'{"color":"white","text":"JumpPack"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-8.49 1.0 0.5 {text:'{"color":"blue","text":"base"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-8.49 1.0 0.5 {text:'{"color":"blue","text":"loading..."}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon text_display ~-8.49 1.0 2.0 {text:'{"color":"green","text":"\\u2190"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon text_display ~-8.49 1.0 -1.0 {text:'{"color":"green","text":"\\u2192"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon interaction ~-8.6 1.0 2.0 {width:0.4,height:0.25}
@@ -70,6 +70,7 @@ execute at @s run
     scoreboard players reset #len math
     %FILE%/update_setting_pack
   
+  execute unless data storage infinite_parkour:calc lane.settings.jumppack_index run data modify storage infinite_parkour:calc lane.settings.jumppack_index set value 0
   %EMPTY%
     $data modify storage infinite_parkour:calc lane.settings.jumppack_id set from storage infinite_parkour:jumppack list[$(jumppack_index)].name
   + with storage infinite_parkour:calc lane.settings
