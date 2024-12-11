@@ -16,9 +16,22 @@ execute at @s run
   place template infinite_parkour:freeplay_lobby ~-15 ~-16 ~-15
   %FILE%/setup_first_jump
 
+  summon text_display ~-8.49 3.2 0.5 {text:'{"color":"yellow","text":"Settings"}',transformation:{translation:[0,0,0],scale:[2,2,2],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-8.49 2.3 2.0 {text:'{"color":"white","text":"Particles"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-8.49 2.0 2.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon interaction ~-8.6 2.0 2.0 {width:0.4,height:0.25}
+  summon text_display ~-8.49 2.3 -1.0 {text:'{"color":"white","text":"Decorations"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-8.49 2.0 -1.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon interaction ~-8.6 2.0 -1.0 {width:0.4,height:0.25}
+  summon text_display ~-8.49 1.3 0.5 {text:'{"color":"white","text":"JumpPack"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-8.49 1.0 0.5 {text:'{"color":"blue","text":"base"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-8.49 1.0 2.0 {text:'{"color":"green","text":"\\u2190"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-8.49 1.0 -1.0 {text:'{"color":"green","text":"\\u2192"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon interaction ~-8.6 1.0 2.0 {width:0.4,height:0.25}
+  summon interaction ~-8.6 1.0 -1.0 {width:0.4,height:0.25}
+
 /tick
   %FILE%/game_tick
-  %FILE%/fall_tick
 
 # Lobby
 /lobby_tick
@@ -34,6 +47,56 @@ execute at @s run
       execute unless score @s BlockCheckpoint matches 0.. run scoreboard players set @s BlockCheckpoint 0
       execute unless score @s BlockDifficulty matches 0.. run scoreboard players set @s BlockDifficulty 1
       scoreboard players operation @s Blocks = @s BlockCheckpoint
+  # Settings board
+  execute positioned ~-8.6 2.0 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.particles
+    %FILE%/toggle_setting
+    execute store result storage infinite_parkour:calc lane.settings.particles byte 1 run scoreboard players get #value math
+    scoreboard players reset #value math
+  execute positioned ~-8.6 2.0 -1.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.decorations
+    %FILE%/toggle_setting
+    execute store result storage infinite_parkour:calc lane.settings.decorations byte 1 run scoreboard players get #value math
+    scoreboard players reset #value math
+  execute positioned ~-8.6 1.0 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.pack_index
+    execute unless score #value math matches 1.. run execute store result score #value math if data storage infinite_parkour:jumppack list[]
+    scoreboard players remove #value math 1
+    %FILE%/update_setting_pack
+  execute positioned ~-8.6 1.0 -1.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.pack_index
+    execute store result score #len math if data storage infinite_parkour:jumppack list[]
+    scoreboard players add #value math 1
+    execute if score #value math >= #len math run scoreboard players set #value math 0
+    scoreboard players reset #len math
+    %FILE%/update_setting_pack
+  
+  %EMPTY%
+    $data modify storage infinite_parkour:calc lane.settings.pack_id set from storage infinite_parkour:jumppack list[$(pack_index)].name
+  + with storage infinite_parkour:calc lane.settings
+  execute positioned ~-8.49 1.0 0.5 run
+    $data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"blue","text":"$(pack_id)"}'
+  + with storage infinite_parkour:calc lane.settings
+
+/is_clicked
+  execute unless data entity @s interaction unless data entity @s attack run return 0
+  data remove entity @s interaction
+  data remove entity @s attack
+  return 1
+
+/toggle_setting
+  scoreboard players add #value math 1
+  execute if
+    execute if score #value math matches 1 run return 1
+    execute positioned ~0.11 ~ ~ run data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"red","text":"off"}'
+    scoreboard players set #value math 0
+    return 0
+  + run
+    execute positioned ~0.11 ~ ~ run data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"green","text":"on"}'
+
+/update_setting_pack
+  execute store result storage infinite_parkour:calc lane.settings.pack_index int 1 run scoreboard players get #value math
+  scoreboard players reset #value math
 
 /setup_first_jump
   # for calculations
@@ -65,7 +128,6 @@ execute at @s run
   data remove storage infinite_parkour:calc lane
 
 /player_tick
-  execute unless entity @s[team=ParkourPlayers] run return 0
   %FILE%/set_distance_score
   # Clean decorations behind the player
   execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
@@ -75,11 +137,16 @@ execute at @s run
     execute if entity @s[tag=ip_jump_goal] run function infinite_parkour:freeplay/finished_jump
     execute at @s run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"raw_gold_block"}}
     function infinite_parkour:generate_decorations
+  scoreboard players reset #velocity math
+
+  %FILE%/fall_tick
 
 /test_landed
-  execute if entity @s[nbt={OnGround:1b}] run return 1
-  # TODO detect when the player is close to the ground and has upwards movement
-  return 0
+  # execute if entity @s[nbt={OnGround:1b}] run return 1
+  # execute store result score #velocity math run data get entity @s Motion[1] 1000
+  # execute if score #velocity math matches 1.. run return 1
+  # return 0
+  return 1
 
 /finished_jump
   # generate jump, this is placeholder and TODO: allow for randomization between different jump packs, and selection of a jumppack
@@ -99,38 +166,34 @@ execute at @s run
 
 /fall_tick
   # this function is used for the falling effect and teleporting the players back
-  execute as @a[team=ParkourPlayers] at @s run
-    execute store result score py math run data get entity @s Pos[1]
-    execute store result score by math run data get entity @n[tag=ip_jump_goal] Pos[1]
-    execute if score py math >= by math run
-      tag @s remove ParkourFalling
-      stopsound @s ambient minecraft:item.elytra.flying
-    execute if score py math >= by math run return 0
-
-    execute if entity @s[tag=!ParkourFalling] run
-      tag @s add ParkourFalling
-      playsound minecraft:item.elytra.flying ambient @s ~ ~ ~ 0.4 2
-    particle crit ~4 ~-5 ~4 -2 10 -2 0.5 0 normal
-    particle crit ~-4 ~-5 ~4 2 10 -2 0.5 0 normal
-    particle crit ~4 ~-5 ~-4 -2 10 2 0.5 0 normal
-    particle crit ~-4 ~-5 ~-4 2 10 2 0.5 0 normal
-
-    scoreboard players remove by math 8
-    execute if score py math >= by math run return 0
+  execute store result score py math run data get entity @s Pos[1]
+  execute store result score by math run data get entity @n[tag=ip_jump_goal] Pos[1]
+  execute if score py math >= by math run
     tag @s remove ParkourFalling
     stopsound @s ambient minecraft:item.elytra.flying
-    execute as @e[tag=ip_block_marker,distance=..512] at @s run
-      setblock ~ ~ ~ air
-      kill @n[type=block_display,distance=..0.9]
-      kill @s
-    kill @e[tag=ParkourDeco,distance=..512]
-    kill @e[type=marker,tag=ip_trail,distance=..512]
-    function infinite_parkour:lane/teleport_entry
-    team join Highscore @s
-    scoreboard players set #reset_lobby math 1
+  execute if score py math >= by math run return 0
 
-  stopsound @a[team=Highscore] ambient minecraft:item.elytra.flying
-  tag @a[team=Highscore] remove ParkourFalling
+  execute if entity @s[tag=!ParkourFalling] run
+    tag @s add ParkourFalling
+    playsound minecraft:item.elytra.flying ambient @s ~ ~ ~ 0.4 2
+  particle crit ~4 ~-5 ~4 -2 10 -2 0.5 0 normal
+  particle crit ~-4 ~-5 ~4 2 10 -2 0.5 0 normal
+  particle crit ~4 ~-5 ~-4 -2 10 2 0.5 0 normal
+  particle crit ~-4 ~-5 ~-4 2 10 2 0.5 0 normal
+
+  scoreboard players remove by math 8
+  execute if score py math >= by math run return 0
+  tag @s remove ParkourFalling
+  stopsound @s ambient minecraft:item.elytra.flying
+  execute as @e[tag=ip_block_marker,distance=..512] at @s run
+    setblock ~ ~ ~ air
+    kill @n[type=block_display,distance=..0.9]
+    kill @s
+  kill @e[tag=ParkourDeco,distance=..512]
+  kill @e[type=marker,tag=ip_trail,distance=..512]
+  function infinite_parkour:lane/teleport_entry
+  team join Highscore @s
+  scoreboard players set #reset_lobby math 1
 
 /set_distance_score
   execute store result score @s Blocks run data get entity @s Pos[2] 1
