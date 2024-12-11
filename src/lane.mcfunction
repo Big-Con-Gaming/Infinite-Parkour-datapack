@@ -64,8 +64,8 @@
   execute in infinite_parkour:lane as @e[type=marker,tag=ip_lane_remove,distance=0..] at @s run %FILE%/free
   
   execute in infinite_parkour:lane as @e[type=interaction,tag=ip_leave,distance=0..] run
-    execute on attacker run function infinite_parkour:lane/exit
-    execute on target run function infinite_parkour:lane/exit
+    execute on attacker run %FILE%/exit
+    execute on target run %FILE%/exit
     data remove entity @s attack
     data remove entity @s interaction
 
