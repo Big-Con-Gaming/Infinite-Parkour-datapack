@@ -8,7 +8,7 @@
 
 
 /store
-  execute in infinite_parkour:infinite_parkour run
+  execute in infinite_parkour:lane run
     # test if already exists
     execute if %FILE%/test run return 0
     # store UUID
@@ -142,7 +142,7 @@
 
 
 /retrieve
-  execute in infinite_parkour:infinite_parkour run
+  execute in infinite_parkour:lane run
     # fetch data
     %EMPTY%
       $data modify storage infinite_parkour:player_data current set from storage infinite_parkour:player_data players[{UUID:$(UUID)}]

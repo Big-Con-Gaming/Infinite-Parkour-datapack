@@ -4,7 +4,7 @@
 # test the player is not in a lobby
 execute at @s if dimension infinite_parkour:lane run return 0
 
-execute in infinite_parkour:infinite_parkour run function infinite_parkour:player_saver/store
+function infinite_parkour:player_saver/store
 function infinite_parkour:player_saver/clear
 gamemode adventure @s
 
@@ -31,22 +31,21 @@ execute at @s run
   summon interaction ~-8.6 1.0 -1.0 {width:0.4,height:0.25}
 
 /tick
-  %FILE%/game_tick
+  function infinite_parkour:decorations/pre_tick
+  execute in infinite_parkour:lane as @e[type=marker,tag=ip_freeplay_entry,distance=0..] at @s run
+    data modify storage infinite_parkour:calc lane set from entity @s data
+    %EMPTY%
+      $execute as @a[nbt={UUID:$(player)},distance=0..] at @s run %FILE%/player_tick
+    + with storage infinite_parkour:calc lane
+    %FILE%/lobby_tick
+    data modify entity @s data set from storage infinite_parkour:calc lane
+  data remove storage infinite_parkour:calc lane
 
 # Lobby
 /lobby_tick
   execute if score #reset_lobby math matches 1 run
     %FILE%/setup_first_jump
     scoreboard players reset #reset_lobby math
-  execute store success score #player_in_lobby math positioned ~-8 ~-8 ~-8 if entity @p[dx=15,dy=15,dz=15]
-  execute as @p if score #player_in_lobby math matches 1 run team join Highscore
-  #Checks below to see if the first 2 blocks have been generated, if not, then they are created. The player is also tossed on ParkourPlayers team. I'm not sure if this is working intended actually since in theory the player could walk backwards, rejoin team Highscore, and then wouldn't be back on team ParkourPlayers when walking back forwards, but this doesn't happen.
-  execute align xyz unless block ~ ~1 ~12 minecraft:barrier positioned ~-10 ~ ~ as @p[dx=20,dy=10,dz=12] if score #player_in_lobby math matches 0 positioned ~10 ~1 ~10 run
-    team join ParkourPlayers @s
-    execute as @s[team=ParkourPlayers] run
-      execute unless score @s BlockCheckpoint matches 0.. run scoreboard players set @s BlockCheckpoint 0
-      execute unless score @s BlockDifficulty matches 0.. run scoreboard players set @s BlockDifficulty 1
-      scoreboard players operation @s Blocks = @s BlockCheckpoint
   # Settings board
   execute positioned ~-8.6 2.0 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
     execute store result score #value math run data get storage infinite_parkour:calc lane.settings.particles
@@ -115,34 +114,28 @@ execute at @s run
   summon block_display ~ -0.5 19.5 {interpolation_duration:1,Tags:["ip_block_display","ip_scale_up"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
   summon marker ~ -0.5 19.5 {Tags:["ip_jump_connect","ip_jump_next","ip_block_marker"]}
 
-
 # Game
-/game_tick
-  execute in infinite_parkour:lane as @e[type=marker,tag=ip_freeplay_entry,distance=0..] at @s run
-    data modify storage infinite_parkour:calc lane set from entity @s data
-    %EMPTY%
-      $execute as @a[nbt={UUID:$(player)}] at @s run %FILE%/player_tick
-    + with storage infinite_parkour:calc lane
-    %FILE%/lobby_tick
-    data modify entity @s data set from storage infinite_parkour:calc lane
-  data remove storage infinite_parkour:calc lane
-
 /player_tick
   %FILE%/set_distance_score
   # Clean decorations behind the player
   execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
 
-  execute if function infinite_parkour:freeplay/test_landed positioned ~-0.8 ~-1 ~-0.8 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,dx=0.6,dy=1,dz=0.6] at @s run
+  # execute if function infinite_parkour:freeplay/test_landed positioned ~-0.8 ~-1 ~-0.8 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,tag=!ip_jump_next,dx=0.6,dy=1,dz=0.6] at @s run
+  execute positioned ~-0.85 ~-0.55 ~-0.85 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,tag=!ip_jump_next,dx=0.7,dy=0,dz=0.7] at @s run
     tag @s add ip_block_reached
     execute if entity @s[tag=ip_jump_goal] run function infinite_parkour:freeplay/finished_jump
     execute at @s run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"raw_gold_block"}}
-    function infinite_parkour:generate_decorations
+    function infinite_parkour:decorations/place
   scoreboard players reset #velocity math
 
   %FILE%/fall_tick
 
+  title @s[team=ParkourPlayers] actionbar {"color":"#98a3dd","extra":["[",{"score":{"name":"@s","objective":"ip_score"}},"]"],"text":""}
+  title @s[team=Highscore] actionbar [{"color":"#98a3dd","bold":true,"extra":["SCORE ",{"score":{"name":"@s","objective":"ip_score"}}],"text":""}, "    ", {"color":"#b5bad6","bold":true,"extra":["RECORD ",{"score":{"name":"@s","objective":"ip_highscore"}}],"text":""}]
+
+
 /test_landed
-  # execute if entity @s[nbt={OnGround:1b}] run return 1
+  execute if entity @s[nbt={OnGround:1b}] run return 1
   # execute store result score #velocity math run data get entity @s Motion[1] 1000
   # execute if score #velocity math matches 1.. run return 1
   # return 0
@@ -196,8 +189,12 @@ execute at @s run
   scoreboard players set #reset_lobby math 1
 
 /set_distance_score
-  execute store result score @s Blocks run data get entity @s Pos[2] 1
-  scoreboard players remove @s Blocks 16
-  execute if score @s Blocks matches ..0 run scoreboard players set @s Blocks 0
+  execute store result score @s ip_score run data get entity @s Pos[2] 1
+  scoreboard players remove @s ip_score 16
+  execute if score @s ip_score matches 0.. run
+    team join ParkourPlayers @s
+  execute if score @s ip_score matches ..-1 run
+    team join Highscore @s
+    scoreboard players set @s ip_score 0
   # Using unless in case the player doesn't have a high score yet
-  execute unless score @s HighScore > @s Blocks run scoreboard players operation @s HighScore = @s Blocks
+  execute unless score @s ip_highscore > @s ip_score run scoreboard players operation @s ip_highscore = @s ip_score
