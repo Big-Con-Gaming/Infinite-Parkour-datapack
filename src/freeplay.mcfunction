@@ -58,12 +58,12 @@ execute at @s run
     execute store result storage infinite_parkour:calc lane.settings.decorations byte 1 run scoreboard players get #value math
     scoreboard players reset #value math
   execute positioned ~-8.6 1.0 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
-    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.pack_index
+    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.jumppack_index
     execute unless score #value math matches 1.. run execute store result score #value math if data storage infinite_parkour:jumppack list[]
     scoreboard players remove #value math 1
     %FILE%/update_setting_pack
   execute positioned ~-8.6 1.0 -1.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
-    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.pack_index
+    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.jumppack_index
     execute store result score #len math if data storage infinite_parkour:jumppack list[]
     scoreboard players add #value math 1
     execute if score #value math >= #len math run scoreboard players set #value math 0
@@ -71,10 +71,10 @@ execute at @s run
     %FILE%/update_setting_pack
   
   %EMPTY%
-    $data modify storage infinite_parkour:calc lane.settings.pack_id set from storage infinite_parkour:jumppack list[$(pack_index)].name
+    $data modify storage infinite_parkour:calc lane.settings.jumppack_id set from storage infinite_parkour:jumppack list[$(jumppack_index)].name
   + with storage infinite_parkour:calc lane.settings
   execute positioned ~-8.49 1.0 0.5 run
-    $data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"blue","text":"$(pack_id)"}'
+    $data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"blue","text":"$(jumppack_id)"}'
   + with storage infinite_parkour:calc lane.settings
 
 /is_clicked
@@ -94,7 +94,7 @@ execute at @s run
     execute positioned ~0.11 ~ ~ run data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"green","text":"on"}'
 
 /update_setting_pack
-  execute store result storage infinite_parkour:calc lane.settings.pack_index int 1 run scoreboard players get #value math
+  execute store result storage infinite_parkour:calc lane.settings.jumppack_index int 1 run scoreboard players get #value math
   scoreboard players reset #value math
 
 /setup_first_jump
@@ -142,12 +142,13 @@ execute at @s run
   return 1
 
 /finished_jump
-  # generate jump, this is placeholder and TODO: allow for randomization between different jump packs, and selection of a jumppack
-  function infinite_parkour:jumppack/fetch {jumppack_id:"base"}
+  function infinite_parkour:jumppack/fetch with storage infinite_parkour:calc lane.settings
   # TODO filter jumps based on y value
   # - if y <= -64, remove up jumps
   # - if y >= 64 remove down jumps
   function infinite_parkour:jumppack/random_jump
+  data remove storage infinite_parkour:jumppack jumppack
+
   data modify storage infinite_parkour:calc temp_blocks_list set from storage infinite_parkour:jumppack jump.blocks
   # Below gets a random number between 0 and 1, multiplies by 2, and then subtracts 1. This gives a random value of -1 or 1, which will be multiplied by every X value to randomly mirror jumps across the X axis, 50-50.
   execute store result storage infinite_parkour:calc jump_mirror_math int 2 run random value 0..1
@@ -156,6 +157,7 @@ execute at @s run
   # TODO select a direction in case the current x value is too far from the center
 
   function infinite_parkour:jump/increment
+  data remove storage infinite_parkour:jumppack jump
 
 /fall_tick
   # this function is used for the falling effect and teleporting the players back
