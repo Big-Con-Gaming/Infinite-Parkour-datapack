@@ -26,6 +26,7 @@ execute as @e[type=marker,tag=ip_jump_goal] at @s run
     execute summon minecraft:block_display run %FILE%/distance with storage infinite_parkour:macro data
     scoreboard players operation d math *= 100 const
     scoreboard players operation d math /= d1 math
+    data remove storage infinite_parkour:macro data
     # making sure 0 <= d <= 100
     execute if score d math matches ..0 run scoreboard players set d math 0
     execute if score d math matches 100.. run scoreboard players set d math 100
