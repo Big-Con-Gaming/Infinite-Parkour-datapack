@@ -38,7 +38,9 @@ team modify infpar_dark_green color dark_green
 
 execute unless data storage infinite_parkour:player_data players run data modify storage infinite_parkour:player_data players set value []
 
-execute in infinite_parkour:lane run setblock 0 0 0 minecraft:barrel
+execute in infinite_parkour:lane run
+  forceload add 0 0 0 0
+  setblock 0 0 0 minecraft:barrel
 
 data modify storage jumppack:base jumppack set value {jumps:[[[],[{blocks:[{pos:[0,0,0],type:"platform"},{pos:[2,-1,4],type:"platform"}],dir:{},dst:[2,-1,4],max_pos:[2,0,4],min_pos:[0,-1,0],trail:[{dst:[2,-1,4],src:[0,0,0]}]},{blocks:[{pos:[0,0,0],type:"platform"},{pos:[0,-1,4],type:"platform"}],dir:{},dst:[0,-1,4],max_pos:[0,0,4],min_pos:[0,-1,0],trail:[{dst:[0,-1,4],src:[0,0,0]}]},{blocks:[{pos:[0,0,0],type:"platform"},{pos:[1,1,3],type:"platform"}],dir:{},dst:[1,1,3],max_pos:[1,1,3],min_pos:[0,0,0],trail:[{dst:[1,1,3],src:[0,0,0]}]},{blocks:[{pos:[0,0,0],type:"platform"},{pos:[0,1,3],type:"platform"}],dir:{},dst:[0,1,3],max_pos:[0,1,3],min_pos:[0,0,0],trail:[{dst:[0,1,3],src:[0,0,0]}]},{blocks:[{pos:[0,0,0],type:"platform"},{pos:[0,0,4],type:"platform"}],dir:{},dst:[0,0,4],max_pos:[0,0,4],min_pos:[0,0,0],trail:[]}],[{blocks:[{pos:[0,0,0],type:"platform"},{pos:[3,0,3],type:"platform"}],dir:{},dst:[3,0,3],max_pos:[3,0,3],min_pos:[0,0,0],trail:[{dst:[3,0,3],src:[0,0,0]}]},{blocks:[{pos:[0,0,0],type:"platform"},{pos:[0,0,3],type:"platform"}],dir:{},dst:[0,0,3],max_pos:[0,0,3],min_pos:[0,0,0],trail:[{dst:[0,0,3],src:[0,0,0]}]},{blocks:[{pos:[0,0,0],type:"platform"},{pos:[1,0,3],type:"platform"}],dir:{},dst:[1,0,3],max_pos:[1,0,3],min_pos:[0,0,0],trail:[{dst:[1,0,3],src:[0,0,0]}]},{blocks:[{pos:[0,0,0],type:"platform"},{pos:[1,0,2],type:"platform"}],dir:{},dst:[1,0,2],max_pos:[1,0,2],min_pos:[0,0,0],trail:[{dst:[1,0,2],src:[0,0,0]}]},{blocks:[{pos:[0,0,0],type:"platform"},{pos:[0,0,2],type:"platform"}],dir:{},dst:[0,0,2],max_pos:[0,0,2],min_pos:[0,0,0],trail:[{dst:[0,0,2],src:[0,0,0]}]}],[],[],[]],[],[],[],[],[],[],[]]}
 function infinite_parkour:jumppack/update_list {jumppack_id:base}
