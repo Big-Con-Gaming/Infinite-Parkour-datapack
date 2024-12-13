@@ -1,7 +1,7 @@
 /tick
   execute as @e[type=marker,tag=ip_trail] at @s run
-    $particle trail$(data) ~ ~ ~ 0 0 0 0.5 0 normal
-  + with entity @s
+    $particle trail{color:$(color),target:$(target),duration:20} ~ ~ ~ 0 0 0 0.5 0 normal
+  + with entity @s data
 
 /save
   data modify storage infinite_parkour:calc trail set value []

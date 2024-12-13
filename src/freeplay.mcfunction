@@ -122,7 +122,7 @@ execute at @s run
   execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
 
   # execute if function infinite_parkour:freeplay/test_landed positioned ~-0.8 ~-1 ~-0.8 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,tag=!ip_jump_next,dx=0.6,dy=1,dz=0.6] at @s run
-  execute positioned ~-0.85 ~-0.55 ~-0.85 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,tag=!ip_jump_next,dx=0.7,dy=0,dz=0.7] at @s run
+  execute positioned ~-0.85 ~-1 ~-0.85 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,tag=!ip_jump_next,dx=0.7,dy=0,dz=0.7] at @s run
     tag @s add ip_block_reached
     execute if entity @s[tag=ip_jump_goal] run function infinite_parkour:freeplay/finished_jump
     execute at @s run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"raw_gold_block"}}
