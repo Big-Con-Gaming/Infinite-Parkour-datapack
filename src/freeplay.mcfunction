@@ -13,26 +13,29 @@ function infinite_parkour:lane/alloc
 data remove storage infinite_parkour:calc lane_tag
 
 execute at @s run
-  place template infinite_parkour:freeplay_lobby ~-15 ~-16 ~-15
+  # place template infinite_parkour:freeplay_lobby ~-15 ~-16 ~-15
+  place template infinite_parkour:freeplay_top ~-15 ~-11 ~-15
+  place template infinite_parkour:freeplay_bottom ~-15 ~-42 ~-15
   %FILE%/setup_first_jump
 
-  summon text_display ~-8.49 3.2 0.5 {text:'{"color":"yellow","text":"Settings"}',transformation:{translation:[0,0,0],scale:[2,2,2],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-8.49 2.3 2.0 {text:'{"color":"white","text":"Particles"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-8.49 2.0 2.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon interaction ~-8.6 2.0 2.0 {width:0.4,height:0.25}
-  summon text_display ~-8.49 2.3 -1.0 {text:'{"color":"white","text":"Decorations"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-8.49 2.0 -1.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon interaction ~-8.6 2.0 -1.0 {width:0.4,height:0.25}
-  summon text_display ~-8.49 1.3 0.5 {text:'{"color":"white","text":"JumpPack"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-8.49 1.0 0.5 {text:'{"color":"blue","text":"loading..."}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-8.49 1.0 2.0 {text:'{"color":"green","text":"\\u2190"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-8.49 1.0 -1.0 {text:'{"color":"green","text":"\\u2192"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon interaction ~-8.6 1.0 2.0 {width:0.4,height:0.25}
-  summon interaction ~-8.6 1.0 -1.0 {width:0.4,height:0.25}
+  summon text_display ~-6.49 3.2 0.5 {text:'{"color":"yellow","text":"Settings"}',transformation:{translation:[0,0,0],scale:[2,2,2],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 2.5 2.0 {text:'{"color":"white","text":"Particles"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 2.2 2.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon interaction ~-6.6 2.2 2.0 {width:0.4,height:0.25}
+  summon text_display ~-6.49 2.5 -1.0 {text:'{"color":"white","text":"Decorations"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 2.2 -1.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon interaction ~-6.6 2.2 -1.0 {width:0.4,height:0.25}
+  summon text_display ~-6.49 1.6 0.5 {text:'{"color":"white","text":"JumpPack"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 1.3 0.5 {text:'{"color":"blue","text":"loading..."}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 1.3 2.0 {text:'{"color":"green","text":"\\u2190"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 1.3 -1.0 {text:'{"color":"green","text":"\\u2192"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon interaction ~-6.6 1.3 2.0 {width:0.4,height:0.25}
+  summon interaction ~-6.6 1.3 -1.0 {width:0.4,height:0.25}
 
 /tick
   function infinite_parkour:decorations/pre_tick
   execute in infinite_parkour:lane as @e[type=marker,tag=ip_freeplay_entry,distance=0..] at @s run
+    particle minecraft:enchant ~13 1.5 0.5 0 0 0 0.6 2 normal @a
     data modify storage infinite_parkour:calc lane set from entity @s data
     %EMPTY%
       $execute as @a[nbt={UUID:$(player)},distance=0..] at @s run %FILE%/player_tick
@@ -47,22 +50,22 @@ execute at @s run
     %FILE%/setup_first_jump
     scoreboard players reset #reset_lobby math
   # Settings board
-  execute positioned ~-8.6 2.0 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+  execute positioned ~-6.6 2.2 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
     execute store result score #value math run data get storage infinite_parkour:calc lane.settings.particles
     %FILE%/toggle_setting
     execute store result storage infinite_parkour:calc lane.settings.particles byte 1 run scoreboard players get #value math
     scoreboard players reset #value math
-  execute positioned ~-8.6 2.0 -1.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+  execute positioned ~-6.6 2.2 -1.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
     execute store result score #value math run data get storage infinite_parkour:calc lane.settings.decorations
     %FILE%/toggle_setting
     execute store result storage infinite_parkour:calc lane.settings.decorations byte 1 run scoreboard players get #value math
     scoreboard players reset #value math
-  execute positioned ~-8.6 1.0 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+  execute positioned ~-6.6 1.3 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
     execute store result score #value math run data get storage infinite_parkour:calc lane.settings.jumppack_index
     execute unless score #value math matches 1.. run execute store result score #value math if data storage infinite_parkour:jumppack list[]
     scoreboard players remove #value math 1
     %FILE%/update_setting_pack
-  execute positioned ~-8.6 1.0 -1.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+  execute positioned ~-6.6 1.3 -1.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
     execute store result score #value math run data get storage infinite_parkour:calc lane.settings.jumppack_index
     execute store result score #len math if data storage infinite_parkour:jumppack list[]
     scoreboard players add #value math 1
@@ -74,7 +77,7 @@ execute at @s run
   %EMPTY%
     $data modify storage infinite_parkour:calc lane.settings.jumppack_id set from storage infinite_parkour:jumppack list[$(jumppack_index)].name
   + with storage infinite_parkour:calc lane.settings
-  execute positioned ~-8.49 1.0 0.5 run
+  execute positioned ~-6.49 1.3 0.5 run
     $data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"blue","text":"$(jumppack_id)"}'
   + with storage infinite_parkour:calc lane.settings
 
@@ -164,6 +167,7 @@ execute at @s run
   # this function is used for the falling effect and teleporting the players back
   execute store result score py math run data get entity @s Pos[1]
   execute store result score by math run data get entity @n[tag=ip_jump_goal] Pos[1]
+  execute if entity @s[team=Highscore] run scoreboard players remove by math 11
   execute if score py math >= by math run
     tag @s remove ParkourFalling
     stopsound @s ambient minecraft:item.elytra.flying
