@@ -6,6 +6,7 @@
     "infinite_parkour:scale_parkour_block",
     "infinite_parkour:trail/tick",
     "infinite_parkour:portal/tick",
+    "infinite_parkour:interaction/tick",
     "infinite_parkour:editor/environment/tick",
     "infinite_parkour:editor/flight/tick",
     "infinite_parkour:editor/items/tick"
