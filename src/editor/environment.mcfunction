@@ -52,8 +52,11 @@
       execute unless data entity @s interaction unless data entity @s attack run return 0
 
       execute if entity @s[tag=ipe_leave] run
-        execute on attacker run function infinite_parkour:player_saver/retrieve
-        execute on target run function infinite_parkour:player_saver/retrieve
+        # TODO change back to retrieve after the alpha
+        # execute on attacker run function infinite_parkour:player_saver/retrieve
+        # execute on target run function infinite_parkour:player_saver/retrieve
+        execute on attacker run function infinite_parkour:freeplay
+        execute on target run function infinite_parkour:freeplay
       execute if entity @s[tag=ipe_page_prev] as @n[type=text_display,tag=ipe_page_num,distance=..1,scores={ipe_index=1..}] at @s run
         scoreboard players remove @s ipe_index 1
         %FILE%/update_page
