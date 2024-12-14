@@ -9,9 +9,17 @@
         tag @s remove ipe_player_canvas
         execute positioned ~-1 ~ ~17 run %FILE%/store_items
     execute as @a[distance=0..,tag=ipe_player_canvas] run %FILE%/give_bundles
-    execute as @a[distance=0..,tag=!ipe_player_canvas] run %FILE%/give_hologram_controls
+    execute as @a[distance=0..,tag=!ipe_player_canvas] run
+      %FILE%/update_pack_name
+      %FILE%/give_hologram_controls
 
   return 0
+
+/update_pack_name
+  data modify storage infinite_parkour:calc name set from entity @s Inventory[{Slot:8b}].components."minecraft:writable_book_content".pages[0].raw
+  execute unless data storage infinite_parkour:calc name run return 0
+  function infinite_parkour:editor/set_pack with storage infinite_parkour:calc
+  data remove storage infinite_parkour:calc name
 
 /store_items
   item replace block ~ ~ ~ container.0 from entity @s container.0
@@ -143,7 +151,7 @@
   item replace entity @s container.5 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply5"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.6 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply6"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.7 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply7"]},item_model="air",item_name="''",lore=[]]
-  item replace entity @s container.8 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply8"]},item_model="air",item_name="''",lore=[]]
+  item replace entity @s container.8 with writable_book[item_model="chest",item_name="NewPack",lore=['{"text":"Use only lower cased letters,","italic":false,"color":"gray"}','{"text":"underscores or dashes","italic":false,"color":"gray"}']]
   item replace entity @s container.9 with air
   item replace entity @s container.10 with air
   item replace entity @s container.11 with air

@@ -179,7 +179,7 @@
       scoreboard players operation dst_x math = x math
       scoreboard players operation dst_y math = y math
       scoreboard players operation max_z math = z math
-    data modify storage infinite_parkour:calc temp set value {pos:[0,0,0]}
+    data modify storage infinite_parkour:calc temp set value {pos:[I;0,0,0]}
     execute store result storage infinite_parkour:calc temp.pos[0] int 1 run scoreboard players get x math
     execute store result storage infinite_parkour:calc temp.pos[1] int 1 run scoreboard players get y math
     execute store result storage infinite_parkour:calc temp.pos[2] int 1 run scoreboard players get z math

@@ -13,13 +13,14 @@
 # Needs to be called on marker[tag=ip_jump_goal]
 /spawn
   data modify storage infinite_parkour:calc temp_blocks_list set from storage infinite_parkour:jumppack jump.blocks
+  data remove storage infinite_parkour:calc temp_blocks_list[{pos:[I;0,0,0]}]
 
   # spawn blocks
   %EMPTY%
     #This runs through each block in the jump's list and runs the function place_jump_objects in their position. We remove the first point since it will always overlap with the location of the previous block!
-    data remove storage infinite_parkour:calc temp_blocks_list[0]
     execute unless data storage infinite_parkour:calc temp_blocks_list[0] run return 0
     data modify storage infinite_parkour:calc temp_current_block set from storage infinite_parkour:calc temp_blocks_list[0]
+    data remove storage infinite_parkour:calc temp_blocks_list[0]
     #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.
     data modify storage infinite_parkour:macro pos set from storage infinite_parkour:calc temp_current_block.pos
     %FILE%/spawn/macro_pos

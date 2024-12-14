@@ -25,7 +25,8 @@ scoreboard players operation #last_time ip_last_online = #current_time ip_last_o
 scoreboard players remove #last_time ip_last_online 1
 execute as @a unless score @s ip_last_online = #last_time ip_last_online run
   tellraw @s "welcome!"
-  execute if dimension infinite_parkour:lane run function infinite_parkour:player_saver/retrieve
+  function infinite_parkour:player_saver/retrieve
   scoreboard players reset @s ip_lane
+  function infinite_parkour:freeplay
 scoreboard players operation @a ip_last_online = #current_time ip_last_online
 scoreboard players reset #current_time ip_last_online
