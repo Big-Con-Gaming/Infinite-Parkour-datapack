@@ -1,5 +1,6 @@
 # starts an editor for the player
-function infinite_parkour:editor/guide
+tellraw @s {"text":"Welcome to the infinite parkour editor!","bold":true,"color":"dark_green"}
+tellraw @s [{"text":"Disclaimer:","bold":true,"color":"gold"},{"text":" This editor is not done yet, Expect bugs.","bold":false,"color":"yellow"}]
 execute at @s unless dimension infinite_parkour:editor run
   scoreboard players reset @s ip_lane
   function infinite_parkour:player_saver/store
@@ -7,16 +8,8 @@ execute at @s unless dimension infinite_parkour:editor run
   execute in infinite_parkour:editor positioned 0.0 0.0 0.0 run 
     execute as @n[type=marker,tag=ipe_env,distance=..0.1] at @s run function infinite_parkour:editor/environment/delete
     function infinite_parkour:editor/environment/create
-    data merge entity @n[type=marker,tag=ipe_env,distance=..0.1] {data:{jumppack_id:"my_jumppack"}}
+    data merge entity @n[type=marker,tag=ipe_env,distance=..0.1] {data:{jumppack_id:"new_pack"}}
     tp @s ~31.5 32.0 -4.5 0 0
-
-/guide
-  tellraw @s {"text":"Welcome to the infinite parkour editor!","bold":true,"color":"dark_green"}
-  tellraw @s {"text":"- To show this guide again run"}
-  tellraw @s {"text":"  /function infinite_parkour:editor/guide","color":"green"}
-  tellraw @s {"text":"- To change the edited pack run"}
-  tellraw @s [{"text":"  /function infinite_parkour:editor/set_pack {name:\"","color":"green"},{"text":"<packname>","color":"light_purple"},{"text":"\"}","color":"green"}]
-  tellraw @s [{"text":"Disclaimer:","bold":true,"color":"gold"},{"text":" This editor is not done yet, Expect bugs.","bold":true,"color":"yellow"}]
 
 /set_pack
   $execute positioned 0.0 0.0 0.0 run data merge entity @n[type=marker,tag=ipe_env,distance=..0.1] {data:{jumppack_id:"$(name)"}}

@@ -2,6 +2,7 @@
 # calling this function directly teleports the player to a new freeplay lobby
 
 # test the player is not in a lobby
+say enter freeplay
 execute at @s if dimension infinite_parkour:lane run return 0
 
 function infinite_parkour:player_saver/store
@@ -19,12 +20,9 @@ execute at @s run
   %FILE%/setup_first_jump
   # settings
   summon text_display ~-6.49 3.2 0.5 {text:'{"color":"yellow","text":"Settings"}',transformation:{translation:[0,0,0],scale:[2,2,2],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 2.5 2.0 {text:'{"color":"white","text":"Particles"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 2.2 2.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon interaction ~-6.6 2.2 2.0 {width:0.4,height:0.25}
-  summon text_display ~-6.49 2.5 -1.0 {text:'{"color":"white","text":"Decorations"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 2.2 -1.0 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon interaction ~-6.6 2.2 -1.0 {width:0.4,height:0.25}
+  summon text_display ~-6.49 2.5 0.5 {text:'{"color":"white","text":"Decorations"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 2.2 0.5 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon interaction ~-6.6 2.2 0.5 {width:0.4,height:0.25}
   summon text_display ~-6.49 1.6 0.5 {text:'{"color":"white","text":"JumpPack"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon text_display ~-6.49 1.3 0.5 {text:'{"color":"blue","text":"loading..."}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon text_display ~-6.49 1.3 2.0 {text:'{"color":"green","text":"\\u2190"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
@@ -81,12 +79,7 @@ execute at @s run
     %FILE%/setup_first_jump
     scoreboard players reset #reset_lobby math
   # Settings board
-  execute positioned ~-6.6 2.2 2.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
-    execute store result score #value math run data get storage infinite_parkour:calc lane.settings.particles
-    %FILE%/toggle_setting
-    execute store result storage infinite_parkour:calc lane.settings.particles byte 1 run scoreboard players get #value math
-    scoreboard players reset #value math
-  execute positioned ~-6.6 2.2 -1.0 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
+  execute positioned ~-6.6 2.2 0.5 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
     execute store result score #value math run data get storage infinite_parkour:calc lane.settings.decorations
     %FILE%/toggle_setting
     execute store result storage infinite_parkour:calc lane.settings.decorations byte 1 run scoreboard players get #value math
@@ -198,6 +191,7 @@ execute at @s run
   # TODO select a direction in case the current x value is too far from the center
 
   function infinite_parkour:jump/increment
+  scoreboard players reset #jump_mirror_math math
   data remove storage infinite_parkour:jumppack jump
 
 /fall_tick

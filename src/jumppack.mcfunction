@@ -26,7 +26,7 @@
   $execute unless data storage jumppack:$(jumppack_id) jumppack run data remove storage infinite_parkour:jumppack list[{name:'$(jumppack_id)'}]
 
 /test_random_jump
-  %FILE%/fetch {jumppack_id:"my_jumppack"}
+  %FILE%/fetch {jumppack_id:"base"}
   %FILE%/random_jump
   data remove storage infinite_parkour:jumppack jumppack
 
