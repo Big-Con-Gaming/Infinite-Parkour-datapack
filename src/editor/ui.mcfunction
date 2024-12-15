@@ -68,6 +68,10 @@
   %EMPTY%
     $data modify storage infinite_parkour:macro data.jumppack_id set from storage infinite_parkour:jumppack list[$(index)].name
   + with storage infinite_parkour:macro data
+  #update
+  %FILE%/update_pack_from_data
+
+/update_pack_from_data
   # update text display
   %EMPTY%
     $data merge entity @s {text:'"$(jumppack_id)"'}
@@ -76,5 +80,3 @@
   execute positioned ~-31.5 0.0 0.0 as @n[type=marker,tag=ipe_env,distance=..0.1] run data modify entity @s data.jumppack_id set from storage infinite_parkour:macro data.jumppack_id
   data remove storage infinite_parkour:macro data
   execute positioned ~-10 33 -17 align xyz run function infinite_parkour:editor/hologram/unload_all
-
-

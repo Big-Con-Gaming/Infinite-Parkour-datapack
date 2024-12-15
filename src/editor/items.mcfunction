@@ -16,10 +16,19 @@
   return 0
 
 /update_pack_name
-  data modify storage infinite_parkour:calc name set from entity @s Inventory[{Slot:8b}].components."minecraft:writable_book_content".pages[0].raw
-  execute unless data storage infinite_parkour:calc name run return 0
-  function infinite_parkour:editor/set_pack with storage infinite_parkour:calc
-  data remove storage infinite_parkour:calc name
+  # get
+  data modify storage infinite_parkour:macro data.jumppack_id set from entity @s Inventory[{Slot:8b}].components."minecraft:writable_book_content".pages[0].raw
+  execute unless data storage infinite_parkour:macro data.jumppack_id run return 0
+  # update
+  execute positioned 0.0 0.0 0.0 run
+    execute positioned ~31.5 34.0 -17.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
+      scoreboard players set @s ipe_index 0
+      function infinite_parkour:editor/ui/update_pack_from_data
+    execute positioned ~31.5 33.0 -17.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1] at @s run
+      scoreboard players set @s ipe_index 0
+      function infinite_parkour:editor/ui/update_page
+  # clean
+  data remove storage infinite_parkour:macro data
 
 /store_items
   item replace block ~ ~ ~ container.0 from entity @s container.0
