@@ -41,26 +41,26 @@
       data remove entity @s interaction
       data remove entity @s attack
 
-/prev_page
-  execute positioned ~0.5 33.0 -17.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1,scores={ipe_index=1..}] at @s run
-    scoreboard players remove @s ipe_index 1
-    %FILE%/update_page
-/next_page
-  execute positioned ~-0.5 33.0 -17.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1,scores={ipe_index=..6}] at @s run
-    scoreboard players add @s ipe_index 1
-    %FILE%/update_page
-
 /prev_pack
-  execute positioned ~1.5 34.0 -17.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
+  execute positioned ~2 36.25 -30.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
     execute unless score @s ipe_index matches 1.. run execute store result score @s ipe_index if data storage infinite_parkour:jumppack list[]
     scoreboard players remove @s ipe_index 1
     %FILE%/update_pack
 /next_pack
-  execute positioned ~-1.5 34.0 -17.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
+  execute positioned ~-2 36.25 -30.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
     execute store result score #len math if data storage infinite_parkour:jumppack list[]
     scoreboard players add @s ipe_index 1
     execute if score @s ipe_index >= #len math run scoreboard players set @s ipe_index 0
     %FILE%/update_pack
+
+/prev_page
+  execute positioned ~1 34.25 -30.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1,scores={ipe_index=1..}] at @s run
+    scoreboard players remove @s ipe_index 1
+    %FILE%/update_page
+/next_page
+  execute positioned ~-1 34.25 -30.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1,scores={ipe_index=..6}] at @s run
+    scoreboard players add @s ipe_index 1
+    %FILE%/update_page
 
 /update_page
   execute store result storage infinite_parkour:macro data.page int 1 run scoreboard players get @s ipe_index

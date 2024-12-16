@@ -39,7 +39,7 @@
   data remove storage infinite_parkour:macro data
   
   execute at @e[type=marker,tag=ip_jump_next,distance=..512] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ip_block_display","ip_scale_up"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
-  execute at @e[type=marker,tag=ParkourBlocker,distance=..512] as @n[type=block_display,distance=..1] run data merge entity @s {block_state:{Name:"minecraft:yellow_stained_glass"}}
+  execute at @e[type=marker,tag=ip_block_blocker,distance=..512] run data merge entity @n[type=block_display,distance=..1] {block_state:{Name:"minecraft:yellow_stained_glass"}}
   # generate decoration, will be included here in the future on the next line
 
   data remove storage infinite_parkour:calc temp_blocks_list
@@ -52,8 +52,8 @@
 
   /place_jump_objects
     #This places the different kinds of objects found in jumps. Currently, this includes platforms, blockers, and end destinations which are platforms as well. Mostly just places and modifies markers.
-    execute if data storage infinite_parkour:calc temp_current_block{type:"platform"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker"]}
-    execute if data storage infinite_parkour:calc temp_current_block{type:"blocker"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ParkourBlocker"]}
+    execute if data storage infinite_parkour:calc temp_current_block{type:"platform"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_platform"]}
+    execute if data storage infinite_parkour:calc temp_current_block{type:"blocker"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_blocker"]}
 
   /macro_pos
     #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.

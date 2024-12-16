@@ -36,9 +36,10 @@
   execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,tag=ipe_block,dx=64,dy=64,dz=64] at @s if block ~ ~ ~ air run kill @s
 
 /place_block
-  execute if entity @s[tag=ipe_place_80] run
-    summon marker ~0.5 ~0.5 ~0.5 {Tags:["ipe_trail_start","ipe_trail_start_new"]}
-  execute if entity @s[tag=ipe_place_80] run return 0
+  execute if entity @s[tag=ipe_place_8] run
+    execute if entity @s[tag=ipe_place_80] run setblock ~ ~ ~ air
+    execute if entity @s[tag=ipe_place_81] run summon marker ~0.5 ~0.5 ~0.5 {Tags:["ipe_trail_start","ipe_trail_start_new"]}
+  execute if entity @s[tag=ipe_place_8] run return 0
 
   execute unless entity @n[type=block_display,tag=ipe_block,distance=..0.1] run summon block_display ~ ~ ~ {Tags:["ipe_block"],block_state:{Name:"reinforced_deepslate"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
   ride @s mount @n[type=block_display,tag=ipe_block,distance=..0.1]
