@@ -34,20 +34,20 @@
 
 /create_grid
   scoreboard players set #counter ipe_index 0
-  execute positioned ~21 32 ~-17 run %FILE%/create_row
-  execute positioned ~24 32 ~-17 run %FILE%/create_row
-  execute positioned ~27 32 ~-17 run %FILE%/create_row
-  execute positioned ~35 32 ~-17 run %FILE%/create_row
-  execute positioned ~38 32 ~-17 run %FILE%/create_row
-  execute positioned ~41 32 ~-17 run %FILE%/create_row
+  execute positioned ~18 32 ~-17 run %FILE%/create_row
+  execute positioned ~22 32 ~-17 run %FILE%/create_row
+  execute positioned ~26 32 ~-17 run %FILE%/create_row
+  execute positioned ~36 32 ~-17 run %FILE%/create_row
+  execute positioned ~40 32 ~-17 run %FILE%/create_row
+  execute positioned ~44 32 ~-17 run %FILE%/create_row
   scoreboard players reset #counter ipe_index
 
 /create_row
-  %FILE%/create_one
-  execute positioned ~ ~ ~3 run %FILE%/create_one
-  execute positioned ~ ~ ~6 run %FILE%/create_one
+  execute positioned ~ ~ ~-3 run %FILE%/create_one
+  execute positioned ~ ~ ~1 run %FILE%/create_one
+  execute positioned ~ ~ ~5 run %FILE%/create_one
   execute positioned ~ ~ ~9 run %FILE%/create_one
-  execute positioned ~ ~ ~12 run %FILE%/create_one
+  execute positioned ~ ~ ~13 run %FILE%/create_one
 
 /create_one
   summon minecraft:block_display ~.5 ~.5 ~.5 {Passengers: [{block_state: {Name: "minecraft:pale_oak_wood", Properties: {axis: "y"}}, id: "minecraft:block_display", transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.875f, 0.25f, 0.875f], translation: [-0.4375f, -0.5f, -0.4375f]}}, {block_state: {Name: "minecraft:chiseled_tuff"}, id: "minecraft:block_display", transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [1.0f, 0.375f, 1.0f], translation: [-0.5f, 0.125f, -0.5f]}}], block_state: {Name: "minecraft:pale_oak_wood", Properties: {axis: "y"}}, transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.75f, 0.5f, 0.75f], translation: [-0.375f, -0.25f, -0.375f]}}
