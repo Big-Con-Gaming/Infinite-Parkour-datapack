@@ -2,16 +2,14 @@
   execute in infinite_parkour:editor run
     kill @e[type=item,distance=0..]
     execute at @e[type=marker,tag=ipe_env,distance=0..] run
-      execute positioned ~ ~ ~-1 as @a[dx=64,dy=64,dz=65] unless entity @s[tag=ipe_player_canvas] run
-        tag @s add ipe_player_canvas
-        execute positioned ~-1 ~ ~ run %FILE%/retrieve_items
-      execute positioned ~ ~ ~-18 as @a[dx=64,dy=64,dz=13.4] if entity @s[tag=ipe_player_canvas] run
-        tag @s remove ipe_player_canvas
-        execute positioned ~-1 ~ ~17 run %FILE%/store_items
-    execute as @a[distance=0..,tag=ipe_player_canvas,tag=!admin-build_mode] run %FILE%/give_bundles
-    execute as @a[distance=0..,tag=!ipe_player_canvas,tag=!admin-build_mode] run
-      %FILE%/update_pack_name
-      %FILE%/give_hologram_controls
+      execute positioned ~-1 ~ ~-1 as @a[dx=65,dy=64,dz=65,tag=!admin-build_mode] unless entity @s[tag=ipe_player_canvas] run
+        execute unless items entity @s player.cursor item_frame run
+          %FILE%/retrieve_items
+        %FILE%/store_items
+        %FILE%/give_bundles
+      execute positioned ~ ~ ~-18 as @a[dx=64,dy=64,dz=13.4,tag=!admin-build_mode] if entity @s[tag=ipe_player_canvas] run
+        %FILE%/update_pack_name
+        %FILE%/give_hologram_controls
 
   return 0
 
@@ -59,97 +57,254 @@
   item replace block ~ ~ ~ container.25 from entity @s container.34
   item replace block ~ ~ ~ container.26 from entity @s container.35
 
+/retrieve_item
+  $execute unless items entity @s container.$(i) item_frame if items block ~ ~ ~ container.$(j) item_frame run
+    $item replace entity @s container.$(i) with air
+    $item replace entity @s container.$(i) from block ~ ~ ~ container.$(j)
+  + {i:$(i),j:$(j)}
+
 /retrieve_items
-  item replace entity @s container.0 from block ~ ~ ~ container.0
-  item replace entity @s container.1 from block ~ ~ ~ container.1
-  item replace entity @s container.2 from block ~ ~ ~ container.2
-  item replace entity @s container.3 from block ~ ~ ~ container.3
-  item replace entity @s container.4 from block ~ ~ ~ container.4
-  item replace entity @s container.5 from block ~ ~ ~ container.5
-  item replace entity @s container.6 from block ~ ~ ~ container.6
-  item replace entity @s container.7 from block ~ ~ ~ container.7
-  item replace entity @s container.8 from block ~ ~ ~ container.8
-  item replace entity @s container.18 from block ~ ~ ~ container.9
-  item replace entity @s container.19 from block ~ ~ ~ container.10
-  item replace entity @s container.20 from block ~ ~ ~ container.11
-  item replace entity @s container.21 from block ~ ~ ~ container.12
-  item replace entity @s container.22 from block ~ ~ ~ container.13
-  item replace entity @s container.23 from block ~ ~ ~ container.14
-  item replace entity @s container.24 from block ~ ~ ~ container.15
-  item replace entity @s container.25 from block ~ ~ ~ container.16
-  item replace entity @s container.26 from block ~ ~ ~ container.17
-  item replace entity @s container.27 from block ~ ~ ~ container.18
-  item replace entity @s container.28 from block ~ ~ ~ container.19
-  item replace entity @s container.29 from block ~ ~ ~ container.20
-  item replace entity @s container.30 from block ~ ~ ~ container.21
-  item replace entity @s container.31 from block ~ ~ ~ container.22
-  item replace entity @s container.32 from block ~ ~ ~ container.23
-  item replace entity @s container.33 from block ~ ~ ~ container.24
-  item replace entity @s container.34 from block ~ ~ ~ container.25
-  item replace entity @s container.35 from block ~ ~ ~ container.26
+  %FILE%/retrieve_item {i:0,j:0}
+  %FILE%/retrieve_item {i:1,j:1}
+  %FILE%/retrieve_item {i:2,j:2}
+  %FILE%/retrieve_item {i:3,j:3}
+  %FILE%/retrieve_item {i:4,j:4}
+  %FILE%/retrieve_item {i:5,j:5}
+  %FILE%/retrieve_item {i:6,j:6}
+  %FILE%/retrieve_item {i:7,j:7}
+  %FILE%/retrieve_item {i:8,j:8}
+  %FILE%/retrieve_item {i:18,j:9}
+  %FILE%/retrieve_item {i:19,j:10}
+  %FILE%/retrieve_item {i:20,j:11}
+  %FILE%/retrieve_item {i:21,j:12}
+  %FILE%/retrieve_item {i:22,j:13}
+  %FILE%/retrieve_item {i:23,j:14}
+  %FILE%/retrieve_item {i:24,j:15}
+  %FILE%/retrieve_item {i:25,j:16}
+  %FILE%/retrieve_item {i:26,j:17}
+  %FILE%/retrieve_item {i:27,j:18}
+  %FILE%/retrieve_item {i:28,j:19}
+  %FILE%/retrieve_item {i:29,j:20}
+  %FILE%/retrieve_item {i:30,j:21}
+  %FILE%/retrieve_item {i:31,j:22}
+  %FILE%/retrieve_item {i:32,j:23}
+  %FILE%/retrieve_item {i:33,j:24}
+  %FILE%/retrieve_item {i:34,j:25}
+  %FILE%/retrieve_item {i:35,j:26}
+
+  # execute unless items entity @s container.0 item_frame run item replace entity @s container.0 from block ~ ~ ~ container.0
+  # execute unless items entity @s container.1 item_frame run item replace entity @s container.1 from block ~ ~ ~ container.1
+  # execute unless items entity @s container.2 item_frame run item replace entity @s container.2 from block ~ ~ ~ container.2
+  # execute unless items entity @s container.3 item_frame run item replace entity @s container.3 from block ~ ~ ~ container.3
+  # execute unless items entity @s container.4 item_frame run item replace entity @s container.4 from block ~ ~ ~ container.4
+  # execute unless items entity @s container.5 item_frame run item replace entity @s container.5 from block ~ ~ ~ container.5
+  # execute unless items entity @s container.6 item_frame run item replace entity @s container.6 from block ~ ~ ~ container.6
+  # execute unless items entity @s container.7 item_frame run item replace entity @s container.7 from block ~ ~ ~ container.7
+  # execute unless items entity @s container.8 item_frame run item replace entity @s container.8 from block ~ ~ ~ container.8
+  # execute unless items entity @s container.18 item_frame run item replace entity @s container.18 from block ~ ~ ~ container.9
+  # execute unless items entity @s container.19 item_frame run item replace entity @s container.19 from block ~ ~ ~ container.10
+  # execute unless items entity @s container.20 item_frame run item replace entity @s container.20 from block ~ ~ ~ container.11
+  # execute unless items entity @s container.21 item_frame run item replace entity @s container.21 from block ~ ~ ~ container.12
+  # execute unless items entity @s container.22 item_frame run item replace entity @s container.22 from block ~ ~ ~ container.13
+  # execute unless items entity @s container.23 item_frame run item replace entity @s container.23 from block ~ ~ ~ container.14
+  # execute unless items entity @s container.24 item_frame run item replace entity @s container.24 from block ~ ~ ~ container.15
+  # execute unless items entity @s container.25 item_frame run item replace entity @s container.25 from block ~ ~ ~ container.16
+  # execute unless items entity @s container.26 item_frame run item replace entity @s container.26 from block ~ ~ ~ container.17
+  # execute unless items entity @s container.27 item_frame run item replace entity @s container.27 from block ~ ~ ~ container.18
+  # execute unless items entity @s container.28 item_frame run item replace entity @s container.28 from block ~ ~ ~ container.19
+  # execute unless items entity @s container.29 item_frame run item replace entity @s container.29 from block ~ ~ ~ container.20
+  # execute unless items entity @s container.30 item_frame run item replace entity @s container.30 from block ~ ~ ~ container.21
+  # execute unless items entity @s container.31 item_frame run item replace entity @s container.31 from block ~ ~ ~ container.22
+  # execute unless items entity @s container.32 item_frame run item replace entity @s container.32 from block ~ ~ ~ container.23
+  # execute unless items entity @s container.33 item_frame run item replace entity @s container.33 from block ~ ~ ~ container.24
+  # execute unless items entity @s container.34 item_frame run item replace entity @s container.34 from block ~ ~ ~ container.25
+  # execute unless items entity @s container.35 item_frame run item replace entity @s container.35 from block ~ ~ ~ container.26
+
+/give_bundle
+  # $execute unless items entity @s container.$(slot) $(color)_bundle[item_name="$(name)",bundle_contents=[
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)0"$(inside)]},item_model:"$(model0)",item_name:"'$(name0)'",lore:[$(lore0)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)1"$(inside)]},item_model:"$(model1)",item_name:"'$(name1)'",lore:[$(lore1)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)2"$(inside)]},item_model:"$(model2)",item_name:"'$(name2)'",lore:[$(lore2)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)3"$(inside)]},item_model:"$(model3)",item_name:"'$(name3)'",lore:[$(lore3)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)4"$(inside)]},item_model:"$(model4)",item_name:"'$(name4)'",lore:[$(lore4)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)5"$(inside)]},item_model:"$(model5)",item_name:"'$(name5)'",lore:[$(lore5)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)6"$(inside)]},item_model:"$(model6)",item_name:"'$(name6)'",lore:[$(lore6)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)7"$(inside)]},item_model:"$(model7)",item_name:"'$(name7)'",lore:[$(lore7)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)8"$(inside)]},item_model:"$(model8)",item_name:"'$(name8)'",lore:[$(lore8)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)9"$(inside)]},item_model:"$(model9)",item_name:"'$(name9)'",lore:[$(lore9)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)a"$(inside)]},item_model:"$(modela)",item_name:"'$(namea)'",lore:[$(lorea)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)b"$(inside)]},item_model:"$(modelb)",item_name:"'$(nameb)'",lore:[$(loreb)]}}
+  # +]] run item replace entity @s container.$(slot) with $(color)_bundle[item_name="$(name)",bundle_contents=[
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)0"$(inside)]},item_model:"$(model0)",item_name:"'$(name0)'",lore:[$(lore0)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)1"$(inside)]},item_model:"$(model1)",item_name:"'$(name1)'",lore:[$(lore1)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)2"$(inside)]},item_model:"$(model2)",item_name:"'$(name2)'",lore:[$(lore2)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)3"$(inside)]},item_model:"$(model3)",item_name:"'$(name3)'",lore:[$(lore3)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)4"$(inside)]},item_model:"$(model4)",item_name:"'$(name4)'",lore:[$(lore4)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)5"$(inside)]},item_model:"$(model5)",item_name:"'$(name5)'",lore:[$(lore5)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)6"$(inside)]},item_model:"$(model6)",item_name:"'$(name6)'",lore:[$(lore6)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)7"$(inside)]},item_model:"$(model7)",item_name:"'$(name7)'",lore:[$(lore7)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)8"$(inside)]},item_model:"$(model8)",item_name:"'$(name8)'",lore:[$(lore8)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)9"$(inside)]},item_model:"$(model9)",item_name:"'$(name9)'",lore:[$(lore9)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)a"$(inside)]},item_model:"$(modela)",item_name:"'$(namea)'",lore:[$(lorea)]}},
+  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)b"$(inside)]},item_model:"$(modelb)",item_name:"'$(nameb)'",lore:[$(loreb)]}}
+  # +]]
+
+  $execute unless items entity @s container.$(slot) $(color)_bundle[item_name="$(name)",bundle_contents=[
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)0"$(inside)]},item_model:"$(model0)",item_name:"'$(name0)'",lore:[$(lore0)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)1"$(inside)]},item_model:"$(model1)",item_name:"'$(name1)'",lore:[$(lore1)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)2"$(inside)]},item_model:"$(model2)",item_name:"'$(name2)'",lore:[$(lore2)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)3"$(inside)]},item_model:"$(model3)",item_name:"'$(name3)'",lore:[$(lore3)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)4"$(inside)]},item_model:"$(model4)",item_name:"'$(name4)'",lore:[$(lore4)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)5"$(inside)]},item_model:"$(model5)",item_name:"'$(name5)'",lore:[$(lore5)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)6"$(inside)]},item_model:"$(model6)",item_name:"'$(name6)'",lore:[$(lore6)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)7"$(inside)]},item_model:"$(model7)",item_name:"'$(name7)'",lore:[$(lore7)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)8"$(inside)]},item_model:"$(model8)",item_name:"'$(name8)'",lore:[$(lore8)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)9"$(inside)]},item_model:"$(model9)",item_name:"'$(name9)'",lore:[$(lore9)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)a"$(inside)]},item_model:"$(modela)",item_name:"'$(namea)'",lore:[$(lorea)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)b"$(inside)]},item_model:"$(modelb)",item_name:"'$(nameb)'",lore:[$(loreb)]}}
+  +]] run item replace entity @s container.$(slot) with $(color)_bundle[item_name="$(name)",bundle_contents=[
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)0"$(inside)]},item_model:"$(model0)",item_name:"'$(name0)'",lore:[$(lore0)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)1"$(inside)]},item_model:"$(model1)",item_name:"'$(name1)'",lore:[$(lore1)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)2"$(inside)]},item_model:"$(model2)",item_name:"'$(name2)'",lore:[$(lore2)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)3"$(inside)]},item_model:"$(model3)",item_name:"'$(name3)'",lore:[$(lore3)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)4"$(inside)]},item_model:"$(model4)",item_name:"'$(name4)'",lore:[$(lore4)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)5"$(inside)]},item_model:"$(model5)",item_name:"'$(name5)'",lore:[$(lore5)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)6"$(inside)]},item_model:"$(model6)",item_name:"'$(name6)'",lore:[$(lore6)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)7"$(inside)]},item_model:"$(model7)",item_name:"'$(name7)'",lore:[$(lore7)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)8"$(inside)]},item_model:"$(model8)",item_name:"'$(name8)'",lore:[$(lore8)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)9"$(inside)]},item_model:"$(model9)",item_name:"'$(name9)'",lore:[$(lore9)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)a"$(inside)]},item_model:"$(modela)",item_name:"'$(namea)'",lore:[$(lorea)]}},
+  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)b"$(inside)]},item_model:"$(modelb)",item_name:"'$(nameb)'",lore:[$(loreb)]}}
+  +]]
+  
 
 /give_bundles
-  item replace entity @s container.9 with green_bundle[item_name="SolidBlocks",bundle_contents=[
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_00"]},item_model:"stone",item_name:"Platform",lore:['{"text":"Simple blocks the player will jump on","italic":false,"color":"gray"}']}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_01"]},item_model:"tuff",item_name:"Blocker",lore:['{"text":"Blocks to stop the player","italic":false,"color":"gray"}']}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_02"]},item_model:"air",item_name:"'2'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_03"]},item_model:"air",item_name:"'3'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_04"]},item_model:"air",item_name:"'4'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_05"]},item_model:"air",item_name:"'5'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_06"]},item_model:"air",item_name:"'6'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_07"]},item_model:"air",item_name:"'7'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_08"]},item_model:"air",item_name:"'8'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_09"]},item_model:"air",item_name:"'9'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_0a"]},item_model:"air",item_name:"'10'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_0","ipe_place_0b"]},item_model:"air",item_name:"'11'"}}
-  +]]
-  item replace entity @s container.10 with yellow_bundle[item_name="Pickups",bundle_contents=[
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_10"]},item_model:"gold_nugget",item_name:"SimplePickup"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_11"]},item_model:"emerald",item_name:"AdvancedPickup"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_12"]},item_model:"air",item_name:"'2'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_13"]},item_model:"air",item_name:"'3'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_14"]},item_model:"air",item_name:"'4'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_15"]},item_model:"air",item_name:"'5'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_16"]},item_model:"air",item_name:"'6'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_17"]},item_model:"air",item_name:"'7'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_18"]},item_model:"air",item_name:"'8'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_19"]},item_model:"air",item_name:"'9'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_1a"]},item_model:"air",item_name:"'10'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_1","ipe_place_1b"]},item_model:"air",item_name:"'11'"}}
-  +]]
-  item replace entity @s container.11 with red_bundle[item_name="'Special Blocks (Not Ready)'",bundle_contents=[
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_20"]},item_model:"ladder",item_name:"Ladder"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_21"]},item_model:"slime_block",item_name:"SlimeBlock"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_22"]},item_model:"honey_block",item_name:"HoneyBlock"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_23"]},item_model:"air",item_name:"'3'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_24"]},item_model:"air",item_name:"'4'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_25"]},item_model:"air",item_name:"'5'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_26"]},item_model:"air",item_name:"'6'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_27"]},item_model:"air",item_name:"'7'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_28"]},item_model:"air",item_name:"'8'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_29"]},item_model:"air",item_name:"'9'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_2a"]},item_model:"air",item_name:"'10'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_2","ipe_place_2b"]},item_model:"air",item_name:"'11'"}}
-  +]]
-  item replace entity @s container.12 with white_bundle[item_name="'Future Category'"]
-  item replace entity @s container.13 with white_bundle[item_name="'Future Category'"]
-  item replace entity @s container.14 with white_bundle[item_name="'Future Category'"]
-  item replace entity @s container.15 with white_bundle[item_name="'Future Category'"]
-  item replace entity @s container.16 with white_bundle[item_name="'Future Category'"]
-  item replace entity @s container.17 with pink_bundle[item_name="Modifiers",bundle_contents=[
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_80","ipe_place_inside"]},item_model:"redstone",item_name:"Trail",lore:['{"text":"Creates a trail between blocks","italic":false,"color":"gray"}','{"text":"To remove break the starting block","italic":false,"color":"gray"}']}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_81","ipe_place_inside"]},item_model:"air",item_name:"'1'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_82","ipe_place_inside"]},item_model:"air",item_name:"'2'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_83","ipe_place_inside"]},item_model:"air",item_name:"'3'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_84","ipe_place_inside"]},item_model:"air",item_name:"'4'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_85","ipe_place_inside"]},item_model:"air",item_name:"'5'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_86","ipe_place_inside"]},item_model:"air",item_name:"'6'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_87","ipe_place_inside"]},item_model:"air",item_name:"'7'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_88","ipe_place_inside"]},item_model:"air",item_name:"'8'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_89","ipe_place_inside"]},item_model:"air",item_name:"'9'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_8a","ipe_place_inside"]},item_model:"air",item_name:"'10'"}},
-  +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_8","ipe_place_8b","ipe_place_inside"]},item_model:"air",item_name:"'11'"}}
-  +]]
+  %FILE%/give_bundle {slot:'9',color:'green',name:'SolidBlocks',i:'0',inside:'',
+  + model0:'stone',name0:'Platform',lore0:'\'{"text":"Simple blocks the player will jump on","italic":false,"color":"gray"}\'',
+  + model1:'tuff',name1:'Blocker',lore1:'\'{"text":"Blocks to stop the player","italic":false,"color":"gray"}\'',
+  + model2:'air',name2:'2',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
+  %FILE%/give_bundle {slot:'10',color:'yellow',name:'Pickups',i:'1',inside:'',
+  + model0:'gold_nugget',name0:'SimplePickup',lore0:'',
+  + model1:'emerald',name1:'AdvancedPickup',lore1:'',
+  + model2:'air',name2:'2',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
+  %FILE%/give_bundle {slot:'11',color:'red',name:'\'Special Blocks (Not Ready)\'',i:'2',inside:'',
+  + model0:'ladder',name0:'Ladder',lore0:'',
+  + model1:'slime_block',name1:'SlimeBlock',lore1:'',
+  + model2:'honey_block',name2:'HoneyBlock',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
+  %FILE%/give_bundle {slot:'12',color:'white',name:'\'Future Category\'',i:'3',inside:'',
+  + model0:'air',name0:'0',lore0:'',
+  + model1:'air',name1:'1',lore1:'',
+  + model2:'air',name2:'2',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
+  %FILE%/give_bundle {slot:'13',color:'white',name:'\'Future Category\'',i:'4',inside:'',
+  + model0:'air',name0:'0',lore0:'',
+  + model1:'air',name1:'1',lore1:'',
+  + model2:'air',name2:'2',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
+  %FILE%/give_bundle {slot:'14',color:'white',name:'\'Future Category\'',i:'5',inside:'',
+  + model0:'air',name0:'0',lore0:'',
+  + model1:'air',name1:'1',lore1:'',
+  + model2:'air',name2:'2',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
+  %FILE%/give_bundle {slot:'15',color:'white',name:'\'Future Category\'',i:'6',inside:'',
+  + model0:'air',name0:'0',lore0:'',
+  + model1:'air',name1:'1',lore1:'',
+  + model2:'air',name2:'2',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
+  %FILE%/give_bundle {slot:'16',color:'white',name:'\'Future Category\'',i:'7',inside:'',
+  + model0:'air',name0:'0',lore0:'',
+  + model1:'air',name1:'1',lore1:'',
+  + model2:'air',name2:'2',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
+  %FILE%/give_bundle {slot:'17',color:'pink',name:'Modifiers',i:'8',inside:',"ipe_place_inside"',
+  + model0:'barrier',name0:'Delete',lore0:'',
+  + model1:'redstone',name1:'Trail',lore1:'\'{"text":"Creates a trail between blocks","italic":false,"color":"gray"}\',\'{"text":"To remove break the starting block","italic":false,"color":"gray"}\'',
+  + model2:'air',name2:'2',lore2:'',
+  + model3:'air',name3:'3',lore3:'',
+  + model4:'air',name4:'4',lore4:'',
+  + model5:'air',name5:'5',lore5:'',
+  + model6:'air',name6:'6',lore6:'',
+  + model7:'air',name7:'7',lore7:'',
+  + model8:'air',name8:'8',lore8:'',
+  + model9:'air',name9:'9',lore9:'',
+  + modela:'air',namea:'a',lorea:'',
+  + modelb:'air',nameb:'b',loreb:''
+  + }
 
 /give_hologram_controls
   item replace entity @s container.0 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply0"]},item_model="lead",item_name="Load",lore=['{"text":"Right click a hologram to load it","italic":false,"color":"gray"}']]

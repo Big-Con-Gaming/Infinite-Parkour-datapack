@@ -137,7 +137,7 @@ execute at @s run
   # first jump
   setblock ~ -1 16 barrier
   summon block_display ~ -0.5 16.5 {interpolation_duration:1,Tags:["ip_block_display"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[1.0f,1.0f,1.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[-0.5f,-0.5f,-0.5f]}}
-  summon marker ~ -0.5 16.5 {Tags:["ip_jump_connect","ip_jump_goal","ip_block_marker"]}
+  summon marker ~ -0.5 16.5 {Tags:["ip_jump_connect","ip_jump_goal","ip_block_marker","ip_block_platform"]}
   execute positioned ~ -0.5 16.5 summon marker run
     tag @s add ip_trail
     # TODO customized color
@@ -146,7 +146,7 @@ execute at @s run
     data modify entity @s data.target[0] set from entity @s Pos[0]
   # second jump
   summon block_display ~ -0.5 19.5 {interpolation_duration:1,Tags:["ip_block_display","ip_scale_up"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
-  summon marker ~ -0.5 19.5 {Tags:["ip_jump_connect","ip_jump_next","ip_block_marker"]}
+  summon marker ~ -0.5 19.5 {Tags:["ip_jump_connect","ip_jump_next","ip_block_marker","ip_block_platform"]}
 
 # Game
 /player_tick
@@ -155,7 +155,7 @@ execute at @s run
   execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
 
   # execute if function infinite_parkour:freeplay/test_landed positioned ~-0.8 ~-1 ~-0.8 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,tag=!ip_jump_next,dx=0.6,dy=1,dz=0.6] at @s run
-  execute positioned ~-0.85 ~-1 ~-0.85 as @e[type=marker,tag=ip_block_marker,tag=!ip_block_reached,tag=!ip_jump_next,dx=0.7,dy=0,dz=0.7] at @s run
+  execute positioned ~-0.85 ~-1 ~-0.85 as @e[type=marker,tag=ip_block_platform,tag=!ip_block_reached,tag=!ip_jump_next,dx=0.7,dy=0,dz=0.7] at @s run
     tag @s add ip_block_reached
     execute if entity @s[tag=ip_jump_goal] run function infinite_parkour:freeplay/finished_jump
     execute at @s run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"raw_gold_block"}}
