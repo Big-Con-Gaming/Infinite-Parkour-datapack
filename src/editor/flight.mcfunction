@@ -29,11 +29,20 @@
   execute unless entity @s[gamemode=survival] unless entity @s[gamemode=adventure] run return 0
   %FILE%/ensure_mounted
 
-  execute on vehicle run
+  execute on vehicle at @s run
     execute if score #direction math matches 1 run data modify entity @s Motion[1] set value 0.7d
     execute if score #direction math matches 0 run data modify entity @s Motion[1] set value 0.0d
     execute if score #direction math matches -1 run data modify entity @s Motion[1] set value -0.7d
     execute store result score #on_ground math run data get entity @s OnGround
+    # execute unless block ~-0.3 ~1.8 ~-0.3 air align y run tp @s ~ ~-0.8 ~ 
+    # execute unless block ~-0.3 ~1.8 ~0.3 air align y run tp @s ~ ~-0.8 ~ 
+    # execute unless block ~0.3 ~1.8 ~-0.3 air align y run tp @s ~ ~-0.8 ~ 
+    # execute unless block ~0.3 ~1.8 ~0.3 air align y run tp @s ~ ~-0.8 ~ 
+    
+    execute unless block ~-0.29 ~1.79 ~-0.29 air align y run tp @s ~ ~0.2 ~ 
+    execute unless block ~-0.29 ~1.79 ~0.29 air align y run tp @s ~ ~0.2 ~ 
+    execute unless block ~0.29 ~1.79 ~-0.29 air align y run tp @s ~ ~0.2 ~ 
+    execute unless block ~0.29 ~1.79 ~0.29 air align y run tp @s ~ ~0.2 ~ 
   execute if score #on_ground math matches 1 run %FILE%/stop_flying
   scoreboard players reset #on_ground math
 
@@ -58,7 +67,7 @@
     attribute @s scale base set 0.41558
     attribute @s safe_fall_distance base set 1024
     attribute @s jump_strength base set 0
-    effect give @n[type=horse] invisibility infinite 0 true
+    # effect give @n[type=horse] invisibility infinite 0 true
   data remove storage infinite_parkour:calc player_id
 /stop_flying
   tag @s remove ipe_flying
