@@ -11,16 +11,7 @@
   fill ~-1 64 -1 ~64 64 64 light_blue_concrete
   # hologram room
   place template infinite_parkour:editor-hologram_room 16 31 -33
-  #fill ~19 31 -19 ~43 31 -3 white_concrete
-  #fill ~19 32 -19 ~43 39 -19 white_concrete
-  #fill ~19 32 -19 ~19 39 -3 white_concrete
-  #fill ~43 32 -3 ~43 39 -19 white_concrete
-  #fill ~43 32 -3 ~19 39 -3 white_concrete
-  #fill ~19 40 -19 ~43 40 -3 light_blue_concrete
-  # hallway
-  fill ~29 31 -2 ~33 35 -2 minecraft:white_concrete
-  fill ~30 32 -3 ~32 34 -1 air
-  # holograms
+
   function infinite_parkour:editor/hologram/create_grid
   # ui
   function infinite_parkour:editor/ui/spawn
