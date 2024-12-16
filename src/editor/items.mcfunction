@@ -8,8 +8,8 @@
       execute positioned ~ ~ ~-18 as @a[dx=64,dy=64,dz=13.4] if entity @s[tag=ipe_player_canvas] run
         tag @s remove ipe_player_canvas
         execute positioned ~-1 ~ ~17 run %FILE%/store_items
-    execute as @a[distance=0..,tag=ipe_player_canvas] run %FILE%/give_bundles
-    execute as @a[distance=0..,tag=!ipe_player_canvas] run
+    execute as @a[distance=0..,tag=ipe_player_canvas,tag=!admin-build_mode] run %FILE%/give_bundles
+    execute as @a[distance=0..,tag=!ipe_player_canvas,tag=!admin-build_mode] run
       %FILE%/update_pack_name
       %FILE%/give_hologram_controls
 

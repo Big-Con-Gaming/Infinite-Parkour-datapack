@@ -10,12 +10,13 @@
   fill ~64 0 64 ~-1 63 64 white_concrete
   fill ~-1 64 -1 ~64 64 64 light_blue_concrete
   # hologram room
-  fill ~19 31 -19 ~43 31 -3 white_concrete
-  fill ~19 32 -19 ~43 39 -19 white_concrete
-  fill ~19 32 -19 ~19 39 -3 white_concrete
-  fill ~43 32 -3 ~43 39 -19 white_concrete
-  fill ~43 32 -3 ~19 39 -3 white_concrete
-  fill ~19 40 -19 ~43 40 -3 light_blue_concrete
+  place template infinite_parkour:editor-hologram_room 16 31 -33
+  #fill ~19 31 -19 ~43 31 -3 white_concrete
+  #fill ~19 32 -19 ~43 39 -19 white_concrete
+  #fill ~19 32 -19 ~19 39 -3 white_concrete
+  #fill ~43 32 -3 ~43 39 -19 white_concrete
+  #fill ~43 32 -3 ~19 39 -3 white_concrete
+  #fill ~19 40 -19 ~43 40 -3 light_blue_concrete
   # hallway
   fill ~29 31 -2 ~33 35 -2 minecraft:white_concrete
   fill ~30 32 -3 ~32 34 -1 air
@@ -23,14 +24,14 @@
   function infinite_parkour:editor/hologram/create_grid
   # ui
   function infinite_parkour:editor/ui/spawn
-  # items
+  # items 
   setblock ~-1 ~ ~-1 chest
 # deletes this environment (should be called on a marker with the tag 'ipe_env')
 /delete
   execute positioned ~-0.5 -0.5 -32.5 run kill @e[type=!player,dx=64,dy=64,dz=96]
   fill ~-1 -1 -1 ~64 -1 64 light_gray_concrete
   fill ~-1 0 -1 ~64 64 64 air
-  fill ~19 31 -19 ~43 40 -2 air
+  fill 17 39 -32 45 32 -4 air
   forceload remove ~ -32 ~63 63
 
 # executed every tick

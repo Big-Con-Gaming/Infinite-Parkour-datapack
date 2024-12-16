@@ -1,28 +1,36 @@
 /spawn
-  # leave button
-  # TODO change back to infinite_parkour:player_saver/retrieve after the alpha
-  summon interaction ~31.5 32.5 -18.7 {width:1.9,height:0.3,Tags:["_ip_interaction","freeplay"]}
-  summon text_display ~31.5 32.5 -17.9 {text:'[{"color":"yellow","text":"Click to Leave","bold":true}]'}
-  # page controls
-  summon text_display ~31.5 33.5 -17.9 {text:'"Page"'}
-  execute positioned ~31.5 33.0 -17.9 summon text_display run
-    data merge entity @s {text:'"0"'}
-    tag @s add ipe_page_num
-    scoreboard players set @s ipe_index 0
-  summon text_display ~31.0 33.0 -17.9 {text:'"\\u2190"'}
-  summon text_display ~32.0 33.0 -17.9 {text:'"\\u2192"'}
-  summon interaction ~31.0 33.0 -17.9 {width:0.3,height:0.3,Tags:["_ip_interaction","editor/ui/prev_page"]}
-  summon interaction ~32.0 33.0 -17.9 {width:0.3,height:0.3,Tags:["_ip_interaction","editor/ui/next_page"]}
-  # pack selection
-  summon text_display ~31.5 34.5 -17.9 {text:'"Pack"'}
-  execute positioned ~31.5 34.0 -17.9 summon text_display run
-    data merge entity @s {text:'"new_pack"'}
+  ## --pack selection-- ##
+  summon text_display ~31.5 37.0 -30.9 {text:'"Selected Pack"',transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
+  execute positioned ~31.5 36.25 -30.9 summon text_display run
+    data merge entity @s {text:'"new_pack"',transformation: {scale: [1.5f, 1.5f, 1.5f]}}
     tag @s add ipe_pack_name
     scoreboard players set @s ipe_index 0
-  summon text_display ~30.0 34.0 -17.9 {text:'"\\u2190"'}
-  summon text_display ~33.0 34.0 -17.9 {text:'"\\u2192"'}
-  summon interaction ~30.0 34.0 -17.9 {width:0.3,height:0.3,Tags:["_ip_interaction","editor/ui/prev_pack"]}
-  summon interaction ~33.0 34.0 -17.9 {width:0.3,height:0.3,Tags:["_ip_interaction","editor/ui/next_pack"]}
+
+  # --Buttons-- #
+  summon block_display ~29.5 36.5 -30.9 {block_state: {Name: "minecraft:smooth_quartz_stairs", Properties: {facing: "north", half: "bottom", shape: "straight", waterlogged: "false"}}, transformation: {left_rotation: [0.6532815f, 0.27059805f, 0.6532815f, -0.27059805f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.06249998f, 0.49999997f, 0.49999994f], translation: [-0.3535534f, -1.0430813E-7f, -0.031249905f]}}
+  summon block_display ~33.5 36.5 -30.9 {block_state: {Name: "minecraft:smooth_quartz_stairs", Properties: {facing: "north", half: "bottom", shape: "straight", waterlogged: "false"}}, transformation: {left_rotation: [0.27059805f, -0.6532815f, 0.27059805f, 0.6532815f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.062499974f, 0.49999994f, 0.49999994f], translation: [0.35355338f, 1.1920929E-7f, -0.0312499f]}}
+  summon interaction ~29.45 36.2 -31.1 {width:0.6,height:0.6,Tags:["_ip_interaction","editor/ui/prev_pack"]}
+  summon interaction ~33.55 36.2 -31.1 {width:0.6,height:0.6,Tags:["_ip_interaction","editor/ui/next_pack"]}
+
+
+  ## --page controls-- ##
+  summon text_display ~31.5 35 -30.9 {text:'"Page"',transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
+  execute positioned ~31.5 34.25 -30.9 summon text_display run
+    data merge entity @s {text:'"0"',transformation: {scale: [1.5f, 1.5f, 1.5f]}}
+    tag @s add ipe_page_num
+    scoreboard players set @s ipe_index 0
+
+  # --Buttons-- #
+  summon block_display ~30.5 34.5 -30.9 {block_state: {Name: "minecraft:smooth_quartz_stairs", Properties: {facing: "north", half: "bottom", shape: "straight", waterlogged: "false"}}, transformation: {left_rotation: [0.6532815f, 0.27059805f, 0.6532815f, -0.27059805f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.06249998f, 0.49999997f, 0.49999994f], translation: [-0.3535534f, -1.0430813E-7f, -0.031249905f]}}
+  summon block_display ~32.5 34.5 -30.9 {block_state: {Name: "minecraft:smooth_quartz_stairs", Properties: {facing: "north", half: "bottom", shape: "straight", waterlogged: "false"}}, transformation: {left_rotation: [0.27059805f, -0.6532815f, 0.27059805f, 0.6532815f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.062499974f, 0.49999994f, 0.49999994f], translation: [0.35355338f, 1.1920929E-7f, -0.0312499f]}}
+  summon interaction ~30.45 34.2 -31.1 {width:0.6,height:0.6,Tags:["_ip_interaction","editor/ui/prev_page"]}
+  summon interaction ~32.55 34.2 -31.1 {width:0.6,height:0.6,Tags:["_ip_interaction","editor/ui/next_page"]}
+  
+
+  ## --leave button-- ##
+  # TODO change back to infinite_parkour:player_saver/retrieve after the alpha
+  summon text_display ~31.5 33.4 -30.9 {text:'[{"color":"yellow","text":"Click to Leave","bold":true}]',transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
+  summon interaction ~31.5 33.3 -32.5 {width:3.4,height:0.6,Tags:["_ip_interaction","freeplay"]}
 
 /tick
   execute in infinite_parkour:editor as @a[distance=0..] at @s run

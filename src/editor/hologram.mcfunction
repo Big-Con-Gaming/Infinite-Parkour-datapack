@@ -50,7 +50,8 @@
   execute positioned ~ ~ ~12 run %FILE%/create_one
 
 /create_one
-  setblock ~ ~ ~ light_gray_concrete
+  summon minecraft:block_display ~.5 ~.5 ~.5 {Passengers: [{block_state: {Name: "minecraft:pale_oak_wood", Properties: {axis: "y"}}, id: "minecraft:block_display", transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.875f, 0.25f, 0.875f], translation: [-0.4375f, -0.5f, -0.4375f]}}, {block_state: {Name: "minecraft:chiseled_tuff"}, id: "minecraft:block_display", transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [1.0f, 0.375f, 1.0f], translation: [-0.5f, 0.125f, -0.5f]}}], block_state: {Name: "minecraft:pale_oak_wood", Properties: {axis: "y"}}, transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.75f, 0.5f, 0.75f], translation: [-0.375f, -0.25f, -0.375f]}}
+  setblock ~ ~ ~ barrier
   setblock ~ ~1 ~ orange_stained_glass
   execute positioned ~0.5 ~1.5 ~0.5 summon block_display run
     tag @s add ipe_hologram
