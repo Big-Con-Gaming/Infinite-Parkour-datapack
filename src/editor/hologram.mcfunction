@@ -2,7 +2,7 @@
 
 /tick
   execute in infinite_parkour:editor as @e[type=block_display,tag=ipe_hologram,distance=0..] at @s run tp @s ~ ~ ~ ~2 ~
-  execute in infinite_parkour:editor as @a[distance=0..] at @s as @n[type=block_display,tag=ipe_hologram_loading,distance=..16] at @s run %FILE%/load
+  execute in infinite_parkour:editor as @a[distance=0..] at @s as @n[type=block_display,tag=ipe_hologram_loading,distance=..32] at @s run %FILE%/load
   execute in infinite_parkour:editor as @e[type=item_frame,tag=ipe_hologram_apply,distance=0..] at @s positioned ^ ^ ^-0.5 align xyz positioned ~0.5 ~0.5 ~0.5 run %FILE%/modify
 
 /modify
@@ -34,20 +34,20 @@
 
 /create_grid
   scoreboard players set #counter ipe_index 0
-  execute positioned ~18 32 ~-17 run %FILE%/create_row
-  execute positioned ~22 32 ~-17 run %FILE%/create_row
-  execute positioned ~26 32 ~-17 run %FILE%/create_row
-  execute positioned ~36 32 ~-17 run %FILE%/create_row
-  execute positioned ~40 32 ~-17 run %FILE%/create_row
-  execute positioned ~44 32 ~-17 run %FILE%/create_row
+  execute positioned ~18.0 32.0 -20.0 run %FILE%/create_row
+  execute positioned ~22.0 32.0 -20.0 run %FILE%/create_row
+  execute positioned ~26.0 32.0 -20.0 run %FILE%/create_row
+  execute positioned ~36.0 32.0 -20.0 run %FILE%/create_row
+  execute positioned ~40.0 32.0 -20.0 run %FILE%/create_row
+  execute positioned ~44.0 32.0 -20.0 run %FILE%/create_row
   scoreboard players reset #counter ipe_index
 
 /create_row
-  execute positioned ~ ~ ~-3 run %FILE%/create_one
-  execute positioned ~ ~ ~1 run %FILE%/create_one
-  execute positioned ~ ~ ~5 run %FILE%/create_one
-  execute positioned ~ ~ ~9 run %FILE%/create_one
-  execute positioned ~ ~ ~13 run %FILE%/create_one
+  execute positioned ~ ~ ~ run %FILE%/create_one
+  execute positioned ~ ~ ~4 run %FILE%/create_one
+  execute positioned ~ ~ ~8 run %FILE%/create_one
+  execute positioned ~ ~ ~12 run %FILE%/create_one
+  execute positioned ~ ~ ~16 run %FILE%/create_one
 
 /create_one
   summon minecraft:block_display ~.5 ~.5 ~.5 {Passengers: [{block_state: {Name: "minecraft:pale_oak_wood", Properties: {axis: "y"}}, id: "minecraft:block_display", transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.875f, 0.25f, 0.875f], translation: [-0.4375f, -0.5f, -0.4375f]}}, {block_state: {Name: "minecraft:chiseled_tuff"}, id: "minecraft:block_display", transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [1.0f, 0.375f, 1.0f], translation: [-0.5f, 0.125f, -0.5f]}}], block_state: {Name: "minecraft:pale_oak_wood", Properties: {axis: "y"}}, transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.75f, 0.5f, 0.75f], translation: [-0.375f, -0.25f, -0.375f]}}
@@ -64,7 +64,7 @@
   scoreboard players add #counter ipe_index 1
 
 /unload_all
-  execute as @e[type=block_display,tag=ipe_hologram,dx=20,dy=0,dz=12] at @s run %FILE%/unload
+  execute as @e[type=block_display,tag=ipe_hologram,dx=26,dy=0,dz=16] at @s run %FILE%/unload
 
 /unload
   execute on passengers run kill @s
