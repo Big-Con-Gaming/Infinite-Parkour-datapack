@@ -31,6 +31,7 @@
   function infinite_parkour:editor/hologram/tick
   execute in infinite_parkour:editor as @e[type=marker,tag=ipe_env,distance=0..] at @s run
     function infinite_parkour:editor/canvas/tick
+    function infinite_parkour:editor/items/tick
   execute in infinite_parkour:editor run kill @e[type=item_frame,distance=0..]
 
 /export
