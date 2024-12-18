@@ -1,0 +1,16 @@
+{
+  "type": "infinite_parkour:editor",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "infinite_parkour:editor",
+      "lakes": false,
+      "features": false,
+      "layers": [
+        { "block": "minecraft:bedrock", "height": 1 },
+        { "block": "minecraft:gray_concrete", "height": 163 }
+      ],
+      "structure_overrides": []
+    }
+  }
+}
