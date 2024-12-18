@@ -42,7 +42,7 @@
     # data modify storage infinite_parkour:macro data2.clickEvent.action set value 'copy_to_clipboard'
     # $data modify storage infinite_parkour:macro data2.clickEvent.value set value '$(jumppack)'
     $data modify storage infinite_parkour:jumppack str set value '$(jumppack)'
-  + with storage jumppack:base
+  + with storage jumppack_base:data
   setblock ~ ~ ~ command_block[facing=up]{auto:1b,Command:"data get storage infinite_parkour:jumppack str"}
   setblock ~ ~1 ~ chain_command_block[facing=up]{auto:1b,Command:"%FUNC%/finish"}
   # execute
