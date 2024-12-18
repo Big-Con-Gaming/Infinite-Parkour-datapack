@@ -1,16 +1,16 @@
 /tick
-  execute in infinite_parkour:editor run
-    kill @e[type=item,distance=0..]
-    execute at @e[type=marker,tag=ipe_env,distance=0..] run
-      execute positioned ~-1 ~ ~-1 as @a[dx=65,dy=64,dz=65,tag=!admin-build_mode] unless entity @s[tag=ipe_player_canvas] run
-        execute unless items entity @s player.cursor item_frame run
-          %FILE%/retrieve_items
-        %FILE%/store_items
-        %FILE%/give_bundles
-      execute positioned ~ ~ ~-18 as @a[dx=64,dy=64,dz=13.4,tag=!admin-build_mode] if entity @s[tag=ipe_player_canvas] run
-        %FILE%/update_pack_name
-        %FILE%/give_hologram_controls
-
+  kill @e[type=item,distance=0..]
+  execute positioned ~ 0 -32 as @a[dx=64,dy=64,dz=86,tag=!admin-build_mode] run
+    execute if entity @s[dx=64,dy=64,dz=32] run
+      %FILE%/update_pack_name
+      %FILE%/give_hologram_controls
+      tag @s remove ip_editor
+    execute unless entity @s[dx=64,dy=64,dz=32] positioned ~-1 0 -1 run
+      execute unless entity @s[tag=ip_editor] run clear @s
+      execute unless items entity @s player.cursor item_frame run %FILE%/retrieve_items
+      %FILE%/store_items
+      %FILE%/give_bundles
+      tag @s add ip_editor
   return 0
 
 /update_pack_name
@@ -92,63 +92,7 @@
   %FILE%/retrieve_item {i:34,j:25}
   %FILE%/retrieve_item {i:35,j:26}
 
-  # execute unless items entity @s container.0 item_frame run item replace entity @s container.0 from block ~ ~ ~ container.0
-  # execute unless items entity @s container.1 item_frame run item replace entity @s container.1 from block ~ ~ ~ container.1
-  # execute unless items entity @s container.2 item_frame run item replace entity @s container.2 from block ~ ~ ~ container.2
-  # execute unless items entity @s container.3 item_frame run item replace entity @s container.3 from block ~ ~ ~ container.3
-  # execute unless items entity @s container.4 item_frame run item replace entity @s container.4 from block ~ ~ ~ container.4
-  # execute unless items entity @s container.5 item_frame run item replace entity @s container.5 from block ~ ~ ~ container.5
-  # execute unless items entity @s container.6 item_frame run item replace entity @s container.6 from block ~ ~ ~ container.6
-  # execute unless items entity @s container.7 item_frame run item replace entity @s container.7 from block ~ ~ ~ container.7
-  # execute unless items entity @s container.8 item_frame run item replace entity @s container.8 from block ~ ~ ~ container.8
-  # execute unless items entity @s container.18 item_frame run item replace entity @s container.18 from block ~ ~ ~ container.9
-  # execute unless items entity @s container.19 item_frame run item replace entity @s container.19 from block ~ ~ ~ container.10
-  # execute unless items entity @s container.20 item_frame run item replace entity @s container.20 from block ~ ~ ~ container.11
-  # execute unless items entity @s container.21 item_frame run item replace entity @s container.21 from block ~ ~ ~ container.12
-  # execute unless items entity @s container.22 item_frame run item replace entity @s container.22 from block ~ ~ ~ container.13
-  # execute unless items entity @s container.23 item_frame run item replace entity @s container.23 from block ~ ~ ~ container.14
-  # execute unless items entity @s container.24 item_frame run item replace entity @s container.24 from block ~ ~ ~ container.15
-  # execute unless items entity @s container.25 item_frame run item replace entity @s container.25 from block ~ ~ ~ container.16
-  # execute unless items entity @s container.26 item_frame run item replace entity @s container.26 from block ~ ~ ~ container.17
-  # execute unless items entity @s container.27 item_frame run item replace entity @s container.27 from block ~ ~ ~ container.18
-  # execute unless items entity @s container.28 item_frame run item replace entity @s container.28 from block ~ ~ ~ container.19
-  # execute unless items entity @s container.29 item_frame run item replace entity @s container.29 from block ~ ~ ~ container.20
-  # execute unless items entity @s container.30 item_frame run item replace entity @s container.30 from block ~ ~ ~ container.21
-  # execute unless items entity @s container.31 item_frame run item replace entity @s container.31 from block ~ ~ ~ container.22
-  # execute unless items entity @s container.32 item_frame run item replace entity @s container.32 from block ~ ~ ~ container.23
-  # execute unless items entity @s container.33 item_frame run item replace entity @s container.33 from block ~ ~ ~ container.24
-  # execute unless items entity @s container.34 item_frame run item replace entity @s container.34 from block ~ ~ ~ container.25
-  # execute unless items entity @s container.35 item_frame run item replace entity @s container.35 from block ~ ~ ~ container.26
-
 /give_bundle
-  # $execute unless items entity @s container.$(slot) $(color)_bundle[item_name="$(name)",bundle_contents=[
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)0"$(inside)]},item_model:"$(model0)",item_name:"'$(name0)'",lore:[$(lore0)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)1"$(inside)]},item_model:"$(model1)",item_name:"'$(name1)'",lore:[$(lore1)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)2"$(inside)]},item_model:"$(model2)",item_name:"'$(name2)'",lore:[$(lore2)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)3"$(inside)]},item_model:"$(model3)",item_name:"'$(name3)'",lore:[$(lore3)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)4"$(inside)]},item_model:"$(model4)",item_name:"'$(name4)'",lore:[$(lore4)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)5"$(inside)]},item_model:"$(model5)",item_name:"'$(name5)'",lore:[$(lore5)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)6"$(inside)]},item_model:"$(model6)",item_name:"'$(name6)'",lore:[$(lore6)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)7"$(inside)]},item_model:"$(model7)",item_name:"'$(name7)'",lore:[$(lore7)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)8"$(inside)]},item_model:"$(model8)",item_name:"'$(name8)'",lore:[$(lore8)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)9"$(inside)]},item_model:"$(model9)",item_name:"'$(name9)'",lore:[$(lore9)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)a"$(inside)]},item_model:"$(modela)",item_name:"'$(namea)'",lore:[$(lorea)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)b"$(inside)]},item_model:"$(modelb)",item_name:"'$(nameb)'",lore:[$(loreb)]}}
-  # +]] run item replace entity @s container.$(slot) with $(color)_bundle[item_name="$(name)",bundle_contents=[
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)0"$(inside)]},item_model:"$(model0)",item_name:"'$(name0)'",lore:[$(lore0)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)1"$(inside)]},item_model:"$(model1)",item_name:"'$(name1)'",lore:[$(lore1)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)2"$(inside)]},item_model:"$(model2)",item_name:"'$(name2)'",lore:[$(lore2)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)3"$(inside)]},item_model:"$(model3)",item_name:"'$(name3)'",lore:[$(lore3)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)4"$(inside)]},item_model:"$(model4)",item_name:"'$(name4)'",lore:[$(lore4)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)5"$(inside)]},item_model:"$(model5)",item_name:"'$(name5)'",lore:[$(lore5)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)6"$(inside)]},item_model:"$(model6)",item_name:"'$(name6)'",lore:[$(lore6)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)7"$(inside)]},item_model:"$(model7)",item_name:"'$(name7)'",lore:[$(lore7)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)8"$(inside)]},item_model:"$(model8)",item_name:"'$(name8)'",lore:[$(lore8)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)9"$(inside)]},item_model:"$(model9)",item_name:"'$(name9)'",lore:[$(lore9)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)a"$(inside)]},item_model:"$(modela)",item_name:"'$(namea)'",lore:[$(lorea)]}},
-  # +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)b"$(inside)]},item_model:"$(modelb)",item_name:"'$(nameb)'",lore:[$(loreb)]}}
-  # +]]
-
   $execute unless items entity @s container.$(slot) $(color)_bundle[item_name="$(name)",bundle_contents=[
   +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)0"$(inside)]},item_model:"$(model0)",item_name:"'$(name0)'",lore:[$(lore0)]}},
   +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)1"$(inside)]},item_model:"$(model1)",item_name:"'$(name1)'",lore:[$(lore1)]}},

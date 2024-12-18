@@ -8,7 +8,6 @@
     "infinite_parkour:portal/tick",
     "infinite_parkour:interaction/tick",
     "infinite_parkour:editor/environment/tick",
-    "infinite_parkour:editor/flight/tick",
-    "infinite_parkour:editor/items/tick"
+    "infinite_parkour:editor/flight/tick"
   ]
 }
