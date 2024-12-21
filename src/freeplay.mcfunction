@@ -197,8 +197,9 @@ execute at @s run
 /fall_tick
   # this function is used for the falling effect and teleporting the players back
   execute store result score py math run data get entity @s Pos[1]
-  execute store result score by math run data get entity @n[tag=ip_jump_goal] Pos[1]
+  execute store result score by math run data get entity @n[tag=ip_trail_curr] Pos[1]
   execute if entity @s[team=Highscore] run scoreboard players remove by math 11
+  execute if data entity @s {OnGround:1b} run return 0
   execute if score py math >= by math run
     tag @s remove ParkourFalling
     stopsound @s ambient minecraft:item.elytra.flying
