@@ -27,7 +27,6 @@
   execute if score #v math matches 3 run particle cloud ~ ~ ~ 2 0 2 0.1 50 normal
   execute if score #v math matches 3 run playsound minecraft:block.anvil.land ambient @p ~ ~ ~ 0.4 0.7
   execute if score #v math matches 4 at @n[type=marker,tag=ip_jump_goal] run
-    particle end_rod ~ ~1 ~ 0 10 0 0.05 0 normal
     particle end_rod ~0.2 ~1 ~ 0 10 0 0.05 0 normal
     particle end_rod ~ ~1 ~0.2 0 10 0 0.05 0 normal
     particle end_rod ~-0.2 ~1 ~ 0 10 0 0.05 0 normal
