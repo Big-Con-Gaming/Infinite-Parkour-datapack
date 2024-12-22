@@ -142,7 +142,6 @@
 
 
 /retrieve
-  say retrieve
   execute in infinite_parkour:lane run
     # fetch data
     %EMPTY%

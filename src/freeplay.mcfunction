@@ -2,7 +2,6 @@
 # calling this function directly teleports the player to a new freeplay lobby
 
 # test the player is not in a lobby
-say enter freeplay
 execute at @s if dimension infinite_parkour:lane run return 0
 
 function infinite_parkour:player_saver/store
