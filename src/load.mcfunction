@@ -44,4 +44,4 @@ execute in infinite_parkour:lane run
 
 function infinite_parkour:load_base_packs
 
-say §aFinished loading!
+# say §aFinished loading!
