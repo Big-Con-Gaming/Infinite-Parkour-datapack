@@ -24,6 +24,9 @@ scoreboard players set 1024 const 1024
 scoreboard players set 8000 const 8000
 
 gamerule commandModificationBlockLimit 999999999
+#Below is only for alpha release
+gamerule doMobLoot false
+gamerule fallDamage false
 
 team add Highscore {"text":"InLobby"}
 team modify Highscore color gold
@@ -45,3 +48,6 @@ execute in infinite_parkour:lane run
 function infinite_parkour:load_base_packs
 
 # say §aFinished loading!
+
+#Below is also only for alpha, to force all players into the lobby
+execute as @a run function infinite_parkour:freeplay
