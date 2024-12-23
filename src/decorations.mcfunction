@@ -16,7 +16,7 @@
     return 1
   + run return 0
   # generate a random number
-  execute store result score #v math run random value 0..4
+  execute store result score #v math run random value -5..4
   # spawn decoration according to the number
   execute if score #v math matches 0 positioned ~50 ~-40 ~50 unless entity @e[type=block_display,distance=..50,tag=ParkourDecoPillar] summon block_display run
     data merge entity @s {interpolation_duration:100,Tags:["ParkourDeco","ParkourDecoPillar","ip_interpolate","ip_interpolate_0"],brightness:{sky:3,block:3},transformation:{translation:[20.0f,-350.0f,20.0f],scale:[30.0f, 20.0f, 30.0f]},block_state:{Name:"minecraft:gold_block"},view_range:50.0f}
