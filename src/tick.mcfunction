@@ -14,8 +14,8 @@ execute as @a at @s run
   execute align xyz positioned ~-70 ~-50 ~-1 if dimension infinite_parkour:lane run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
 #Below is a quick fix to make block displays disappear whenever the player is too close. I want to replace this later with a fix, just don't know what yet.
 execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ ~-45 run
-  execute if entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:0}
-  execute unless entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:50.0f}
+  execute if entity @a[dx=55,dy=70,dz=55] run data merge entity @s {block_state:{Name:"minecraft:yellow_stained_glass"}}
+  execute unless entity @a[dx=55,dy=70,dz=55] run data merge entity @s {block_state:{Name:"minecraft:gold_block"}}
 #Failsafe below to prevent any teamers from leaving the dimension with their team. Most likely needs to be changed before release in case another data pack installed uses teams
 execute as @a at @s if dimension minecraft:overworld run team leave @s 
 
