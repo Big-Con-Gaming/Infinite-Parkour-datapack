@@ -45,9 +45,6 @@ execute at @s run
   execute positioned ~-3.0 0 3.5 run %FUNC%/builder {color:"#ebd68f","angle":0,name:"lags_kills",title:"Suggestor",interaction:"credit_lags"}
   execute positioned ~-1.0 0 5.5 run %FUNC%/builder {color:"#eb8f8f","angle":-1.57079,name:"Flaming_Thunder_",title:"Head Builder",interaction:"credit_flaming"}
   execute positioned ~-3.0 0 7.5 run %FUNC%/builder {color:"#ebe58f","angle":3.14159,name:"2s2s",title:"Build Helper",interaction:"credit_2s2s"}
-
-  #cleans up any loose items
-  kill @e[type=item,distance=..64]
   /builder
     $summon text_display ~ -5.2 ~ {text:'[{"color":"$(color)","text":"$(name)"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
     $summon text_display ~ -5.45 ~ {text:'[{"color":"gray","text":"$(title)"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
