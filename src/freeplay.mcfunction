@@ -197,9 +197,8 @@ execute at @s run
 /fall_tick
   # this function is used for the falling effect and teleporting the players back
   execute store result score py math run data get entity @s Pos[1]
-  execute store result score by math run data get entity @n[tag=ip_jump_next] Pos[1]
+  execute store result score by math run data get entity @n[tag=ip_jump_curr,tag=!ip_block_reached,tag=!ip_jump_prev] Pos[1]
   execute if entity @s[team=Highscore] run scoreboard players remove by math 11
-  scoreboard players remove by math 3
   execute if data entity @s {OnGround:1b} run return 0
   execute if score py math >= by math run
     tag @s remove ParkourFalling
