@@ -48,6 +48,3 @@ execute in infinite_parkour:lane run
 function infinite_parkour:load_base_packs
 
 # say §aFinished loading!
-
-#Below is also only for alpha, to force all players into the lobby
-execute as @a run function infinite_parkour:freeplay
