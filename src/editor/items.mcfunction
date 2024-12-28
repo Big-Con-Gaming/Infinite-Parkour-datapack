@@ -120,7 +120,7 @@
   +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)a"$(inside)]},item_model:"$(modela)",item_name:"'$(namea)'",lore:[$(lorea)]}},
   +{id:"item_frame",Count:1,components:{entity_data:{id:"item_frame",Invisible:1b,Tags:["ipe_place","ipe_place_$(i)","ipe_place_$(i)b"$(inside)]},item_model:"$(modelb)",item_name:"'$(nameb)'",lore:[$(loreb)]}}
   +]]
-  
+
 
 /give_bundles
   %FILE%/give_bundle {slot:'9',color:'green',name:'SolidBlocks',i:'0',inside:'',

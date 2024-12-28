@@ -15,7 +15,7 @@
   function infinite_parkour:editor/hologram/create_grid
   # ui
   function infinite_parkour:editor/ui/spawn
-  # items 
+  # items
   setblock ~-1 ~ ~-1 chest
 # deletes this environment (should be called on a marker with the tag 'ipe_env')
 /delete

@@ -25,7 +25,7 @@
   summon block_display ~32.5 34.5 -30.9 {block_state: {Name: "minecraft:smooth_quartz_stairs", Properties: {facing: "north", half: "bottom", shape: "straight", waterlogged: "false"}}, transformation: {left_rotation: [0.27059805f, -0.6532815f, 0.27059805f, 0.6532815f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.062499974f, 0.49999994f, 0.49999994f], translation: [0.35355338f, 1.1920929E-7f, -0.0312499f]}}
   summon interaction ~30.45 34.2 -31.1 {width:0.6,height:0.6,Tags:["_ip_interaction","editor/ui/prev_page"]}
   summon interaction ~32.55 34.2 -31.1 {width:0.6,height:0.6,Tags:["_ip_interaction","editor/ui/next_page"]}
-  
+
 
   ## --leave button-- ##
   # TODO change back to infinite_parkour:player_saver/retrieve after the alpha
@@ -37,7 +37,7 @@
     execute as @e[type=interaction,distance=..0.10] at @s run
       execute unless data entity @s interaction unless data entity @s attack run return 0
       execute if entity @s[tag=ipe_hologram_interact] run function infinite_parkour:editor/hologram/interact
-      
+
       data remove entity @s interaction
       data remove entity @s attack
 

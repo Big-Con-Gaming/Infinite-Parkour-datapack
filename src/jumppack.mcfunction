@@ -42,7 +42,7 @@
     $execute store result score #selecting math run random value 0..$(max)
   + with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
-  
+
   %FILE%/random_jump/pick_pack
 
   scoreboard players reset #selecting math

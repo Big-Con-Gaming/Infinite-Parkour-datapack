@@ -37,13 +37,13 @@
     $execute positioned ~$(x) ~$(y) ~$(z) run tag @n[type=marker,distance=..0.1] add ip_jump_connect
   + with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
-  
+
   execute at @e[type=marker,tag=ip_jump_next,distance=..512] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ip_block_display","ip_scale_up"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
   execute at @e[type=marker,tag=ip_block_blocker,distance=..512] run data merge entity @n[type=block_display,distance=..1] {block_state:{Name:"minecraft:yellow_stained_glass"}}
   # generate decoration, will be included here in the future on the next line
 
   data remove storage infinite_parkour:calc temp_blocks_list
-  
+
   # create new trail
   data modify storage infinite_parkour:calc trail set from storage infinite_parkour:jumppack jump.trail
   # TODO allow editing of trail color

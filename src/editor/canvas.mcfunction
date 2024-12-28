@@ -22,7 +22,7 @@
   execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=ipe_trail_start_new] run
     execute unless entity @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run return 0
     data modify storage infinite_parkour:calc dst set from entity @s Pos
-    execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run 
+    execute as @n[type=marker,dx=64,dy=64,dz=64,tag=ipe_trail_start,tag=!ipe_trail_start_new] run
       tag @s add ip_trail
       tag @s remove ipe_trail_start
       data modify entity @s data.color set value [0.8,0.2,0.3]
@@ -131,7 +131,7 @@
     data remove storage infinite_parkour:calc temp
 
   execute unless data storage infinite_parkour:calc jump.blocks[0] run data modify storage infinite_parkour:calc jump set value {}
-  
+
   execute if data storage infinite_parkour:calc jump.blocks[0] run
     data modify storage infinite_parkour:calc jump.min_pos set value [0,0,0]
     execute store result storage infinite_parkour:calc jump.min_pos[0] int 1 run scoreboard players get min_x math
@@ -154,7 +154,7 @@
     function infinite_parkour:trail/save
     data modify storage infinite_parkour:calc jump.trail set from storage infinite_parkour:calc trail
     data remove storage infinite_parkour:calc trail
-  
+
   scoreboard players reset min_x math
   scoreboard players reset min_y math
   scoreboard players reset min_z math

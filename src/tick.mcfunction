@@ -20,7 +20,7 @@ execute as @e[type=block_display,tag=ParkourDecoCarpet] at @s positioned ~-60 ~-
   execute if entity @e[dx=60,dy=60,dz=60,tag=!ParkourDeco] run data merge entity @s {block_state:{Name:"minecraft:yellow_stained_glass"}}
   execute unless entity @e[dx=60,dy=60,dz=60,tag=!ParkourDeco] run data merge entity @s {block_state:{Name:"minecraft:gold_block"}}
 #Failsafe below to prevent any teamers from leaving the dimension with their team. Most likely needs to be changed before release in case another data pack installed uses teams
-execute as @a at @s if dimension minecraft:overworld run team leave @s 
+execute as @a at @s if dimension minecraft:overworld run team leave @s
 
 # detecting players that just logged in
 execute store result score #current_time ip_last_online run time query gametime

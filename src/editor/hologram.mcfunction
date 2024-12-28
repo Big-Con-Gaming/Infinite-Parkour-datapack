@@ -73,7 +73,7 @@
 
 /load
   tag @s remove ipe_hologram_loading
-  
+
   %FILE%/prepare_macro
   function infinite_parkour:jumppack/get_jump with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
@@ -82,8 +82,8 @@
     setblock ~ ~ ~ black_stained_glass
     data remove storage infinite_parkour:calc jump
   execute unless data storage infinite_parkour:calc jump run return 0
-    
-  
+
+
   %FILE%/get_dimensions
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
@@ -101,7 +101,7 @@
 
 /interact
   %FILE%/prepare_macro
-  
+
   execute if data entity @s interaction run
     execute positioned ~-31.5 0 ~17.9 as @n[type=marker,tag=ipe_env,distance=..17] at @s run function infinite_parkour:editor/canvas/save
     function infinite_parkour:jumppack/set_jump with storage infinite_parkour:macro data
@@ -163,7 +163,7 @@
   scoreboard players operation off_x math *= 8000 const
   scoreboard players operation off_y math *= 8000 const
   scoreboard players operation off_z math *= 8000 const
-  
+
   scoreboard players reset min_x math
   scoreboard players reset min_y math
   scoreboard players reset min_z math

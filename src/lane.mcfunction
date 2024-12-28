@@ -13,7 +13,7 @@
 
   %FUNC%/claim with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
-  
+
   scoreboard players reset #new ip_lane
 
   /claim
@@ -63,7 +63,7 @@
       scoreboard players reset #test ip_lane
       execute positioned ~-512 -0.5 -0.5 run tag @n[type=marker,tag=ip_lane_entry,dx=1024,dy=1,dz=1] remove ip_lane_remove
   execute in infinite_parkour:lane as @e[type=marker,tag=ip_lane_remove,distance=0..] at @s run %FILE%/free
-  
+
   execute in infinite_parkour:lane as @e[type=interaction,tag=ip_leave,distance=0..] run
     execute on attacker run %FILE%/exit
     execute on target run %FILE%/exit
