@@ -24,7 +24,7 @@ scoreboard players set 1024 const 1024
 scoreboard players set 8000 const 8000
 scoreboard objectives add BugFix trigger
 scoreboard players enable @a BugFix 
-function infinite_parkour:bugfix
+function infinite_parkour:mrbooks36
 
 gamerule commandModificationBlockLimit 999999999
 #Below is only for alpha release
