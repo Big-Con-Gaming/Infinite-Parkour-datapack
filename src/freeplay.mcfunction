@@ -20,7 +20,7 @@ execute at @s run
   # settings
   summon text_display ~-6.49 3.2 0.5 {text:'{"color":"yellow","text":"Settings"}',transformation:{translation:[0,0,0],scale:[2,2,2],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon text_display ~-6.49 2.5 0.5 {text:'{"color":"white","text":"Decorations"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 2.2 0.5 {text:'{"color":"red","text":"off"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 2.2 0.5 {text:'{"color":"green","text":"on"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon interaction ~-6.6 2.2 0.5 {width:0.4,height:0.25}
   summon text_display ~-6.49 1.6 0.5 {text:'{"color":"white","text":"JumpPack"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon text_display ~-6.49 1.3 0.5 {text:'{"color":"blue","text":"loading..."}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
@@ -102,6 +102,7 @@ execute at @s run
     data remove entity @s interaction
     data remove entity @s attack
 
+  execute unless data storage infinite_parkour:calc lane.settings.decorations run data modify storage infinite_parkour:calc lane.settings.decorations set value 1
   execute unless data storage infinite_parkour:calc lane.settings.jumppack_index run data modify storage infinite_parkour:calc lane.settings.jumppack_index set value 0
   %EMPTY%
     $data modify storage infinite_parkour:calc lane.settings.jumppack_id set from storage infinite_parkour:jumppack list[$(jumppack_index)].name
@@ -202,6 +203,7 @@ execute at @s run
     # this function is used for the falling effect and teleporting the players back
     execute store result score py math run data get entity @s Pos[1]
     execute store result score by math run data get storage infinite_parkour:calc lane.min_jumps_y
+    scoreboard players remove by math 3
     execute if data entity @s {OnGround:1b} run return 0
     execute if score py math >= by math run
       tag @s remove ParkourFalling
