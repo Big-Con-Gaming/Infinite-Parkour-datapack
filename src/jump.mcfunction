@@ -95,6 +95,35 @@
     kill @n[type=block_display,distance=..0.1,tag=ip_block_display]
     kill @s
 
+# updates infinite_parkour:calc lane.jumps_y and lane.min_jumps_y
+# Needs to be called on marker[tag=ip_jump_goal]
+/update_min_y
+  # Remove last jump y
+  data remove storage infinite_parkour:calc lane.jumps_y[0]
+  # Add new jump y
+  execute store result score #jump_min_y math run data get storage infinite_parkour:jumppack jump.min_pos[1]
+  execute store result score #off math run data get entity @s Pos[1]
+  scoreboard players operation #jump_min_y math += #off math
+  data modify storage infinite_parkour:calc lane.jumps_y append value 0
+  execute store result storage infinite_parkour:calc lane.jumps_y[-1] int 1 run scoreboard players get #jump_min_y math
+  scoreboard players reset #jump_min_y math
+  scoreboard players reset #off math
+  # Update the minimum y
+  data modify storage infinite_parkour:calc jumps_y set from storage infinite_parkour:calc lane.jumps_y
+  execute store result score #min math run data get storage infinite_parkour:calc jumps_y[0]
+  data remove storage infinite_parkour:calc jumps_y[0]
+  %EMPTY%
+    execute unless data storage infinite_parkour:calc jumps_y[0] run return 0
+    execute store result score #candidate math run data get storage infinite_parkour:calc jumps_y[0]
+    execute if score #candidate math < #min math run scoreboard players operation #min math = #candidate math
+    data remove storage infinite_parkour:calc jumps_y[0]
+    # Recursion
+    %FUNC%
+  execute store result storage infinite_parkour:calc lane.min_jumps_y int 1 run scoreboard players get #min math
+  data remove storage infinite_parkour:calc jumps_y
+  scoreboard players reset #min math
+  scoreboard players reset #candidate math
+
 /increment
   execute positioned ~-31.5 ~-31.5 ~-63.5 as @n[type=marker,dx=64,dy=64,dz=64,tag=ip_jump_connect,tag=ip_jump_curr] at @s run
     execute positioned ~-31.5 ~-31.5 ~-63.5 as @n[type=marker,dx=64,dy=64,dz=64,tag=ip_jump_connect,tag=ip_jump_prev] at @s run
@@ -108,6 +137,7 @@
     # mark next trail as current trail
     tag @e[type=marker,tag=ip_trail,distance=..512] add ip_trail_curr
     # spawn
+    function infinite_parkour:jump/update_min_y
     function infinite_parkour:jump/spawn
 
 /update_scale

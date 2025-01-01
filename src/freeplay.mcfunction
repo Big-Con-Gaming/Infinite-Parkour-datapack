@@ -146,6 +146,9 @@ execute at @s run
   # second jump
   summon block_display ~ -0.5 19.5 {interpolation_duration:1,Tags:["ip_block_display","ip_scale_up"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
   summon marker ~ -0.5 19.5 {Tags:["ip_jump_connect","ip_jump_next","ip_block_marker","ip_block_platform"]}
+  # update data
+  data modify storage infinite_parkour:calc lane.jumps_y set value [-12,-12,-12]
+  data modify storage infinite_parkour:calc lane.min_jumps_y set value -12
 
 # Game
 /player_tick
@@ -188,43 +191,47 @@ execute at @s run
   execute store result score #jump_mirror_math math run data get storage infinite_parkour:calc jump_mirror_math
   scoreboard players remove #jump_mirror_math math 1
   # TODO select a direction in case the current x value is too far from the center
-
+  # Place jump and update previous jumps
   function infinite_parkour:jump/increment
+  # Cleanup
   scoreboard players reset #jump_mirror_math math
   data remove storage infinite_parkour:jumppack jump
 
 /fall_tick
-  # this function is used for the falling effect and teleporting the players back
-  execute store result score py math run data get entity @s Pos[1]
-  execute store result score by math run data get entity @n[tag=ip_trail_curr] Pos[1]
-  execute if entity @s[team=Highscore] run scoreboard players remove by math 11
-  execute if data entity @s {OnGround:1b} run return 0
-  execute if score py math >= by math run
+  %EMPTY%
+    # this function is used for the falling effect and teleporting the players back
+    execute store result score py math run data get entity @s Pos[1]
+    execute store result score by math run data get storage infinite_parkour:calc lane.min_jumps_y
+    execute if data entity @s {OnGround:1b} run return 0
+    execute if score py math >= by math run
+      tag @s remove ParkourFalling
+      stopsound @s ambient minecraft:item.elytra.flying
+    execute if score py math >= by math run return 0
+
+    execute if entity @s[tag=!ParkourFalling] run
+      tag @s add ParkourFalling
+      playsound minecraft:item.elytra.flying ambient @s ~ ~ ~ 0.4 2
+    particle crit ~4 ~-5 ~4 -2 10 -2 0.5 0 normal
+    particle crit ~-4 ~-5 ~4 2 10 -2 0.5 0 normal
+    particle crit ~4 ~-5 ~-4 -2 10 2 0.5 0 normal
+    particle crit ~-4 ~-5 ~-4 2 10 2 0.5 0 normal
+
+    scoreboard players remove by math 8
+    execute if score py math >= by math run return 0
     tag @s remove ParkourFalling
     stopsound @s ambient minecraft:item.elytra.flying
-  execute if score py math >= by math run return 0
-
-  execute if entity @s[tag=!ParkourFalling] run
-    tag @s add ParkourFalling
-    playsound minecraft:item.elytra.flying ambient @s ~ ~ ~ 0.4 2
-  particle crit ~4 ~-5 ~4 -2 10 -2 0.5 0 normal
-  particle crit ~-4 ~-5 ~4 2 10 -2 0.5 0 normal
-  particle crit ~4 ~-5 ~-4 -2 10 2 0.5 0 normal
-  particle crit ~-4 ~-5 ~-4 2 10 2 0.5 0 normal
-
-  scoreboard players remove by math 8
-  execute if score py math >= by math run return 0
-  tag @s remove ParkourFalling
-  stopsound @s ambient minecraft:item.elytra.flying
-  execute as @e[tag=ip_block_marker,distance=..512] at @s run
-    setblock ~ ~ ~ air
-    kill @n[type=block_display,distance=..0.9]
-    kill @s
-  kill @e[tag=ParkourDeco,distance=..512]
-  kill @e[type=marker,tag=ip_trail,distance=..512]
-  function infinite_parkour:lane/teleport_entry
-  team join Highscore @s
-  scoreboard players set #reset_lobby math 1
+    execute as @e[tag=ip_block_marker,distance=..512] at @s run
+      setblock ~ ~ ~ air
+      kill @n[type=block_display,distance=..0.9]
+      kill @s
+    kill @e[tag=ParkourDeco,distance=..512]
+    kill @e[type=marker,tag=ip_trail,distance=..512]
+    function infinite_parkour:lane/teleport_entry
+    team join Highscore @s
+    scoreboard players set #reset_lobby math 1
+  # cleanup
+  scoreboard players reset by math
+  scoreboard players reset py math
 
 /set_distance_score
   execute store result score @s ip_score run data get entity @s Pos[2] 1

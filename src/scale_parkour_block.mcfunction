@@ -31,6 +31,7 @@ execute as @e[type=marker,tag=ip_jump_goal] at @s run
     execute if score d math matches ..0 run scoreboard players set d math 0
     execute if score d math matches 100.. run scoreboard players set d math 100
     # return if nothing changed
+    # TODO make it support multiplayer, currently it doesn't because last_d is global (fetch block display data instead)
     execute if score d math = last_d math run return 0
     scoreboard players operation last_d math = d math
     # s = 100 - d
@@ -43,6 +44,17 @@ execute as @e[type=marker,tag=ip_jump_goal] at @s run
     execute store result storage infinite_parkour:macro data.s2 float 0.005 run scoreboard players get s math
     execute as @e[type=block_display,distance=..512] at @s run %FILE%/apply with storage infinite_parkour:macro data
     data remove storage infinite_parkour:macro data
+# cleanup scores
+scoreboard players reset x math
+scoreboard players reset z math
+scoreboard players reset x0 math
+scoreboard players reset z0 math
+scoreboard players reset x1 math
+scoreboard players reset z1 math
+scoreboard players reset d math
+scoreboard players reset d0 math
+scoreboard players reset d1 math
+scoreboard players reset s math
 
 /distance
   $data modify entity @s transformation set value [$(dx)f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,$(dz)f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f]
