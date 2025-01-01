@@ -8,14 +8,17 @@ execute in infinite_parkour:lane run
   effect give @a[distance=0..] instant_health 3 255 true
   effect give @a[distance=0..] resistance 3 255 true
 #For every player on the Parkour Players team, we run infinite_parkour:player-in-game as them below.
-execute as @a at @s run
+execute as @a at @s if entity @s[team=ParkourPlayers] run
   #This command runs every tick for all players directly in the game, on team: ParkourPlayers
   #Below cleans up all blocks and decorations behind the players. The fill command could be removed if we save the location of the most previous jump, to then delete that block and its marker at once. The line directly below can be removed once old code is removed
-  execute align xyz positioned ~-70 ~-50 ~-1 if dimension infinite_parkour:lane run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
+  execute align xyz positioned ~-200 ~-100 ~-10 if dimension infinite_parkour:lane run kill @e[tag=ParkourDeco,dx=400,dy=200,dz=5]
 #Below is a quick fix to make block displays disappear whenever the player is too close. I want to replace this later with a fix, just don't know what yet.
 execute as @e[type=block_display,tag=ParkourDecoPillar] at @s positioned ~-45 ~ ~-45 run
-  execute if entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:0}
-  execute unless entity @a[dx=55,dy=70,dz=55] run data merge entity @s {view_range:50.0f}
+  execute if entity @e[dx=55,dy=49,dz=55,tag=!ParkourDeco] run data merge entity @s {block_state:{Name:"minecraft:yellow_stained_glass"}}
+  execute unless entity @e[dx=55,dy=49,dz=55,tag=!ParkourDeco] run data merge entity @s {block_state:{Name:"minecraft:gold_block"}}
+execute as @e[type=block_display,tag=ParkourDecoCarpet] at @s positioned ~-60 ~-90 ~-60 run
+  execute if entity @e[dx=60,dy=60,dz=60,tag=!ParkourDeco] run data merge entity @s {block_state:{Name:"minecraft:yellow_stained_glass"}}
+  execute unless entity @e[dx=60,dy=60,dz=60,tag=!ParkourDeco] run data merge entity @s {block_state:{Name:"minecraft:gold_block"}}
 #Failsafe below to prevent any teamers from leaving the dimension with their team. Most likely needs to be changed before release in case another data pack installed uses teams
 execute as @a at @s if dimension minecraft:overworld run team leave @s 
 
