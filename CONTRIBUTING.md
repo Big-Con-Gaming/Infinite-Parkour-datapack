@@ -49,6 +49,8 @@ To remove all the error pop-ups and red underlines, create a folder called ``.vs
 - Please test out your changes before making a pull request.
 - Please follow the existing plans that have been laid out in our [Discord server](https://discord.com/channels/1302079242929963018/1305018511093141504). Otherwise, we can't promise to accept your request since we need to maintain the original vision.
 - Contributions that remove whitespace, add redundant features, cause unnecessary changes, or are poorly documented without comments and descriptions will be denied.
+- Please keep your identity or any target selectors containing your username out of the names of any files, folders, or within the contents of functions.
+- Please try to update comments surrounding your code to make sure their functionality is clear and easy to understand to a new programmer.
 - Keep in mind that this is in Alpha, and bugs can show their ugly heads at any corner. Working towards removing these first is preferred over introducing new features at the moment.
 
 ## Conclusion
