@@ -29,9 +29,9 @@ Now when you first look at the code, you may find a ton of errors pop up. This i
 ## OfekN's Custom Compiler
 OfekN has been so kind as to build an entirely custom compiler so that writing data packs is way easier than before. If you want to know how this works and more details about it, we HIGHLY recommend you read the [ReadMe](./README.md) so that you understand how this all works.
 
-Important to note: DO NOT make modifications to the ``/data/`` folder. Usually, this is where you would make modifications to a data pack, but with this compiler, this is not the case. You must make any changes inside of the ``/src/`` folder instead. They have identical structures, but the data folder will be replaced when the compiler runs.
+Important to note: DO NOT make modifications to the ``data/infinite_parkour/functions/`` folder. Usually, this is where you would make modifications to a data pack, but with this compiler, this is not the case. You must make any changes inside of the ``src/`` folder instead. They have identical structures, but the data folder will be replaced when the compiler runs. If you need to modify non-functions, then you must use ``data/``.
 
-To get the compiler running, you can open a command prompt (in VSCode there's a terminal button at the top that works as well) and run ``./autobuild.bat``. This will keep the ``/data/`` folder up to date with every change you make to the ``/src/`` folder for you automatically.
+To get the compiler running, you can open a command prompt (in VSCode there's a terminal button at the top that works as well) and run ``./autobuild.bat``. This will keep the ``data/`` folder up to date with every change you make to the ``src/`` folder for you automatically.
 
 To remove all the error pop-ups and red underlines, create a folder called ``.vscode`` and make a file inside it called ``settings.json``. inside this file, insert the code:
 ```
