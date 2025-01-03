@@ -27,7 +27,7 @@ We recommend using [VSCode](https://code.visualstudio.com/docs/setup/setup-overv
 Now when you first look at the code, you may find a ton of errors pop up. This is because the syntax profiler is not configured to OfekN's custom compiler. More details about this will be shared in the next section.
 
 ## OfekN's Custom Compiler
-OfekN has been so kind as to build an entirely custom compiler so that writing data packs is way easier than before. If you want to know how this works and more details about it, we HIGHLY recommend you read the [ReadMe](./README.md) so that you understand how this all works.
+OfekN has been so kind as to build an entirely custom compiler so that writing data packs is way easier than before. If you want to know how this works and more details about it, we HIGHLY recommend you read the [ReadMe](./README.md) so that you understand how this all works. This will require Java 22 to be running on your system.
 
 Important to note: DO NOT make modifications to the ``data/infinite_parkour/functions/`` folder. Usually, this is where you would make modifications to a data pack, but with this compiler, this is not the case. You must make any changes inside of the ``src/`` folder instead. They have identical structures, but the data folder will be replaced when the compiler runs. If you need to modify non-functions, then you must use ``data/``.
 
