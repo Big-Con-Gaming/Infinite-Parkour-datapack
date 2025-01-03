@@ -1,11 +1,11 @@
 /tick
   kill @e[type=item,distance=0..]
   execute positioned ~ 0 -32 as @a[dx=64,dy=64,dz=86,tag=!admin-build_mode] run
-    execute if entity @s[dx=64,dy=64,dz=32] run
+    execute if entity @s[dx=64,dy=64,dz=29] run
       %FILE%/update_pack_name
       %FILE%/give_hologram_controls
       tag @s remove ip_editor
-    execute unless entity @s[dx=64,dy=64,dz=32] positioned ~-1 0 -1 run
+    execute unless entity @s[dx=64,dy=64,dz=29] positioned ~-1 0 -1 run
       execute unless entity @s[tag=ip_editor] run clear @s
       execute unless items entity @s player.cursor item_frame run %FILE%/retrieve_items
       %FILE%/store_items
@@ -15,14 +15,14 @@
 
 /update_pack_name
   # get
-  data modify storage infinite_parkour:macro data.jumppack_id set from entity @s Inventory[{Slot:8b}].components."minecraft:writable_book_content".pages[0].raw
+  data modify storage infinite_parkour:macro data.jumppack_id set from entity @s Inventory[{Slot:8b}].components."minecraft:written_book_content".title.raw
   execute unless data storage infinite_parkour:macro data.jumppack_id run return 0
   # update
   execute positioned 0.0 0.0 0.0 run
-    execute positioned ~31.5 34.0 -17.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
+    execute positioned ~31.5 36.25 -30.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
       scoreboard players set @s ipe_index 0
       function infinite_parkour:editor/ui/update_pack_from_data
-    execute positioned ~31.5 33.0 -17.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1] at @s run
+    execute positioned ~31.5 34.25 -30.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1] at @s run
       scoreboard players set @s ipe_index 0
       function infinite_parkour:editor/ui/update_page
   # clean
@@ -250,6 +250,10 @@
   + modelb:'air',nameb:'b',loreb:''
   + }
 
+/test
+  item replace entity @s container.8 with writable_book[writable_book_content={pages:[{raw:"a"}]}]
+  item replace entity @s container.8 with writable_book[writable_book_content={pages:[{raw:"Sign this book and type the name of the new pack."}]}]
+
 /give_hologram_controls
   item replace entity @s container.0 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply0"]},item_model="lead",item_name="Load",lore=['{"text":"Right click a hologram to load it","italic":false,"color":"gray"}']]
   item replace entity @s container.1 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply1"]},item_model="writable_book",item_name="Save",lore=['{"text":"Right click a hologram to save into it","italic":false,"color":"gray"}']]
@@ -259,7 +263,7 @@
   item replace entity @s container.5 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply5"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.6 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply6"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.7 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply7"]},item_model="air",item_name="''",lore=[]]
-  item replace entity @s container.8 with writable_book[item_model="chest",item_name="NewPack",lore=['{"text":"Use only lower cased letters,","italic":false,"color":"gray"}','{"text":"underscores or dashes","italic":false,"color":"gray"}']]
+  item replace entity @s container.8 with writable_book[item_model="chest",item_name="NewPack",lore=['{"text":"Use only lower cased letters,","italic":false,"color":"gray"}','{"text":"underscores or dashes","italic":false,"color":"gray"}'],writable_book_content={pages:[{raw:"Sign this book with the name of the new pack."}]}]
   item replace entity @s container.9 with air
   item replace entity @s container.10 with air
   item replace entity @s container.11 with air
