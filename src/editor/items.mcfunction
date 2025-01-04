@@ -17,8 +17,15 @@
   # get
   data modify storage infinite_parkour:macro data.jumppack_id set from entity @s Inventory[{Slot:8b}].components."minecraft:written_book_content".title.raw
   execute unless data storage infinite_parkour:macro data.jumppack_id run return 0
-  # update
-  execute positioned 0.0 0.0 0.0 run
+  # validate name
+  %EMPTY%
+    $data get storage jumppack_base:$(jumppack_id) 0 0
+    scoreboard players set #valid math 1
+  + with storage infinite_parkour:macro data
+  # tell if invalid
+  execute unless score #valid math matches 1 run tellraw @s {"text": "Invalid name", "color": "red"}
+  # update if valid name
+  execute if score #valid math matches 1 positioned 0.0 0.0 0.0 run
     execute positioned ~31.5 36.25 -30.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
       scoreboard players set @s ipe_index 0
       function infinite_parkour:editor/ui/update_pack_from_data
@@ -27,6 +34,7 @@
       function infinite_parkour:editor/ui/update_page
   # clean
   data remove storage infinite_parkour:macro data
+  scoreboard players reset #valid math
 
 /store_items
   item replace block ~ ~ ~ container.0 from entity @s container.0
@@ -263,7 +271,7 @@
   item replace entity @s container.5 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply5"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.6 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply6"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.7 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply7"]},item_model="air",item_name="''",lore=[]]
-  item replace entity @s container.8 with writable_book[item_model="chest",item_name="NewPack",lore=['{"text":"Use only lower cased letters,","italic":false,"color":"gray"}','{"text":"underscores or dashes","italic":false,"color":"gray"}'],writable_book_content={pages:[{raw:"Sign this book with the name of the new pack."}]}]
+  item replace entity @s container.8 with writable_book[item_model="chest",item_name="NewPack",lore=['{"text":"Use only lower cased letters,","italic":false,"color":"gray"}','{"text":"underscores, dashes or dots.","italic":false,"color":"gray"}'],writable_book_content={pages:[{raw:"§3Sign this book with the name of the new pack. §1Use only: §9lower cased letters, numbers, underscores, dashes or dots"}]}]
   item replace entity @s container.9 with air
   item replace entity @s container.10 with air
   item replace entity @s container.11 with air
