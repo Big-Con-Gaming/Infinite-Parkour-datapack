@@ -34,16 +34,14 @@
   execute as @e[type=marker,dx=64,dy=64,dz=64,tag=ip_trail] at @s if block ~ ~ ~ air run kill @s
   # destroy removed blocks
   execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,tag=ipe_block,dx=64,dy=64,dz=64] at @s if block ~ ~ ~ air run kill @s
-
+  execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=slime,tag=ipe_block,dx=64,dy=64,dz=64] at @s if block ~ ~ ~ air run
+    tp @s -10.0 0.0 -10.0
+    data merge entity @s {DeathTime:-100,Health:-1,Glowing:0b}
 /place_block
   execute if entity @s[tag=ipe_place_8] run
     execute if entity @s[tag=ipe_place_80] run setblock ~ ~ ~ air
     execute if entity @s[tag=ipe_place_81] run summon marker ~0.5 ~0.5 ~0.5 {Tags:["ipe_trail_start","ipe_trail_start_new"]}
   execute if entity @s[tag=ipe_place_8] run return 0
-  execute if entity @s[tag=ipe_place_2] run
-    execute if entity @s[tag=ipe_place_21] run setblock ~ ~ ~ slime_block
-    execute if entity @s[tag=ipe_place_22] run setblock ~ ~ ~ honey_block
-  execute if entity @s[tag=ipe_place_2] run return 0
   execute unless entity @n[type=block_display,tag=ipe_block,distance=..0.1] run summon block_display ~ ~ ~ {Tags:["ipe_block"],block_state:{Name:"reinforced_deepslate"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
   ride @s mount @n[type=block_display,tag=ipe_block,distance=..0.1]
   execute on vehicle run team leave @s
@@ -57,6 +55,13 @@
     setblock ~ ~ ~ structure_void
     execute if entity @s[tag=ipe_place_10] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup0"],block_state:{Name:"gold_block"}}
     execute if entity @s[tag=ipe_place_11] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup1"],block_state:{Name:"emerald_block"}}
+  execute if entity @s[tag=ipe_place_2] run
+    execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
+    summon slime ~0.5 ~ ~0.5 {Silent:1b,Invulnerable:1b,Glowing:1b,NoAI:1b,Team:"Editor",Health:1f,Size:0,active_effects:[{id:"minecraft:invisibility",amplifier:0,duration:-1,show_particles:0b}],attributes:[{id:"minecraft:scale",base:1.92}],Tags:["ipe_block"]}
+    execute if entity @s[tag=ipe_place_21] run setblock ~ ~ ~ slime_block
+    execute if entity @s[tag=ipe_place_21] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_slime"],block_state:{Name:"air"}}
+    execute if entity @s[tag=ipe_place_22] run setblock ~ ~ ~ honey_block
+    execute if entity @s[tag=ipe_place_22] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_honey"],block_state:{Name:"air"}}
   # execute if entity @s[tag=ipe_place_8] run
   #   execute on vehicle run
   #     tag @s remove ipe_block_dst
@@ -192,3 +197,5 @@
     execute if entity @s[tag=ipe_block_blocker] run data modify storage infinite_parkour:calc temp.type set value "blocker"
     execute if entity @s[tag=ipe_block_pickup0] run data modify storage infinite_parkour:calc temp.type set value "pickup0"
     execute if entity @s[tag=ipe_block_pickup1] run data modify storage infinite_parkour:calc temp.type set value "pickup1"
+    execute if entity @s[tag=ipe_block_slime] run data modify storage infinite_parkour:calc temp.type set value "slime"
+    execute if entity @s[tag=ipe_block_honey] run data modify storage infinite_parkour:calc temp.type set value "honey"
