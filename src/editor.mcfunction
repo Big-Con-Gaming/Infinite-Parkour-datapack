@@ -10,4 +10,5 @@ execute in infinite_parkour:editor positioned 0.0 0.0 0.0 run
   function infinite_parkour:editor/environment/create
   data merge entity @n[type=marker,tag=ipe_env,distance=..0.1] {data:{jumppack_id:"new_pack"}}
   tp @s ~31.5 32.0 -4.5 0 0
+team join infpar_editor @s
 

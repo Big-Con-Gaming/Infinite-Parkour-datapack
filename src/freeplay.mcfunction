@@ -7,6 +7,7 @@ execute at @s if dimension infinite_parkour:lane run return 0
 function infinite_parkour:player_saver/store
 function infinite_parkour:player_saver/clear
 gamemode adventure @s
+team join Highscore @s
 
 data modify storage infinite_parkour:calc lane_tag set value "ip_freeplay_entry"
 function infinite_parkour:lane/alloc
@@ -153,6 +154,7 @@ execute at @s run
 
 # Game
 /player_tick
+  execute unless entity @s[team=ParkourPlayers] run team join ParkourPlayers
   %FILE%/set_distance_score
   # Clean decorations behind the player
   execute align xyz positioned ~-70 ~-50 ~-1 run kill @e[tag=ParkourDeco,dx=140,dy=100,dz=1]
