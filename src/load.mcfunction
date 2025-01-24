@@ -38,6 +38,11 @@ team add infpar_dark_green
 team modify infpar_yellow color yellow
 team modify infpar_green color green
 team modify infpar_dark_green color dark_green
+team add infpar_editor {"text":"InEditor"}
+team modify infpar_editor color white
+team modify Highscore collisionRule never
+team modify ParkourPlayers collisionRule never
+team modify infpar_editor collisionRule never
 
 execute unless data storage infinite_parkour:player_data players run data modify storage infinite_parkour:player_data players set value []
 
