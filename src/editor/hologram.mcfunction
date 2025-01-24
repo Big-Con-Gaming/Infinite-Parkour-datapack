@@ -129,6 +129,8 @@
 /add_block_states
   data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {block_state:{Name:"stone"}}
   data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {block_state:{Name:"tuff"}}
+  data modify storage infinite_parkour:calc build[{type:"slime"}] merge value {block_state:{Name:"slime_block"}}
+  data modify storage infinite_parkour:calc build[{type:"honey"}] merge value {block_state:{Name:"honey_block"}}
   data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {block_state:{Name:"gold_block"},small:true}
   data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {block_state:{Name:"emerald_block"},small:true}
 
