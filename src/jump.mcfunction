@@ -40,6 +40,8 @@
   
   execute at @e[type=marker,tag=ip_jump_next,distance=..512] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ip_block_display","ip_scale_up"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
   execute at @e[type=marker,tag=ip_block_blocker,distance=..512] run data merge entity @n[type=block_display,distance=..1] {block_state:{Name:"minecraft:yellow_stained_glass"}}
+  execute at @e[type=marker,tag=ip_block_slime,distance=..512] run data merge entity @n[type=block_display,distance=..1] {block_state:{Name:"minecraft:slime_block"}}
+  execute at @e[type=marker,tag=ip_block_honey,distance=..512] run data merge entity @n[type=block_display,distance=..1] {block_state:{Name:"minecraft:honey_block"}}
   # generate decoration, will be included here in the future on the next line
 
   data remove storage infinite_parkour:calc temp_blocks_list
@@ -54,6 +56,8 @@
     #This places the different kinds of objects found in jumps. Currently, this includes platforms, blockers, and end destinations which are platforms as well. Mostly just places and modifies markers.
     execute if data storage infinite_parkour:calc temp_current_block{type:"platform"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_platform"]}
     execute if data storage infinite_parkour:calc temp_current_block{type:"blocker"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_blocker"]}
+    execute if data storage infinite_parkour:calc temp_current_block{type:"slime"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_slime"]}
+    execute if data storage infinite_parkour:calc temp_current_block{type:"honey"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_honey"]}
 
   /macro_pos
     #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.
@@ -69,11 +73,16 @@
 # Needs to be called on marker[tag=ip_jump_goal]
 /place
   execute positioned ~-31.5 ~-31.5 ~-0.5 as @e[type=marker,tag=ip_jump_next,dx=64,dy=64,dz=64] at @s run
-    setblock ~ ~ ~ barrier
+    execute if entity @s[tag=ip_block_platform] run setblock ~ ~ ~ barrier
+    execute if entity @s[tag=ip_block_blocker] run setblock ~ ~ ~ barrier
+    execute if entity @s[tag=ip_block_slime] run setblock ~ ~ ~ slime_block
+    execute if entity @s[tag=ip_block_honey] run setblock ~ ~ ~ honey_block
     tag @s remove ip_jump_next
     tag @s[tag=!ip_jump_connect] add ip_jump_curr
     tag @s[tag=ip_jump_connect] add ip_jump_goal
     execute as @n[type=block_display,distance=..0.1,tag=ip_block_display] run
+      execute if entity @s[nbt={block_state:{Name:"minecraft:slime_block"}}] run kill @s
+      execute if entity @s[nbt={block_state:{Name:"minecraft:honey_block"}}] run kill @s
       data merge entity @s {transformation:{scale:[1f,1f,1f],translation:[-0.5f,-0.5f,-0.5f]}}
       tag @s remove ip_scale_up
   tag @s remove ip_jump_goal
@@ -85,6 +94,8 @@
   execute positioned ~-31.5 ~-31.5 ~-0.5 as @e[type=marker,tag=ip_jump_curr,dx=64,dy=64,dz=64] at @s run
     setblock ~ ~ ~ air
     tag @n[type=block_display,distance=..0.1,tag=ip_block_display] add ip_scale_down
+    execute if entity @s[tag=ip_block_slime] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"minecraft:slime_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+    execute if entity @s[tag=ip_block_honey] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"minecraft:honey_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
     tag @s remove ip_jump_curr
     tag @s add ip_jump_prev
 
