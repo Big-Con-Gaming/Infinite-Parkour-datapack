@@ -45,16 +45,22 @@
   execute unless entity @n[type=block_display,tag=ipe_block,distance=..0.1] run summon block_display ~ ~ ~ {Tags:["ipe_block"],block_state:{Name:"reinforced_deepslate"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
   ride @s mount @n[type=block_display,tag=ipe_block,distance=..0.1]
   execute on vehicle run team leave @s
+  
   execute if entity @s[tag=ipe_place_0] run
     execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
     setblock ~ ~ ~ barrier
     execute if entity @s[tag=ipe_place_00] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_platform"],block_state:{Name:"stone"}}
-    execute if entity @s[tag=ipe_place_01] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_blocker"],block_state:{Name:"tuff"}}
+    execute if entity @s[tag=ipe_place_01] run execute on vehicle run 
+      data merge entity @s {Tags:["ipe_block","ipe_block_slab_platform"],block_state:{Name:"stone"},transformation:{translation:[0.0005f,0.0005f,0.0005f],scale:[0.999f,0.499f,0.999f]}}
+      setblock ~ ~ ~ stone_slab
+    execute if entity @s[tag=ipe_place_02] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_blocker"],block_state:{Name:"tuff"}}
+
   execute if entity @s[tag=ipe_place_1] run
     execute on vehicle run data merge entity @s {transformation:{translation:[0.3125f,0.3125f,0.3125f],scale:[0.375f,0.375f,0.375f]}}
     setblock ~ ~ ~ structure_void
     execute if entity @s[tag=ipe_place_10] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup0"],block_state:{Name:"gold_block"}}
     execute if entity @s[tag=ipe_place_11] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup1"],block_state:{Name:"emerald_block"}}
+
   execute if entity @s[tag=ipe_place_2] run
     execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
     summon slime ~0.5 ~ ~0.5 {Silent:1b,Invulnerable:1b,Glowing:1b,NoAI:1b,Team:"Editor",Health:1f,Size:0,active_effects:[{id:"minecraft:invisibility",amplifier:0,duration:-1,show_particles:0b}],attributes:[{id:"minecraft:scale",base:1.92}],Tags:["ipe_block"]}
@@ -85,7 +91,8 @@
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
   data modify storage infinite_parkour:calc build[{type:"platform"}].Tags set value ["ipe_place_0","ipe_place_00"]
-  data modify storage infinite_parkour:calc build[{type:"blocker"}].Tags set value ["ipe_place_0","ipe_place_01"]
+  data modify storage infinite_parkour:calc build[{type:"slab_platform"}].Tags set value ["ipe_place_0","ipe_place_01"]
+  data modify storage infinite_parkour:calc build[{type:"blocker"}].Tags set value ["ipe_place_0","ipe_place_02"]
   data modify storage infinite_parkour:calc build[{type:"pickup0"}].Tags set value ["ipe_place_1","ipe_place_10"]
   data modify storage infinite_parkour:calc build[{type:"pickup1"}].Tags set value ["ipe_place_1","ipe_place_11"]
   data modify storage infinite_parkour:calc build[{type:"slime"}].Tags set value ["ipe_place_2","ipe_place_21"]
@@ -194,8 +201,11 @@
     execute store result storage infinite_parkour:calc temp.pos[0] int 1 run scoreboard players get x math
     execute store result storage infinite_parkour:calc temp.pos[1] int 1 run scoreboard players get y math
     execute store result storage infinite_parkour:calc temp.pos[2] int 1 run scoreboard players get z math
+
+    
   /get_type
     execute if entity @s[tag=ipe_block_platform] run data modify storage infinite_parkour:calc temp.type set value "platform"
+    execute if entity @s[tag=ipe_block_slab_platform] run data modify storage infinite_parkour:calc temp.type set value "slab_platform"
     execute if entity @s[tag=ipe_block_blocker] run data modify storage infinite_parkour:calc temp.type set value "blocker"
     execute if entity @s[tag=ipe_block_pickup0] run data modify storage infinite_parkour:calc temp.type set value "pickup0"
     execute if entity @s[tag=ipe_block_pickup1] run data modify storage infinite_parkour:calc temp.type set value "pickup1"

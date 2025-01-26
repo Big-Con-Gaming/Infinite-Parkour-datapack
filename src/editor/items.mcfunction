@@ -131,10 +131,17 @@
   
 
 /give_bundles
+
+  ###################################
+  ##                               ##
+  ##      Solid Blocks Bundle      ##
+  ##                               ##
+  ###################################
+
   %FILE%/give_bundle {slot:'9',color:'green',name:'SolidBlocks',i:'0',inside:'',
   + model0:'stone',name0:'Platform',lore0:'\'{"text":"Simple blocks the player will jump on","italic":false,"color":"gray"}\'',
-  + model1:'tuff',name1:'Blocker',lore1:'\'{"text":"Blocks to stop the player","italic":false,"color":"gray"}\'',
-  + model2:'air',name2:'2',lore2:'',
+  + model1:'stone_slab',name1:'Slab Platform',lore1:'\'{"text":"Simple slab the player will jump on","italic":false,"color":"gray"}\'',
+  + model2:'tuff',name2:'Blocker',lore2:'\'{"text":"Blocks to stop the player","italic":false,"color":"gray"}\'',
   + model3:'air',name3:'3',lore3:'',
   + model4:'air',name4:'4',lore4:'',
   + model5:'air',name5:'5',lore5:'',
@@ -145,6 +152,13 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  ###################################
+  ##                               ##
+  ##        Pick ups Bundle        ##
+  ##                               ##
+  ###################################
+
   %FILE%/give_bundle {slot:'10',color:'yellow',name:'Pickups',i:'1',inside:'',
   + model0:'gold_nugget',name0:'SimplePickup',lore0:'',
   + model1:'emerald',name1:'AdvancedPickup',lore1:'',
@@ -159,6 +173,13 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  ###################################
+  ##                               ##
+  ##     Special Blocks Bundle     ##
+  ##                               ##
+  ###################################
+
   %FILE%/give_bundle {slot:'11',color:'red',name:'\'Special Blocks (Not Ready)\'',i:'2',inside:'',
   + model0:'ladder',name0:'Ladder',lore0:'',
   + model1:'slime_block',name1:'SlimeBlock',lore1:'',
@@ -173,6 +194,13 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  ###################################
+  ##                               ##
+  ##          Null Bundle          ##
+  ##                               ##
+  ###################################
+  
   %FILE%/give_bundle {slot:'12',color:'white',name:'\'Future Category\'',i:'3',inside:'',
   + model0:'air',name0:'0',lore0:'',
   + model1:'air',name1:'1',lore1:'',
@@ -187,6 +215,13 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  ###################################
+  ##                               ##
+  ##          Null Bundle          ##
+  ##                               ##
+  ###################################
+
   %FILE%/give_bundle {slot:'13',color:'white',name:'\'Future Category\'',i:'4',inside:'',
   + model0:'air',name0:'0',lore0:'',
   + model1:'air',name1:'1',lore1:'',
@@ -201,6 +236,13 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  ###################################
+  ##                               ##
+  ##          Null Bundle          ##
+  ##                               ##
+  ###################################
+  
   %FILE%/give_bundle {slot:'14',color:'white',name:'\'Future Category\'',i:'5',inside:'',
   + model0:'air',name0:'0',lore0:'',
   + model1:'air',name1:'1',lore1:'',
@@ -215,6 +257,13 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  ###################################
+  ##                               ##
+  ##          Null Bundle          ##
+  ##                               ##
+  ###################################
+  
   %FILE%/give_bundle {slot:'15',color:'white',name:'\'Future Category\'',i:'6',inside:'',
   + model0:'air',name0:'0',lore0:'',
   + model1:'air',name1:'1',lore1:'',
@@ -229,6 +278,13 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  ###################################
+  ##                               ##
+  ##          Null Bundle          ##
+  ##                               ##
+  ###################################
+  
   %FILE%/give_bundle {slot:'16',color:'white',name:'\'Future Category\'',i:'7',inside:'',
   + model0:'air',name0:'0',lore0:'',
   + model1:'air',name1:'1',lore1:'',
@@ -243,6 +299,13 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  ###################################
+  ##                               ##
+  ##       Modifiers Bundle        ##
+  ##                               ##
+  ###################################
+  
   %FILE%/give_bundle {slot:'17',color:'pink',name:'Modifiers',i:'8',inside:',"ipe_place_inside"',
   + model0:'barrier',name0:'Delete',lore0:'',
   + model1:'redstone',name1:'Trail',lore1:'\'{"text":"Creates a trail between blocks","italic":false,"color":"gray"}\',\'{"text":"To remove break the starting block","italic":false,"color":"gray"}\'',
@@ -257,6 +320,8 @@
   + modela:'air',namea:'a',lorea:'',
   + modelb:'air',nameb:'b',loreb:''
   + }
+
+  #==================================#
 
 /test
   item replace entity @s container.8 with writable_book[writable_book_content={pages:[{raw:"a"}]}]
