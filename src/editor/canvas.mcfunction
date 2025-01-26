@@ -88,6 +88,8 @@
   data modify storage infinite_parkour:calc build[{type:"blocker"}].Tags set value ["ipe_place_0","ipe_place_01"]
   data modify storage infinite_parkour:calc build[{type:"pickup0"}].Tags set value ["ipe_place_1","ipe_place_10"]
   data modify storage infinite_parkour:calc build[{type:"pickup1"}].Tags set value ["ipe_place_1","ipe_place_11"]
+  data modify storage infinite_parkour:calc build[{type:"slime"}].Tags set value ["ipe_place_2","ipe_place_21"]
+  data modify storage infinite_parkour:calc build[{type:"honey"}].Tags set value ["ipe_place_2","ipe_place_22"]
 
   data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
   %EMPTY%
