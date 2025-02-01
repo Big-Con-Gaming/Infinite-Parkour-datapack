@@ -1,5 +1,10 @@
 # Sets up things to be used generally
 
+#This imports the Block Dictionary. If you make changes to that JSON File, you need to modify the command below to contain your changes
+#This can be done by copying the contents of the block_dictionary.json file and removing all indentation and line breaks, and then pasting it in the command below, replacing the old data.
+# I recommend using this website to remove whitespace: https://www.browserling.com/tools/remove-all-whitespace
+#data remove storage infinite_parkour:block_dictionary everything
+#data merge storage infinite_parkour:block_dictionary {"everything":{"0":{"id":"platform","physical_block":"minecraft:barrier","override_theme":false,"remove_display_on_place":false,"editor_bundle_id":0,"editor_pos_in_bundle":0,"editor_display_block":"minecraft:stone","editor_block_display_outline":true},"1":{"id":"slab_platform","physical_block":"minecraft:bamboo_mosaic_slab","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":0,"editor_pos_in_bundle":1,"editor_display_block":"minecraft:stone_slab","editor_block_display_outline":true},"2":{"id":"blocker","physical_block":"minecraft:barrier","override_theme":false,"remove_display_on_place":false,"editor_bundle_id":0,"editor_pos_in_bundle":2,"editor_display_block":"minecraft:tuff","editor_block_display_outline":true},"3":{"id":"slime","physical_block":"minecraft:slime_block","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":2,"editor_pos_in_bundle":1,"editor_display_block":"minecraft:air","editor_block_display_outline":false},"4":{"id":"honey","physical_block":"minecraft:honey_block","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":2,"editor_pos_in_bundle":2,"editor_display_block":"minecraft:air","editor_block_display_outline":false},"length":4}}
 scoreboard objectives add ip_score dummy {"text":"Infinite Parkour - Distance (M)"}
 scoreboard objectives add ip_highscore dummy {"text":"Infinite Parkour - High Score"}
 scoreboard objectives add math dummy {"text":"General math calculations"}
@@ -52,4 +57,7 @@ execute in infinite_parkour:lane run
 
 function infinite_parkour:load_base_packs
 
+### JSON IMPORTS ###
+# This imports the block dictionary since I don't have the compiler working just yet.
+data merge storage infinite_parkour:block_dictionary {"everything":{"0":{"id":"platform","physical_block":"minecraft:barrier","override_theme":false,"remove_display_on_place":false,"editor_bundle_id":0,"editor_pos_in_bundle":0,"editor_display_block":"minecraft:stone","editor_block_display_outline":true},"1":{"id":"slab_platform","physical_block":"minecraft:bamboo_mosaic_slab","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":0,"editor_pos_in_bundle":1,"editor_display_block":"minecraft:stone_slab","editor_block_display_outline":true},"2":{"id":"blocker","physical_block":"minecraft:barrier","override_theme":false,"remove_display_on_place":false,"editor_bundle_id":0,"editor_pos_in_bundle":2,"editor_display_block":"minecraft:tuff","editor_block_display_outline":true},"3":{"id":"slime","physical_block":"minecraft:slime_block","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":2,"editor_pos_in_bundle":1,"editor_display_block":"minecraft:air","editor_block_display_outline":false},"4":{"id":"honey","physical_block":"minecraft:honey_block","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":2,"editor_pos_in_bundle":2,"editor_display_block":"minecraft:air","editor_block_display_outline":false},"length":4}}
 # say §aFinished loading!
