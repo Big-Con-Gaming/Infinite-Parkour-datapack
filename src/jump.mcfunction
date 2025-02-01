@@ -48,10 +48,31 @@
     #######################################
   
   execute at @e[type=marker,tag=ip_jump_next,distance=..512] align xyz run summon block_display ~0.5 ~0.5 ~0.5 {interpolation_duration:1,Tags:["ip_block_display","ip_scale_up"],block_state:{Name:"minecraft:gold_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
-  execute at @e[type=marker,tag=ip_block_slab_platform,distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"minecraft:bamboo_mosaic_slab"}}
-  execute at @e[type=marker,tag=ip_block_blocker,distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"minecraft:yellow_stained_glass"}}
-  execute at @e[type=marker,tag=ip_block_slime,distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"minecraft:slime_block"}}
-  execute at @e[type=marker,tag=ip_block_honey,distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"minecraft:honey_block"}}
+  # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+  data modify storage infinite_parkour:macro data.increment set value 0
+  data modify storage infinite_parkour:macro data.incrementnext set value 1
+  data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
+  data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
+  data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
+  %EMPTY%
+    $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
+    $scoreboard players set #test ip_data $(override_theme)
+    $execute if score #test ip_data matches 1 at @e[type=marker,tag=ip_block_$(id),distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"$(physical_block)"}}
+    $scoreboard players set #increment ip_data $(increment)
+    execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
+    execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
+    scoreboard players remove #increment ip_data 1
+    $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data
+  + with storage infinite_parkour:macro data
+  data remove storage infinite_parkour:macro data
+  scoreboard players reset #increment ip_data
+  scoreboard players reset #test ip_data
+  # These commands have been replaced with the Dictionary search above, if you add a block you do NOT need to add an entry. Just add a dictionary entry.
+  #execute at @e[type=marker,tag=ip_block_slab_platform,distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"minecraft:bamboo_mosaic_slab"}}
+  #execute at @e[type=marker,tag=ip_block_blocker,distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"minecraft:yellow_stained_glass"}}
+  #execute at @e[type=marker,tag=ip_block_slime,distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"minecraft:slime_block"}}
+  #execute at @e[type=marker,tag=ip_block_honey,distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"minecraft:honey_block"}}
+  
   # generate decoration, will be included here in the future on the next line
 
   data remove storage infinite_parkour:calc temp_blocks_list
