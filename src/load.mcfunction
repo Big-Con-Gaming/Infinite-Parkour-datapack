@@ -55,8 +55,9 @@ execute unless data storage infinite_parkour:player_data players run data modify
 execute as @a at @s if dimension infinite_parkour:lane in minecraft:overworld run
   tp @s 0 0 0
   function infinite_parkour:freeplay
-
-
+execute as @a at @s if dimension infinite_parkour:editor in minecraft:overworld run
+  tp @s 0 0 0
+  function infinite_parkour:editor
 execute in infinite_parkour:lane run
   forceload add 0 0 0 0
   setblock 0 0 0 minecraft:barrel
