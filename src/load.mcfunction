@@ -14,6 +14,7 @@ scoreboard objectives add ip_data dummy {"text":"Data"}
 scoreboard objectives add ip_last_online dummy {"text":"Last Online"}
 scoreboard objectives add ip_lane dummy {"text":"Lane"}
 scoreboard objectives add ip_flight_cooldown dummy {"text":"Flight Cooldown"}
+
 # scoreboard objectives setdisplay sidebar.team.yellow ip_score
 # scoreboard objectives setdisplay sidebar.team.gold ip_highscore
 
@@ -51,6 +52,12 @@ team modify infpar_editor collisionRule never
 
 execute unless data storage infinite_parkour:player_data players run data modify storage infinite_parkour:player_data players set value []
 
+execute as @a at @s if dimension infinite_parkour:lane in minecraft:overworld run
+  tp @s 0 0 0
+  function infinite_parkour:freeplay
+execute as @a at @s if dimension infinite_parkour:editor in minecraft:overworld run
+  tp @s 0 0 0
+  function infinite_parkour:editor
 execute in infinite_parkour:lane run
   forceload add 0 0 0 0
   setblock 0 0 0 minecraft:barrel
