@@ -62,5 +62,6 @@ function infinite_parkour:load_base_packs
 # This imports the block dictionary since I don't have the compiler working just yet.
 data merge storage infinite_parkour:block_dictionary {"everything":{"0":{"id":"platform","physical_block":"minecraft:barrier","override_theme":false,"remove_display_on_place":false,"editor_bundle_id":0,"editor_pos_in_bundle":0,"editor_display_block":"minecraft:stone","editor_block_display_outline":true},"1":{"id":"slab_platform","physical_block":"minecraft:bamboo_mosaic_slab","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":0,"editor_pos_in_bundle":1,"editor_display_block":"minecraft:stone_slab","editor_block_display_outline":true},"2":{"id":"blocker","physical_block":"minecraft:barrier","override_theme":false,"remove_display_on_place":false,"editor_bundle_id":0,"editor_pos_in_bundle":2,"editor_display_block":"minecraft:tuff","editor_block_display_outline":true},"3":{"id":"slime","physical_block":"minecraft:slime_block","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":2,"editor_pos_in_bundle":1,"editor_display_block":"minecraft:air","editor_block_display_outline":false},"4":{"id":"honey","physical_block":"minecraft:honey_block","override_theme":true,"remove_display_on_place":true,"editor_bundle_id":2,"editor_pos_in_bundle":2,"editor_display_block":"minecraft:air","editor_block_display_outline":false},"length":4}}
 # say §aFinished loading!
-execute as @a in minecraft:overworld run tp @a 0 0 0
-execute as @a run function infinite_parkour:freepl
+execute as @a if dimension infinite_parkour:lane in minecraft:overworld run
+  tp @a 0 0 0
+  function infinite_parkour:freeplay
