@@ -32,6 +32,3 @@ execute as @a unless score @s ip_last_online = #last_time ip_last_online run
   function infinite_parkour:freeplay
 scoreboard players operation @a ip_last_online = #current_time ip_last_online
 scoreboard players reset #current_time ip_last_online
-scoreboard players enable @a BugFix 
-execute as @a[scores={BugFix=1..}] run reload
-scoreboard players set @a BugFix 0
