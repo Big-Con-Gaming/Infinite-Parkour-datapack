@@ -65,3 +65,6 @@ Currently custom macros aren't supported, there are 3 macros:
  - `%EMPTY%` - will be converted into empty text: ` `
  - `%FILE%` - will be converted into a function call of the file `function <namespace>:<path>`
  - `%FUNC%` - will be converted into a function call of the function `function <namespace>:<path>/<innerpath>`
+### Update: JSON support!
+Using the new jar, (MinecraftScriptJSON.jar) all JSON files found inside of the `./src` folder will become imported at the bottom of `load.mcfunction` after every compile.
+These will be inserted into storage, under the namespace used for this data pack.
