@@ -6,6 +6,7 @@ Check out [BCG's videos](https://www.youtube.com/playlist?list=PLSZguD4jJp5oo_iQ
 ## Building
 This project uses a custom build tool OfekN made (MinecraftScript.jar)<br> [And a updater by MrBooks36](https://github.com/MrBooks36/Infinite-Parkour-datapack-updater
 )
+
 There are a couple of batch files for you to use:
 - [`built.bat`](./build.bat) - builds the project once, will also produce a zip file.
 - [`autobuild.bat`](./autobuild.bat) automatically builds when the code changes, doesn't create a zip file.
