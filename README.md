@@ -12,7 +12,7 @@ There are a couple of batch files for you to use:
 - [`autobuild.bat`](./autobuild.bat) automatically builds when the code changes, doesn't create a zip file.
 - [`clean.bat`](./clean.bat) deletes all generated files.
 ## About MinecraftScript
-Minecraft script is a pretty simple preprocessor to help with datapack develoopment, here are all the features:
+Minecraft script is a pretty simple preprocessor to help with datapack development, here are all the features:
 ### Multiple functions within a file
 You can declare multiple functions within a file like so
 ```
