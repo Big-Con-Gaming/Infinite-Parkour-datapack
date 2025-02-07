@@ -63,7 +63,7 @@
 
   execute if entity @s[tag=ipe_place_2] run
     execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
-    summon slime ~0.5 ~ ~0.5 {Silent:1b,Invulnerable:1b,Glowing:1b,NoAI:1b,Team:"Editor",Health:1f,Size:0,active_effects:[{id:"minecraft:invisibility",amplifier:0,duration:-1,show_particles:0b}],attributes:[{id:"minecraft:scale",base:1.92}],Tags:["ipe_block"]}
+    summon slime ~0.5 ~ ~0.5 {Silent:1b,Invulnerable:1b,Glowing:1b,NoAI:1b,Team:"infpar_editor",Health:1f,Size:0,active_effects:[{id:"minecraft:invisibility",amplifier:0,duration:-1,show_particles:0b}],attributes:[{id:"minecraft:scale",base:1.92}],Tags:["ipe_block"]}
     execute if entity @s[tag=ipe_place_21] run setblock ~ ~ ~ slime_block
     execute if entity @s[tag=ipe_place_21] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_slime"],block_state:{Name:"air"}}
     execute if entity @s[tag=ipe_place_22] run setblock ~ ~ ~ honey_block
