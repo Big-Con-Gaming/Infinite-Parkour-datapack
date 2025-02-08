@@ -56,8 +56,10 @@
   data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
   %EMPTY%
     $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
+    # Below is the only parts that are different between dictionary searches, the rest can be reused.
     $scoreboard players set #test ip_data $(override_theme)
     $execute if score #test ip_data matches 1 at @e[type=marker,tag=ip_block_$(id),distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"$(physical_block)"}}
+    # End Section
     $scoreboard players set #increment ip_data $(increment)
     execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
     execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
@@ -94,11 +96,33 @@
     #######################################
 
     #This places the different kinds of objects found in jumps. Currently, this includes platforms, blockers, and end destinations which are platforms as well. Mostly just places and modifies markers.
-    execute if data storage infinite_parkour:calc temp_current_block{type:"platform"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_platform"]}
-    execute if data storage infinite_parkour:calc temp_current_block{type:"slab_platform"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_slab_platform"]}
-    execute if data storage infinite_parkour:calc temp_current_block{type:"blocker"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_blocker"]}
-    execute if data storage infinite_parkour:calc temp_current_block{type:"slime"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_slime"]}
-    execute if data storage infinite_parkour:calc temp_current_block{type:"honey"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_honey"]}
+    # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+    data modify storage infinite_parkour:macro data.increment set value 0
+    data modify storage infinite_parkour:macro data.incrementnext set value 1
+    data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
+    data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
+    data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
+    %EMPTY%
+      $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
+      # Below is the only parts that are different between dictionary searches, the rest can be reused.
+      $execute if data storage infinite_parkour:calc temp_current_block{type:"$(id)"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_$(id)"]}
+      # End Section
+      $scoreboard players set #increment ip_data $(increment)
+      execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
+      execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
+      scoreboard players remove #increment ip_data 1
+      $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data
+    + with storage infinite_parkour:macro data
+    data remove storage infinite_parkour:macro data
+    scoreboard players reset #increment ip_data
+    scoreboard players reset #test ip_data
+    
+    # Replaced with a dictionary search above
+    # execute if data storage infinite_parkour:calc temp_current_block{type:"platform"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_platform"]}
+    # execute if data storage infinite_parkour:calc temp_current_block{type:"slab_platform"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_slab_platform"]}
+    # execute if data storage infinite_parkour:calc temp_current_block{type:"blocker"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_blocker"]}
+    # execute if data storage infinite_parkour:calc temp_current_block{type:"slime"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_slime"]}
+    # execute if data storage infinite_parkour:calc temp_current_block{type:"honey"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_honey"]}
 
   /macro_pos
     #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.
@@ -122,12 +146,34 @@
     # ||                               || #
     #   ===============================   #
     #######################################
-  
-    execute if entity @s[tag=ip_block_platform] run setblock ~ ~ ~ barrier
-    execute if entity @s[tag=ip_block_slab_platform] run setblock ~ ~ ~ bamboo_mosaic_slab
-    execute if entity @s[tag=ip_block_blocker] run setblock ~ ~ ~ barrier
-    execute if entity @s[tag=ip_block_slime] run setblock ~ ~ ~ slime_block
-    execute if entity @s[tag=ip_block_honey] run setblock ~ ~ ~ honey_block
+    # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+    data modify storage infinite_parkour:macro data.increment set value 0
+    data modify storage infinite_parkour:macro data.incrementnext set value 1
+    data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
+    data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
+    data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
+    %EMPTY%
+      $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
+      # Below is the only parts that are different between dictionary searches, the rest can be reused.
+      $scoreboard players set #test ip_data $(remove_display_on_place)
+      $execute if score #test ip_data matches 1 if entity @s[tag=ip_block_$(id)] run setblock ~ ~ ~ $(physical_block)
+      $execute unless score #test ip_data matches 1 if entity @s[tag=ip_block_$(id)] run setblock ~ ~ ~ minecraft:barrier
+      # End Section
+      $scoreboard players set #increment ip_data $(increment)
+      execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
+      execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
+      scoreboard players remove #increment ip_data 1
+      $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data
+    + with storage infinite_parkour:macro data
+    data remove storage infinite_parkour:macro data
+    scoreboard players reset #increment ip_data
+    scoreboard players reset #test ip_data
+
+    #execute if entity @s[tag=ip_block_platform] run setblock ~ ~ ~ barrier
+    #execute if entity @s[tag=ip_block_slab_platform] run setblock ~ ~ ~ bamboo_mosaic_slab
+    #execute if entity @s[tag=ip_block_blocker] run setblock ~ ~ ~ barrier
+    #execute if entity @s[tag=ip_block_slime] run setblock ~ ~ ~ slime_block
+    #execute if entity @s[tag=ip_block_honey] run setblock ~ ~ ~ honey_block
 
 
     tag @s remove ip_jump_next
@@ -135,10 +181,31 @@
     tag @s[tag=ip_jump_connect] add ip_jump_goal
     execute as @n[type=block_display,distance=..0.1,tag=ip_block_display] run
 
+      # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+      data modify storage infinite_parkour:macro data.increment set value 0
+      data modify storage infinite_parkour:macro data.incrementnext set value 1
+      data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
+      data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
+      data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
+      %EMPTY%
+        $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
+        # Below is the only parts that are different between dictionary searches, the rest can be reused.
+        $scoreboard players set #test ip_data $(remove_display_on_place)
+        $execute if score #test ip_data matches 1 if entity @s[nbt={block_state:{Name:"$(physical_block)"}}] run kill @s
+        # End Section
+        $scoreboard players set #increment ip_data $(increment)
+        execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
+        execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
+        scoreboard players remove #increment ip_data 1
+        $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data
+      + with storage infinite_parkour:macro data
+      data remove storage infinite_parkour:macro data
+      scoreboard players reset #increment ip_data
+      scoreboard players reset #test ip_data
 
-      execute if entity @s[nbt={block_state:{Name:"minecraft:slime_block"}}] run kill @s
-      execute if entity @s[nbt={block_state:{Name:"minecraft:honey_block"}}] run kill @s
-      execute if entity @s[nbt={block_state:{Name:"minecraft:bamboo_mosaic_slab"}}] run kill @s
+      #execute if entity @s[nbt={block_state:{Name:"minecraft:slime_block"}}] run kill @s
+      #execute if entity @s[nbt={block_state:{Name:"minecraft:honey_block"}}] run kill @s
+      #execute if entity @s[nbt={block_state:{Name:"minecraft:bamboo_mosaic_slab"}}] run kill @s
 
       
       data merge entity @s {transformation:{scale:[1f,1f,1f],translation:[-0.5f,-0.5f,-0.5f]}}
@@ -152,9 +219,31 @@
   execute positioned ~-31.5 ~-31.5 ~-0.5 as @e[type=marker,tag=ip_jump_curr,dx=64,dy=64,dz=64] at @s run
     setblock ~ ~ ~ air
     tag @n[type=block_display,distance=..0.1,tag=ip_block_display] add ip_scale_down
-    execute if entity @s[tag=ip_block_slime] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"minecraft:slime_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
-    execute if entity @s[tag=ip_block_honey] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"minecraft:honey_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
-    execute if entity @s[tag=ip_block_slab_platform] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"minecraft:bamboo_mosaic_slab"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+    # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+    data modify storage infinite_parkour:macro data.increment set value 0
+    data modify storage infinite_parkour:macro data.incrementnext set value 1
+    data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
+    data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
+    data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
+    %EMPTY%
+      $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
+      # Below is the only parts that are different between dictionary searches, the rest can be reused.
+      $scoreboard players set #test ip_data $(remove_display_on_place)
+      $execute if score #test ip_data matches 1 if entity @s[tag=ip_block_$(id)] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"$(physical_block)"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+      # End Section
+      $scoreboard players set #increment ip_data $(increment)
+      execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
+      execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
+      scoreboard players remove #increment ip_data 1
+      $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data
+    + with storage infinite_parkour:macro data
+    data remove storage infinite_parkour:macro data
+    scoreboard players reset #increment ip_data
+    scoreboard players reset #test ip_data
+    
+    #execute if entity @s[tag=ip_block_slime] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"minecraft:slime_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+    #execute if entity @s[tag=ip_block_honey] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"minecraft:honey_block"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+    #execute if entity @s[tag=ip_block_slab_platform] run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"minecraft:bamboo_mosaic_slab"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
     tag @s remove ip_jump_curr
     tag @s add ip_jump_prev
 
