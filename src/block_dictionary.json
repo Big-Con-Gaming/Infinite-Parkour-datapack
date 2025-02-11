@@ -31,6 +31,38 @@
                 "editor_block_display_outline":true
             },
             "3":{
+                "id":"pickup0",
+                "physical_block":"minecraft:structure_void",
+                "override_theme":true,
+                "remove_display_on_place":false,
+                "editor_bundle_id":1,
+                "editor_pos_in_bundle":0,
+                "editor_display_block":"minecraft:gold_block",
+                "editor_block_display_outline":true,
+                "pickup_scale":true
+            },
+            "4":{
+                "id":"pickup1",
+                "physical_block":"minecraft:structure_void",
+                "override_theme":true,
+                "remove_display_on_place":false,
+                "editor_bundle_id":1,
+                "editor_pos_in_bundle":1,
+                "editor_display_block":"minecraft:emerald_block",
+                "editor_block_display_outline":true,
+                "pickup_scale":true
+            },
+            "5":{
+                "id":"ladder",
+                "physical_block":"minecraft:ladder",
+                "override_theme":true,
+                "remove_display_on_place":true,
+                "editor_bundle_id":2,
+                "editor_pos_in_bundle":0,
+                "editor_display_block":"minecraft:air",
+                "editor_block_display_outline":true
+            },
+            "6":{
                 "id":"slime",
                 "physical_block":"minecraft:slime_block",
                 "override_theme":true,
@@ -40,7 +72,7 @@
                 "editor_display_block":"minecraft:air",
                 "editor_block_display_outline":false
             },
-            "4":{
+            "7":{
                 "id":"honey",
                 "physical_block":"minecraft:honey_block",
                 "override_theme":true,
@@ -50,6 +82,6 @@
                 "editor_display_block":"minecraft:air",
                 "editor_block_display_outline":false
             },
-            "length":4
+            "length":7
     }
 }
