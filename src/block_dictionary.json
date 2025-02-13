@@ -18,7 +18,8 @@
                 "editor_bundle_id":0,
                 "editor_pos_in_bundle":1,
                 "editor_display_block":"minecraft:stone_slab",
-                "editor_block_display_outline":true
+                "editor_block_display_outline":true,
+                "editor_display_height_offset":-0.0025
             },
             "2":{
                 "id":"blocker",
@@ -39,7 +40,8 @@
                 "editor_pos_in_bundle":0,
                 "editor_display_block":"minecraft:gold_block",
                 "editor_block_display_outline":true,
-                "pickup_scale":true
+                "override_display_height": 0.375,
+                "override_display_width": 0.375
             },
             "4":{
                 "id":"pickup1",
@@ -50,7 +52,8 @@
                 "editor_pos_in_bundle":1,
                 "editor_display_block":"minecraft:emerald_block",
                 "editor_block_display_outline":true,
-                "pickup_scale":true
+                "override_display_height": 0.375,
+                "override_display_width": 0.375
             },
             "5":{
                 "id":"ladder",

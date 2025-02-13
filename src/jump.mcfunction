@@ -96,7 +96,7 @@
     #######################################
 
     #This places the different kinds of objects found in jumps. Currently, this includes platforms, blockers, and end destinations which are platforms as well. Mostly just places and modifies markers.
-    # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+    # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY, PLEASE MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
     data modify storage infinite_parkour:macro data.increment set value 0
     data modify storage infinite_parkour:macro data.incrementnext set value 1
     data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
@@ -146,7 +146,7 @@
     # ||                               || #
     #   ===============================   #
     #######################################
-    # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+    # BELOW IS A DICTIONARY SEARCH, PLEASE MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
     data modify storage infinite_parkour:macro data.increment set value 0
     data modify storage infinite_parkour:macro data.incrementnext set value 1
     data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
@@ -181,7 +181,7 @@
     tag @s[tag=ip_jump_connect] add ip_jump_goal
     execute as @n[type=block_display,distance=..0.1,tag=ip_block_display] run
 
-      # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+      # BELOW IS A DICTIONARY SEARCH, PLEASE MODIFY THE DICTIONARY INSTEAD OF THE COMMANDS BELOW
       data modify storage infinite_parkour:macro data.increment set value 0
       data modify storage infinite_parkour:macro data.incrementnext set value 1
       data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
@@ -219,7 +219,7 @@
   execute positioned ~-31.5 ~-31.5 ~-0.5 as @e[type=marker,tag=ip_jump_curr,dx=64,dy=64,dz=64] at @s run
     setblock ~ ~ ~ air
     tag @n[type=block_display,distance=..0.1,tag=ip_block_display] add ip_scale_down
-    # BELOW IS A TYPICAL DICTIONARY SEARCH FOR THE BLOCK DISPLAY
+    # BELOW IS A DICTIONARY SEARCH, PLEASE MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
     data modify storage infinite_parkour:macro data.increment set value 0
     data modify storage infinite_parkour:macro data.incrementnext set value 1
     data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
