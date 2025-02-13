@@ -71,7 +71,6 @@
       execute if data storage infinite_parkour:macro data.editor_display_height_offset store result score #translation_height_offset ip_data run data get storage infinite_parkour:macro data.editor_display_height_offset 10000
       execute unless data storage infinite_parkour:macro data.editor_display_height_offset run scoreboard players set #translation_height_offset ip_data 0
       execute store result storage infinite_parkour:macro data.translation_height float 0.0001 run scoreboard players operation #test ip_data += #translation_height_offset ip_data
-      
       scoreboard players set #test ip_data 10000
       execute unless block ~ ~ ~ minecraft:barrier unless block ~ ~ ~ minecraft:structure_void if score #test2 ip_data matches 1 run scoreboard players operation #override_display_width ip_data -= 100 const
       scoreboard players operation #test ip_data -= #override_display_width ip_data
