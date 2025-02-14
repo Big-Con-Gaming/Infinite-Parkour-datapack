@@ -87,6 +87,8 @@
     scoreboard players reset #override_display_height ip_data
     scoreboard players reset #override_display_width ip_data
     # End Section
+    data remove storage infinite_parkour:macro data.override_display_height
+    data remove storage infinite_parkour:macro data.override_display_width
     $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
     $scoreboard players set #increment ip_data $(increment)
     execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1

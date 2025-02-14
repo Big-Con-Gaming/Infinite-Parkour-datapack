@@ -1,0 +1,23 @@
+{
+    "everything":{
+        "0":{
+            "i":0,
+            "name":"Solid_Blocks",
+            "color":"green",
+            "slot":9
+        },
+        "1":{
+            "i":1,
+            "name":"Pickups",
+            "color":"yellow",
+            "slot":10
+        },
+        "2":{
+            "i":2,
+            "name":"Special_Blocks",
+            "color":"red",
+            "slot":11
+        },
+        "length":2
+    }
+}
