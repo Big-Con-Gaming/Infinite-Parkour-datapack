@@ -8,7 +8,8 @@
                 "editor_bundle_id":0,
                 "editor_pos_in_bundle":0,
                 "editor_display_block":"minecraft:stone",
-                "editor_block_display_outline":true
+                "editor_block_display_outline":true,
+                "editor_item_desc":"{'text':'Simple blocks the player will jump on','italic':false,'color':'gray'}"
             },
             "1":{
                 "id":"slab_platform",
@@ -19,7 +20,8 @@
                 "editor_pos_in_bundle":1,
                 "editor_display_block":"minecraft:stone_slab",
                 "editor_block_display_outline":true,
-                "editor_display_height_offset":-0.0025
+                "editor_display_height_offset":-0.0025,
+                "editor_item_desc":"{'text':'Simple slab the player will jump on','italic':false,'color':'gray'}"
             },
             "2":{
                 "id":"blocker",
@@ -29,7 +31,8 @@
                 "editor_bundle_id":0,
                 "editor_pos_in_bundle":2,
                 "editor_display_block":"minecraft:tuff",
-                "editor_block_display_outline":true
+                "editor_block_display_outline":true,
+                "editor_item_desc":"{'text':'Blocks to stop the player','italic':false,'color':'gray'}"
             },
             "3":{
                 "id":"pickup0",
@@ -41,7 +44,8 @@
                 "editor_display_block":"minecraft:gold_block",
                 "editor_block_display_outline":true,
                 "override_display_height": 0.375,
-                "override_display_width": 0.375
+                "override_display_width": 0.375,
+                "editor_item_desc":"{'text':'Currency for the player to pick up','italic':false,'color':'gray'}"
             },
             "4":{
                 "id":"pickup1",
@@ -53,17 +57,19 @@
                 "editor_display_block":"minecraft:emerald_block",
                 "editor_block_display_outline":true,
                 "override_display_height": 0.375,
-                "override_display_width": 0.375
+                "override_display_width": 0.375,
+                "editor_item_desc":"{'text':'Rarer currency for the player to pick up','italic':false,'color':'gray'}"
             },
             "5":{
                 "id":"ladder",
                 "physical_block":"minecraft:ladder",
                 "override_theme":true,
-                "remove_display_on_place":true,
+                "remove_display_on_place":false,
                 "editor_bundle_id":2,
                 "editor_pos_in_bundle":0,
-                "editor_display_block":"minecraft:air",
-                "editor_block_display_outline":true
+                "editor_display_block":"minecraft:ladder",
+                "editor_block_display_outline":true,
+                "editor_item_desc":"{'text':'A useful way for the player to gain height','italic':false,'color':'gray'}"
             },
             "6":{
                 "id":"slime",
@@ -73,7 +79,8 @@
                 "editor_bundle_id":2,
                 "editor_pos_in_bundle":1,
                 "editor_display_block":"minecraft:air",
-                "editor_block_display_outline":false
+                "editor_block_display_outline":false,
+                "editor_item_desc":"{'text':'Allows the player to bounce through a jump','italic':false,'color':'gray'}"
             },
             "7":{
                 "id":"honey",
@@ -83,7 +90,8 @@
                 "editor_bundle_id":2,
                 "editor_pos_in_bundle":2,
                 "editor_display_block":"minecraft:air",
-                "editor_block_display_outline":false
+                "editor_block_display_outline":false,
+                "editor_item_desc":"{'text':'Slows the player down, can be used to ride walls','italic':false,'color':'gray'}"
             },
             "length":7
     }
