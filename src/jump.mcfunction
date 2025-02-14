@@ -155,9 +155,10 @@
     %EMPTY%
       $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
       # Below is the only parts that are different between dictionary searches, the rest can be reused.
-      $scoreboard players set #test ip_data $(remove_display_on_place)
-      $execute if score #test ip_data matches 1 if entity @s[tag=ip_block_$(id)] run setblock ~ ~ ~ $(physical_block)
-      $execute unless score #test ip_data matches 1 if entity @s[tag=ip_block_$(id)] run setblock ~ ~ ~ minecraft:barrier
+      #$scoreboard players set #test ip_data $(remove_display_on_place)
+      $execute if entity @s[tag=ip_block_$(id)] run setblock ~ ~ ~ $(physical_block)
+      #if score #test ip_data matches 1
+      #$execute unless score #test ip_data matches 1 if entity @s[tag=ip_block_$(id)] run setblock ~ ~ ~ minecraft:barrier
       # End Section
       $scoreboard players set #increment ip_data $(increment)
       execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
