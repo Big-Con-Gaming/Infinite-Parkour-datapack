@@ -69,7 +69,8 @@
                 "editor_pos_in_bundle":0,
                 "editor_display_block":"minecraft:ladder",
                 "editor_block_display_outline":true,
-                "editor_item_desc":"{'text':'A useful way for the player to gain height','italic':false,'color':'gray'}"
+                "editor_item_desc":"{'text':'A useful way for the player to gain height','italic':false,'color':'gray'}",
+                "rotational":true
             },
             "6":{
                 "id":"slime",
