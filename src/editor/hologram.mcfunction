@@ -135,13 +135,40 @@
     #######################################
 
 /add_block_states
-  data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {block_state:{Name:"stone"}}
-  data modify storage infinite_parkour:calc build[{type:"slab_platform"}] merge value {block_state:{Name:"stone_slab"}}
-  data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {block_state:{Name:"tuff"}}
-  data modify storage infinite_parkour:calc build[{type:"slime"}] merge value {block_state:{Name:"slime_block"}}
-  data modify storage infinite_parkour:calc build[{type:"honey"}] merge value {block_state:{Name:"honey_block"}}
-  data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {block_state:{Name:"gold_block"},small:true}
-  data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {block_state:{Name:"emerald_block"},small:true}
+  # BELOW IS A DICTIONARY SEARCH, MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
+  data modify storage infinite_parkour:macro search.increment set value 0
+  data modify storage infinite_parkour:macro search.incrementnext set value 1
+  data modify storage infinite_parkour:macro search.length set from storage infinite_parkour:block_dictionary everything.length
+  data modify storage infinite_parkour:macro search.block_dictionary set from storage infinite_parkour:block_dictionary everything
+  data modify storage infinite_parkour:macro search merge from storage infinite_parkour:macro search.block_dictionary.0
+  %EMPTY%
+    # Below is the only parts that are different between dictionary searches, the rest can be reused.
+    $scoreboard players set #test ip_data $(remove_display_on_place)
+    $execute unless score #test ip_data matches 1 run data modify storage infinite_parkour:calc build[{type:"$(id)"}] merge value {block_state:{Name:"$(editor_display_block)"}}
+    $execute if score #test ip_data matches 1 run data modify storage infinite_parkour:calc build[{type:"$(id)"}] merge value {block_state:{Name:"$(physical_block)"}}
+    $execute if data storage infinite_parkour:macro search.override_display_height run data modify storage infinite_parkour:calc build[{type:"$(id)"}].override_display_height set from storage infinite_parkour:macro search.override_display_height
+    $execute if data storage infinite_parkour:macro search.override_display_width run data modify storage infinite_parkour:calc build[{type:"$(id)"}].override_display_width set from storage infinite_parkour:macro search.override_display_width
+    data remove storage infinite_parkour:macro search.override_display_height
+    data remove storage infinite_parkour:macro search.override_display_width
+    $data modify storage infinite_parkour:macro search merge from storage infinite_parkour:macro search.block_dictionary.$(incrementnext)
+    # End Section
+    $scoreboard players set #increment ip_data $(increment)
+    execute store result storage infinite_parkour:macro search.increment int 1 run scoreboard players add #increment ip_data 1
+    execute store result storage infinite_parkour:macro search.incrementnext int 1 run scoreboard players add #increment ip_data 1
+    scoreboard players remove #increment ip_data 1
+    $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro search
+  + with storage infinite_parkour:macro search
+  data remove storage infinite_parkour:macro search
+  scoreboard players reset #increment ip_data
+  scoreboard players reset #test ip_data
+  # END OF DICTIONARY SEARCH, BELOW IS OLD CODE, PLEASE MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
+  #data modify storage infinite_parkour:calc build[{type:"platform"}] merge value {block_state:{Name:"stone"}}
+  #data modify storage infinite_parkour:calc build[{type:"slab_platform"}] merge value {block_state:{Name:"stone_slab"}}
+  #data modify storage infinite_parkour:calc build[{type:"blocker"}] merge value {block_state:{Name:"tuff"}}
+  #data modify storage infinite_parkour:calc build[{type:"slime"}] merge value {block_state:{Name:"slime_block"}}
+  #data modify storage infinite_parkour:calc build[{type:"honey"}] merge value {block_state:{Name:"honey_block"}}
+  #data modify storage infinite_parkour:calc build[{type:"pickup0"}] merge value {block_state:{Name:"gold_block"},small:true}
+  #data modify storage infinite_parkour:calc build[{type:"pickup1"}] merge value {block_state:{Name:"emerald_block"},small:true}
 
     #=====================================#
 
@@ -194,28 +221,36 @@
   execute store result score x math run data get storage infinite_parkour:calc build[0].pos[0] 16000
   execute store result score y math run data get storage infinite_parkour:calc build[0].pos[1] 16000
   execute store result score z math run data get storage infinite_parkour:calc build[0].pos[2] 16000
-  scoreboard players set size math 16000
-  execute if data storage infinite_parkour:calc build[0].small run
-    scoreboard players set size math 6000
-    scoreboard players add x math 5000
-    scoreboard players add y math 5000
-    scoreboard players add z math 5000
+  execute if data storage infinite_parkour:calc build[0].override_display_height store result score size_h math run data get storage infinite_parkour:calc build[0].override_display_height 16000
+  execute if data storage infinite_parkour:calc build[0].override_display_width store result score size_w math run data get storage infinite_parkour:calc build[0].override_display_width 16000
+  execute unless data storage infinite_parkour:calc build[0].override_display_height run scoreboard players set size_h math 16000
+  execute unless data storage infinite_parkour:calc build[0].override_display_width run scoreboard players set size_w math 16000
+  scoreboard players set h_offset math 16000
+  scoreboard players set w_offset math 16000
+  scoreboard players operation h_offset math -= size_h math
+  scoreboard players operation w_offset math -= size_w math
+  scoreboard players operation h_offset math /= 2 const
+  scoreboard players operation w_offset math /= 2 const
+  scoreboard players operation x math += w_offset math
+  scoreboard players operation y math += h_offset math
+  scoreboard players operation z math += w_offset math
   scoreboard players operation x math -= off_x math
   scoreboard players operation y math -= off_y math
   scoreboard players operation z math -= off_z math
   scoreboard players operation x math /= max_len math
   scoreboard players operation y math /= max_len math
   scoreboard players operation z math /= max_len math
-  scoreboard players operation size math /= max_len math
+  scoreboard players operation size_h math /= max_len math
+  scoreboard players operation size_w math /= max_len math
   execute summon block_display run
     data modify storage infinite_parkour:calc transformation set from entity @s transformation
     # 0.0000625 = 1/16000
     execute store result storage infinite_parkour:calc transformation.translation[0] float 0.0000625 run scoreboard players get x math
     execute store result storage infinite_parkour:calc transformation.translation[1] float 0.0000625 run scoreboard players get y math
     execute store result storage infinite_parkour:calc transformation.translation[2] float 0.0000625 run scoreboard players get z math
-    execute store result storage infinite_parkour:calc transformation.scale[0] float 0.0000625 run scoreboard players get size math
-    execute store result storage infinite_parkour:calc transformation.scale[1] float 0.0000625 run scoreboard players get size math
-    execute store result storage infinite_parkour:calc transformation.scale[2] float 0.0000625 run scoreboard players get size math
+    execute store result storage infinite_parkour:calc transformation.scale[0] float 0.0000625 run scoreboard players get size_w math
+    execute store result storage infinite_parkour:calc transformation.scale[1] float 0.0000625 run scoreboard players get size_h math
+    execute store result storage infinite_parkour:calc transformation.scale[2] float 0.0000625 run scoreboard players get size_w math
     data modify entity @s transformation set from storage infinite_parkour:calc transformation
     data modify entity @s block_state set from storage infinite_parkour:calc build[0].block_state
     ride @s mount @n[type=block_display,tag=ipe_hologram,distance=..0.1]
@@ -240,4 +275,7 @@
   scoreboard players reset y math
   scoreboard players reset z math
   scoreboard players reset max_len math
-  scoreboard players reset size math
+  scoreboard players reset size_h math
+  scoreboard players reset size_w math
+  scoreboard players reset h_offset math
+  scoreboard players reset w_offset math

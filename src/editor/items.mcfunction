@@ -131,183 +131,282 @@
   
 
 /give_bundles
-
+  data modify storage infinite_parkour:macro bundle.increment set value 0
+  data modify storage infinite_parkour:macro bundle.incrementnext set value 1
+  data modify storage infinite_parkour:macro bundle.length set from storage infinite_parkour:editor_bundles_dictionary everything.length
+  data modify storage infinite_parkour:macro bundle.editor_bundles_dictionary set from storage infinite_parkour:editor_bundles_dictionary everything
+  data modify storage infinite_parkour:macro bundle merge from storage infinite_parkour:macro bundle.editor_bundles_dictionary.0
+  %EMPTY%
+    data modify storage infinite_parkour:macro bundle.contents set from storage infinite_parkour:macro bundle
+    data remove storage infinite_parkour:macro bundle.contents.increment
+    data remove storage infinite_parkour:macro bundle.contents.incrementnext
+    data remove storage infinite_parkour:macro bundle.contents.length
+    data remove storage infinite_parkour:macro bundle.contents.editor_bundles_dictionary
+    data modify storage infinite_parkour:macro bundle.contents.inside set value ''
+    data modify storage infinite_parkour:macro slot.increment set value 0
+    data modify storage infinite_parkour:macro slot.incrementnext set value 1
+    %EMPTY%
+      # BELOW IS A DICTIONARY SEARCH, MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
+      data modify storage infinite_parkour:macro search.increment set value 0
+      data modify storage infinite_parkour:macro search.incrementnext set value 1
+      data modify storage infinite_parkour:macro search.length set from storage infinite_parkour:block_dictionary everything.length
+      data modify storage infinite_parkour:macro search.block_dictionary set from storage infinite_parkour:block_dictionary everything
+      data modify storage infinite_parkour:macro search merge from storage infinite_parkour:macro search.block_dictionary.0
+      data modify storage infinite_parkour:macro search.target_bundle set from storage infinite_parkour:macro bundle.increment
+      execute store result score #test ip_data run data get storage infinite_parkour:macro slot.increment
+      execute if score #test ip_data matches 0..9 run data modify storage infinite_parkour:macro search.target_slot set from storage infinite_parkour:macro slot.increment
+      execute if score #test ip_data matches 10 run data modify storage infinite_parkour:macro search.target_slot set value "a"
+      execute if score #test ip_data matches 11 run data modify storage infinite_parkour:macro search.target_slot set value "b"
+      %EMPTY%
+        #execute if data storage infinite_parkour:macro search.editor_bundle_id run tell Big_Con__ BUNDLE EXISTS
+        #execute if data storage infinite_parkour:macro search.editor_pos_in_bundle run tell Big_Con__ SLOT EXISTS
+        execute store result score #test ip_data run data get storage infinite_parkour:macro search.target_bundle
+        execute store result score #test2 ip_data run data get storage infinite_parkour:macro search.editor_bundle_id
+        execute if score #test ip_data = #test2 ip_data run
+          #tell Big_Con__ MATCHING BUNDLE IDS
+          #$tell Big_Con__ $(target_slot) $(editor_pos_in_bundle)
+          summon marker 0 0 0 {Tags:["IP_Temp"]}
+          $data modify entity @n[type=marker,x=0,y=0,z=0,tag=IP_Temp,distance=0..] Tags append value "$(target_slot)"
+          $data modify entity @n[type=marker,x=0,y=0,z=0,tag=IP_Temp,distance=0..] Tags append value "$(editor_pos_in_bundle)"
+          execute store result score #test ip_data if data entity @n[type=marker,x=0,y=0,z=0,tag=IP_Temp,distance=0..] Tags[]
+          #execute if score #test ip_data matches 3.. run tell Big_Con__ NO MATCH
+          #execute if score #test ip_data matches ..1 run tell Big_Con__ SOMETHINGS WRONG
+          execute if score #test ip_data matches 2 run
+            scoreboard players reset #test ip_data
+            $scoreboard players set #test ip_data $(remove_display_on_place)
+            $execute if score #test ip_data matches 1 run data modify storage infinite_parkour:macro slot.contents.model$(editor_pos_in_bundle) set value "$(physical_block)"
+            $execute unless score #test ip_data matches 1 run data modify storage infinite_parkour:macro slot.contents.model$(editor_pos_in_bundle) set value "$(editor_display_block)"
+            $data modify storage infinite_parkour:macro slot.contents.name$(editor_pos_in_bundle) set value $(id)
+            $data modify storage infinite_parkour:macro slot.contents.lore$(editor_pos_in_bundle) set value "\"$(editor_item_desc)\""
+          + with storage infinite_parkour:macro search
+          kill @n[type=marker,tag=IP_Temp,x=0,y=0,z=0,distance=0..]
+        + with storage infinite_parkour:macro search
+        $data modify storage infinite_parkour:macro search merge from storage infinite_parkour:macro search.block_dictionary.$(incrementnext)
+        $scoreboard players set #increment ip_data $(increment)
+        execute store result storage infinite_parkour:macro search.increment int 1 run scoreboard players add #increment ip_data 1
+        execute store result storage infinite_parkour:macro search.incrementnext int 1 run scoreboard players add #increment ip_data 1
+        scoreboard players remove #increment ip_data 1
+        $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro search
+      + with storage infinite_parkour:macro search
+      # End of Search
+      execute unless data storage infinite_parkour:macro slot.contents run
+        $scoreboard players set #increment ip_data $(increment)
+        $execute if score #increment ip_data matches 0..9 run data modify storage infinite_parkour:macro slot.contents set value {model$(increment):"minecraft:air",name$(increment):"$(increment)",lore$(increment):""}
+        execute if score #increment ip_data matches 10 run data modify storage infinite_parkour:macro slot.contents set value {modela:"minecraft:air",namea:"a",lorea:""}
+        execute if score #increment ip_data matches 11 run data modify storage infinite_parkour:macro slot.contents set value {modelb:"minecraft:air",nameb:"b",loreb:""}
+      + with storage infinite_parkour:macro slot
+      data modify storage infinite_parkour:macro bundle.contents merge from storage infinite_parkour:macro slot.contents
+      #%EMPTY%
+        #$tell Big_Con__ bundle: $(contents)
+      #+ with storage infinite_parkour:macro bundle
+      #%EMPTY%
+        #$tell Big_Con__ slot: $(contents), increment: $(increment)
+      #+ with storage infinite_parkour:macro slot
+      data remove storage infinite_parkour:macro slot.contents
+      data remove storage infinite_parkour:macro search
+      scoreboard players reset #increment ip_data
+      scoreboard players reset #test ip_data
+      scoreboard players reset #test2 ip_data
+      $scoreboard players set #increment ip_data $(increment)
+      execute store result storage infinite_parkour:macro slot.increment int 1 run scoreboard players add #increment ip_data 1
+      execute store result storage infinite_parkour:macro slot.incrementnext int 1 run scoreboard players add #increment ip_data 1
+      scoreboard players remove #increment ip_data 1
+      execute if score #increment ip_data matches ..11 run %FUNC% with storage infinite_parkour:macro slot
+    + with storage infinite_parkour:macro slot
+    # End of Slot Loop
+    data remove storage infinite_parkour:macro slot
+    scoreboard players reset #increment ip_data
+    scoreboard players reset #test ip_data
+    execute if data storage infinite_parkour:macro bundle.contents run data modify storage infinite_parkour:macro test set from storage infinite_parkour:macro bundle.contents
+    %FILE%/give_bundle with storage infinite_parkour:macro bundle.contents
+    data remove storage infinite_parkour:macro bundle.contents
+    $data modify storage infinite_parkour:macro bundle merge from storage infinite_parkour:macro bundle.editor_bundles_dictionary.$(incrementnext)
+    $scoreboard players set #increment ip_data $(increment)
+    execute store result storage infinite_parkour:macro bundle.increment int 1 run scoreboard players add #increment ip_data 1
+    execute store result storage infinite_parkour:macro bundle.incrementnext int 1 run scoreboard players add #increment ip_data 1
+    scoreboard players remove #increment ip_data 1
+    $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro bundle
+  + with storage infinite_parkour:macro bundle
+  # End of Bundle Loop
+  data remove storage infinite_parkour:macro bundle
+  scoreboard players reset #increment ip_data
+  scoreboard players reset #test ip_data
   ###################################
-  ##                               ##
+  ##               0               ##
   ##      Solid Blocks Bundle      ##
   ##                               ##
   ###################################
 
-  %FILE%/give_bundle {slot:'9',color:'green',name:'SolidBlocks',i:'0',inside:'',
-  + model0:'stone',name0:'Platform',lore0:'\'{"text":"Simple blocks the player will jump on","italic":false,"color":"gray"}\'',
-  + model1:'stone_slab',name1:'Slab Platform',lore1:'\'{"text":"Simple slab the player will jump on","italic":false,"color":"gray"}\'',
-  + model2:'tuff',name2:'Blocker',lore2:'\'{"text":"Blocks to stop the player","italic":false,"color":"gray"}\'',
-  + model3:'air',name3:'3',lore3:'',
-  + model4:'air',name4:'4',lore4:'',
-  + model5:'air',name5:'5',lore5:'',
-  + model6:'air',name6:'6',lore6:'',
-  + model7:'air',name7:'7',lore7:'',
-  + model8:'air',name8:'8',lore8:'',
-  + model9:'air',name9:'9',lore9:'',
-  + modela:'air',namea:'a',lorea:'',
-  + modelb:'air',nameb:'b',loreb:''
-  + }
+  #%FILE%/give_bundle {slot:'9',color:'green',name:'SolidBlocks',i:'0',inside:'',
+  #+ model0:'stone',name0:'Platform',lore0:'\'{"text":"Simple blocks the player will jump on","italic":false,"color":"gray"}\'',
+  #+ model1:'stone_slab',name1:'Slab Platform',lore1:'\'{"text":"Simple slab the player will jump on","italic":false,"color":"gray"}\'',
+  #+ model2:'tuff',name2:'Blocker',lore2:'\'{"text":"Blocks to stop the player","italic":false,"color":"gray"}\'',
+  #+ model3:'air',name3:'3',lore3:'',
+  #+ model4:'air',name4:'4',lore4:'',
+  #+ model5:'air',name5:'5',lore5:'',
+  #+ model6:'air',name6:'6',lore6:'',
+  #+ model7:'air',name7:'7',lore7:'',
+  #+ model8:'air',name8:'8',lore8:'',
+  #+ model9:'air',name9:'9',lore9:'',
+  #+ modela:'air',namea:'a',lorea:'',
+  #+ modelb:'air',nameb:'b',loreb:''
+  #+ }
 
   ###################################
-  ##                               ##
+  ##               1               ##
   ##        Pick ups Bundle        ##
   ##                               ##
   ###################################
 
-  %FILE%/give_bundle {slot:'10',color:'yellow',name:'Pickups',i:'1',inside:'',
-  + model0:'gold_nugget',name0:'SimplePickup',lore0:'',
-  + model1:'emerald',name1:'AdvancedPickup',lore1:'',
-  + model2:'air',name2:'2',lore2:'',
-  + model3:'air',name3:'3',lore3:'',
-  + model4:'air',name4:'4',lore4:'',
-  + model5:'air',name5:'5',lore5:'',
-  + model6:'air',name6:'6',lore6:'',
-  + model7:'air',name7:'7',lore7:'',
-  + model8:'air',name8:'8',lore8:'',
-  + model9:'air',name9:'9',lore9:'',
-  + modela:'air',namea:'a',lorea:'',
-  + modelb:'air',nameb:'b',loreb:''
-  + }
+  #%FILE%/give_bundle {slot:'10',color:'yellow',name:'Pickups',i:'1',inside:'',
+  #+ model0:'gold_nugget',name0:'SimplePickup',lore0:'',
+  #+ model1:'emerald',name1:'AdvancedPickup',lore1:'',
+  #+ model2:'air',name2:'2',lore2:'',
+  #+ model3:'air',name3:'3',lore3:'',
+  #+ model4:'air',name4:'4',lore4:'',
+  #+ model5:'air',name5:'5',lore5:'',
+  #+ model6:'air',name6:'6',lore6:'',
+  #+ model7:'air',name7:'7',lore7:'',
+  #+ model8:'air',name8:'8',lore8:'',
+  #+ model9:'air',name9:'9',lore9:'',
+  #+ modela:'air',namea:'a',lorea:'',
+  #+ modelb:'air',nameb:'b',loreb:''
+  #+ }
 
   ###################################
-  ##                               ##
+  ##               2               ##
   ##     Special Blocks Bundle     ##
   ##                               ##
   ###################################
 
-  %FILE%/give_bundle {slot:'11',color:'red',name:'\'Special Blocks (Not Ready)\'',i:'2',inside:'',
-  + model0:'ladder',name0:'Ladder',lore0:'',
-  + model1:'slime_block',name1:'SlimeBlock',lore1:'',
-  + model2:'honey_block',name2:'HoneyBlock',lore2:'',
-  + model3:'air',name3:'3',lore3:'',
-  + model4:'air',name4:'4',lore4:'',
-  + model5:'air',name5:'5',lore5:'',
-  + model6:'air',name6:'6',lore6:'',
-  + model7:'air',name7:'7',lore7:'',
-  + model8:'air',name8:'8',lore8:'',
-  + model9:'air',name9:'9',lore9:'',
-  + modela:'air',namea:'a',lorea:'',
-  + modelb:'air',nameb:'b',loreb:''
-  + }
+  #%FILE%/give_bundle {slot:'11',color:'red',name:'\'Special Blocks (Not Ready)\'',i:'2',inside:'',
+  #+ model0:'ladder',name0:'Ladder',lore0:'',
+  #+ model1:'slime_block',name1:'SlimeBlock',lore1:'',
+  #+ model2:'honey_block',name2:'HoneyBlock',lore2:'',
+  #+ model3:'air',name3:'3',lore3:'',
+  #+ model4:'air',name4:'4',lore4:'',
+  #+ model5:'air',name5:'5',lore5:'',
+  #+ model6:'air',name6:'6',lore6:'',
+  #+ model7:'air',name7:'7',lore7:'',
+  #+ model8:'air',name8:'8',lore8:'',
+  #+ model9:'air',name9:'9',lore9:'',
+  #+ modela:'air',namea:'a',lorea:'',
+  #+ modelb:'air',nameb:'b',loreb:''
+  #+ }
 
   ###################################
-  ##                               ##
+  ##               3               ##
   ##          Null Bundle          ##
   ##                               ##
   ###################################
   
-  %FILE%/give_bundle {slot:'12',color:'white',name:'\'Future Category\'',i:'3',inside:'',
-  + model0:'air',name0:'0',lore0:'',
-  + model1:'air',name1:'1',lore1:'',
-  + model2:'air',name2:'2',lore2:'',
-  + model3:'air',name3:'3',lore3:'',
-  + model4:'air',name4:'4',lore4:'',
-  + model5:'air',name5:'5',lore5:'',
-  + model6:'air',name6:'6',lore6:'',
-  + model7:'air',name7:'7',lore7:'',
-  + model8:'air',name8:'8',lore8:'',
-  + model9:'air',name9:'9',lore9:'',
-  + modela:'air',namea:'a',lorea:'',
-  + modelb:'air',nameb:'b',loreb:''
-  + }
+  #%FILE%/give_bundle {slot:'12',color:'white',name:'\'Future Category\'',i:'3',inside:'',
+  #+ model0:'air',name0:'0',lore0:'',
+  #+ model1:'air',name1:'1',lore1:'',
+  #+ model2:'air',name2:'2',lore2:'',
+  #+ model3:'air',name3:'3',lore3:'',
+  #+ model4:'air',name4:'4',lore4:'',
+  #+ model5:'air',name5:'5',lore5:'',
+  #+ model6:'air',name6:'6',lore6:'',
+  #+ model7:'air',name7:'7',lore7:'',
+  #+ model8:'air',name8:'8',lore8:'',
+  #+ model9:'air',name9:'9',lore9:'',
+  #+ modela:'air',namea:'a',lorea:'',
+  #+ modelb:'air',nameb:'b',loreb:''
+  #+ }
 
   ###################################
-  ##                               ##
+  ##               4               ##
   ##          Null Bundle          ##
   ##                               ##
   ###################################
 
-  %FILE%/give_bundle {slot:'13',color:'white',name:'\'Future Category\'',i:'4',inside:'',
-  + model0:'air',name0:'0',lore0:'',
-  + model1:'air',name1:'1',lore1:'',
-  + model2:'air',name2:'2',lore2:'',
-  + model3:'air',name3:'3',lore3:'',
-  + model4:'air',name4:'4',lore4:'',
-  + model5:'air',name5:'5',lore5:'',
-  + model6:'air',name6:'6',lore6:'',
-  + model7:'air',name7:'7',lore7:'',
-  + model8:'air',name8:'8',lore8:'',
-  + model9:'air',name9:'9',lore9:'',
-  + modela:'air',namea:'a',lorea:'',
-  + modelb:'air',nameb:'b',loreb:''
-  + }
+  #%FILE%/give_bundle {slot:'13',color:'white',name:'\'Future Category\'',i:'4',inside:'',
+  #+ model0:'air',name0:'0',lore0:'',
+  #+ model1:'air',name1:'1',lore1:'',
+  #+ model2:'air',name2:'2',lore2:'',
+  #+ model3:'air',name3:'3',lore3:'',
+  #+ model4:'air',name4:'4',lore4:'',
+  #+ model5:'air',name5:'5',lore5:'',
+  #+ model6:'air',name6:'6',lore6:'',
+  #+ model7:'air',name7:'7',lore7:'',
+  #+ model8:'air',name8:'8',lore8:'',
+  #+ model9:'air',name9:'9',lore9:'',
+  #+ modela:'air',namea:'a',lorea:'',
+  #+ modelb:'air',nameb:'b',loreb:''
+  #+ }
 
   ###################################
-  ##                               ##
-  ##          Null Bundle          ##
-  ##                               ##
-  ###################################
-  
-  %FILE%/give_bundle {slot:'14',color:'white',name:'\'Future Category\'',i:'5',inside:'',
-  + model0:'air',name0:'0',lore0:'',
-  + model1:'air',name1:'1',lore1:'',
-  + model2:'air',name2:'2',lore2:'',
-  + model3:'air',name3:'3',lore3:'',
-  + model4:'air',name4:'4',lore4:'',
-  + model5:'air',name5:'5',lore5:'',
-  + model6:'air',name6:'6',lore6:'',
-  + model7:'air',name7:'7',lore7:'',
-  + model8:'air',name8:'8',lore8:'',
-  + model9:'air',name9:'9',lore9:'',
-  + modela:'air',namea:'a',lorea:'',
-  + modelb:'air',nameb:'b',loreb:''
-  + }
-
-  ###################################
-  ##                               ##
+  ##               5               ##
   ##          Null Bundle          ##
   ##                               ##
   ###################################
   
-  %FILE%/give_bundle {slot:'15',color:'white',name:'\'Future Category\'',i:'6',inside:'',
-  + model0:'air',name0:'0',lore0:'',
-  + model1:'air',name1:'1',lore1:'',
-  + model2:'air',name2:'2',lore2:'',
-  + model3:'air',name3:'3',lore3:'',
-  + model4:'air',name4:'4',lore4:'',
-  + model5:'air',name5:'5',lore5:'',
-  + model6:'air',name6:'6',lore6:'',
-  + model7:'air',name7:'7',lore7:'',
-  + model8:'air',name8:'8',lore8:'',
-  + model9:'air',name9:'9',lore9:'',
-  + modela:'air',namea:'a',lorea:'',
-  + modelb:'air',nameb:'b',loreb:''
-  + }
+  #%FILE%/give_bundle {slot:'14',color:'white',name:'\'Future Category\'',i:'5',inside:'',
+  #+ model0:'air',name0:'0',lore0:'',
+  #+ model1:'air',name1:'1',lore1:'',
+  #+ model2:'air',name2:'2',lore2:'',
+  #+ model3:'air',name3:'3',lore3:'',
+  #+ model4:'air',name4:'4',lore4:'',
+  #+ model5:'air',name5:'5',lore5:'',
+  #+ model6:'air',name6:'6',lore6:'',
+  #+ model7:'air',name7:'7',lore7:'',
+  #+ model8:'air',name8:'8',lore8:'',
+  #+ model9:'air',name9:'9',lore9:'',
+  #+ modela:'air',namea:'a',lorea:'',
+  #+ modelb:'air',nameb:'b',loreb:''
+  #+ }
 
   ###################################
-  ##                               ##
+  ##               6               ##
   ##          Null Bundle          ##
   ##                               ##
   ###################################
   
-  %FILE%/give_bundle {slot:'16',color:'white',name:'\'Future Category\'',i:'7',inside:'',
-  + model0:'air',name0:'0',lore0:'',
-  + model1:'air',name1:'1',lore1:'',
-  + model2:'air',name2:'2',lore2:'',
-  + model3:'air',name3:'3',lore3:'',
-  + model4:'air',name4:'4',lore4:'',
-  + model5:'air',name5:'5',lore5:'',
-  + model6:'air',name6:'6',lore6:'',
-  + model7:'air',name7:'7',lore7:'',
-  + model8:'air',name8:'8',lore8:'',
-  + model9:'air',name9:'9',lore9:'',
-  + modela:'air',namea:'a',lorea:'',
-  + modelb:'air',nameb:'b',loreb:''
-  + }
+  #%FILE%/give_bundle {slot:'15',color:'white',name:'\'Future Category\'',i:'6',inside:'',
+  #+ model0:'air',name0:'0',lore0:'',
+  #+ model1:'air',name1:'1',lore1:'',
+  #+ model2:'air',name2:'2',lore2:'',
+  #+ model3:'air',name3:'3',lore3:'',
+  #+ model4:'air',name4:'4',lore4:'',
+  #+ model5:'air',name5:'5',lore5:'',
+  #+ model6:'air',name6:'6',lore6:'',
+  #+ model7:'air',name7:'7',lore7:'',
+  #+ model8:'air',name8:'8',lore8:'',
+  #+ model9:'air',name9:'9',lore9:'',
+  #+ modela:'air',namea:'a',lorea:'',
+  #+ modelb:'air',nameb:'b',loreb:''
+  #+ }
 
   ###################################
-  ##                               ##
-  ##       Modifiers Bundle        ##
+  ##               7               ##
+  ##          Null Bundle          ##
   ##                               ##
   ###################################
+  
+  #%FILE%/give_bundle {slot:'16',color:'white',name:'\'Future Category\'',i:'7',inside:'',
+  #+ model0:'air',name0:'0',lore0:'',
+  #+ model1:'air',name1:'1',lore1:'',
+  #+ model2:'air',name2:'2',lore2:'',
+  #+ model3:'air',name3:'3',lore3:'',
+  #+ model4:'air',name4:'4',lore4:'',
+  #+ model5:'air',name5:'5',lore5:'',
+  #+ model6:'air',name6:'6',lore6:'',
+  #+ model7:'air',name7:'7',lore7:'',
+  #+ model8:'air',name8:'8',lore8:'',
+  #+ model9:'air',name9:'9',lore9:'',
+  #+ modela:'air',namea:'a',lorea:'',
+  #+ modelb:'air',nameb:'b',loreb:''
+  #+ }
+
+  ####################################
+  ##               8                ##
+  ##        Modifiers Bundle        ##
+  ## This will require manual input ##
+  ####################################
   
   %FILE%/give_bundle {slot:'17',color:'pink',name:'Modifiers',i:'8',inside:',"ipe_place_inside"',
-  + model0:'barrier',name0:'Delete',lore0:'',
+  + model0:'barrier',name0:'Delete',lore0:'\'{"text":"A quick way to clean up elements","italic":false,"color":"gray"}\'',
   + model1:'redstone',name1:'Trail',lore1:'\'{"text":"Creates a trail between blocks","italic":false,"color":"gray"}\',\'{"text":"To remove break the starting block","italic":false,"color":"gray"}\'',
   + model2:'air',name2:'2',lore2:'',
   + model3:'air',name3:'3',lore3:'',

@@ -45,29 +45,112 @@
   execute unless entity @n[type=block_display,tag=ipe_block,distance=..0.1] run summon block_display ~ ~ ~ {Tags:["ipe_block"],block_state:{Name:"reinforced_deepslate"},Glowing:1b,transformation:{translation:[0f,0f,0f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],scale:[1f,1f,1f]}}
   ride @s mount @n[type=block_display,tag=ipe_block,distance=..0.1]
   execute on vehicle run team leave @s
-  
-  execute if entity @s[tag=ipe_place_0] run
-    execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
-    setblock ~ ~ ~ barrier
-    execute if entity @s[tag=ipe_place_00] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_platform"],block_state:{Name:"stone"}}
-    execute if entity @s[tag=ipe_place_01] run execute on vehicle run 
-      data merge entity @s {Tags:["ipe_block","ipe_block_slab_platform"],block_state:{Name:"stone"},transformation:{translation:[0.0005f,0.0005f,0.0005f],scale:[0.999f,0.499f,0.999f]}}
-      setblock ~ ~ ~ stone_slab
-    execute if entity @s[tag=ipe_place_02] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_blocker"],block_state:{Name:"tuff"}}
+  execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
+  # BELOW IS A DICTIONARY SEARCH, MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
+  data modify storage infinite_parkour:macro data.increment set value 0
+  data modify storage infinite_parkour:macro data.incrementnext set value 1
+  data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
+  data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
+  data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
+  %EMPTY%
+    # Below is the only parts that are different between dictionary searches, the rest can be reused.
+    $execute if entity @s[tag=ipe_place_$(editor_bundle_id)$(editor_pos_in_bundle)] run
+      $setblock ~ ~ ~ $(physical_block)
+      execute if data storage infinite_parkour:macro data.rotational run
+        execute store result score #test3 ip_data run data get entity @s Rotation[0]
+        execute if score #test3 ip_data matches 0 run data modify storage infinite_parkour:macro data.newdir set value "south"
+        execute if score #test3 ip_data matches 90 run data modify storage infinite_parkour:macro data.newdir set value "west"
+        execute if score #test3 ip_data matches 180 run data modify storage infinite_parkour:macro data.newdir set value "north"
+        execute if score #test3 ip_data matches 270 run data modify storage infinite_parkour:macro data.newdir set value "east"
+        scoreboard players operation #test3 ip_data += 180 const
+        execute store result storage infinite_parkour:macro data.normaldir float 1 run scoreboard players get #test3 ip_data
+        scoreboard players operation #test3 ip_data -= 180 const
+        %EMPTY%
+          $setblock ~ ~ ~ $(physical_block)[facing=$(newdir)]
+          $execute on vehicle run data merge entity @s {Rotation:[$(normaldir)f,0.0f]}
+        + with storage infinite_parkour:macro data
+        data remove storage infinite_parkour:macro data.newdir
+        data remove storage infinite_parkour:macro data.normaldir
+      + with storage infinite_parkour:macro data
+      $execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_$(id)"],block_state:{Name:"$(editor_display_block)"}}
+      $scoreboard players set #test2 ip_data $(editor_block_display_outline)
+      execute if score #test2 ip_data matches 0 run summon slime ~0.5 ~ ~0.5 {Silent:1b,Invulnerable:1b,Glowing:1b,NoAI:1b,Team:"infpar_editor",Health:1f,Size:0,active_effects:[{id:"minecraft:invisibility",amplifier:0,duration:-1,show_particles:0b}],attributes:[{id:"minecraft:scale",base:1.92}],Tags:["ipe_block"]}
+      execute if score #test2 ip_data matches 0 on vehicle run data merge entity @s {Glowing:0b}
+      execute if data storage infinite_parkour:macro data.override_display_height store result score #override_display_height ip_data run data get storage infinite_parkour:macro data.override_display_height 10000
+      execute unless data storage infinite_parkour:macro data.override_display_height store result storage infinite_parkour:macro data.override_display_height int 1 run scoreboard players set #override_display_height ip_data 10000
+      execute if data storage infinite_parkour:macro data.override_display_width store result score #override_display_width ip_data run data get storage infinite_parkour:macro data.override_display_width 10000
+      execute unless data storage infinite_parkour:macro data.override_display_width store result storage infinite_parkour:macro data.override_display_width int 1 run scoreboard players set #override_display_width ip_data 10000
+      scoreboard players set #test ip_data 10000
+      execute unless block ~ ~ ~ minecraft:barrier unless block ~ ~ ~ minecraft:structure_void if score #test2 ip_data matches 1 run scoreboard players operation #override_display_height ip_data -= 100 const
+      scoreboard players operation #test ip_data -= #override_display_height ip_data
+      scoreboard players operation #test ip_data /= 2 const
+      execute if data storage infinite_parkour:macro data.editor_display_height_offset store result score #translation_height_offset ip_data run data get storage infinite_parkour:macro data.editor_display_height_offset 10000
+      execute unless data storage infinite_parkour:macro data.editor_display_height_offset run scoreboard players set #translation_height_offset ip_data 0
+      execute store result storage infinite_parkour:macro data.translation_height float 0.0001 run scoreboard players operation #test ip_data += #translation_height_offset ip_data
+      scoreboard players set #test ip_data 10000
+      execute unless block ~ ~ ~ minecraft:barrier unless block ~ ~ ~ minecraft:structure_void if score #test2 ip_data matches 1 run scoreboard players operation #override_display_width ip_data -= 100 const
+      scoreboard players operation #test ip_data -= #override_display_width ip_data
+      scoreboard players operation #test ip_data /= 2 const
+      scoreboard players operation #test4 ip_data = #test ip_data
+      execute if data storage infinite_parkour:macro data.rotational run
+        execute if score #test3 ip_data matches 0 run scoreboard players operation #test ip_data -= 10000 const
+        execute if score #test3 ip_data matches 0 run scoreboard players operation #test4 ip_data -= 10000 const
+        execute if score #test3 ip_data matches 90 run scoreboard players operation #test ip_data -= 10000 const
+        execute if score #test3 ip_data matches 270 run scoreboard players operation #test4 ip_data -= 10000 const
+      + with storage infinite_parkour:macro data
+      execute store result storage infinite_parkour:macro data.translation_x float 0.0001 run scoreboard players get #test ip_data
+      execute store result storage infinite_parkour:macro data.translation_z float 0.0001 run scoreboard players get #test4 ip_data
+      # Below have to be in a separate function so that the macro data context gets updated
+      %EMPTY%
+        execute store result storage infinite_parkour:macro data.override_display_height float 0.0001 run scoreboard players get #override_display_height ip_data
+        execute store result storage infinite_parkour:macro data.override_display_width float 0.0001 run scoreboard players get #override_display_width ip_data
+      + with storage infinite_parkour:macro data
+      %EMPTY%
+        $execute on vehicle run data merge entity @s {transformation:{translation:[$(translation_x)f,$(translation_height)f,$(translation_z)f],scale:[$(override_display_width)f,$(override_display_height)f,$(override_display_width)f]}}
+      + with storage infinite_parkour:macro data
+    + with storage infinite_parkour:macro data
+    scoreboard players reset #override_display_height ip_data
+    scoreboard players reset #override_display_width ip_data
+    # End Section
+    data remove storage infinite_parkour:macro data.override_display_height
+    data remove storage infinite_parkour:macro data.override_display_width
+    $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
+    $scoreboard players set #increment ip_data $(increment)
+    execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
+    execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
+    scoreboard players remove #increment ip_data 1
+    $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data
+  + with storage infinite_parkour:macro data
+  data remove storage infinite_parkour:macro data
+  scoreboard players reset #increment ip_data
+  scoreboard players reset #test ip_data
+  scoreboard players reset #test2 ip_data
+  scoreboard players reset #test3 ip_data
+  scoreboard players reset #test4 ip_data
 
-  execute if entity @s[tag=ipe_place_1] run
-    execute on vehicle run data merge entity @s {transformation:{translation:[0.3125f,0.3125f,0.3125f],scale:[0.375f,0.375f,0.375f]}}
-    setblock ~ ~ ~ structure_void
-    execute if entity @s[tag=ipe_place_10] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup0"],block_state:{Name:"gold_block"}}
-    execute if entity @s[tag=ipe_place_11] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup1"],block_state:{Name:"emerald_block"}}
+  # Below is old code that has now been replaced with a Dictionary search. Please modify the dictionary instead of the code below. 
+  #execute if entity @s[tag=ipe_place_0] run
+    #execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
+    #setblock ~ ~ ~ barrier
+    #execute if entity @s[tag=ipe_place_00] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_platform"],block_state:{Name:"stone"}}
+    #execute if entity @s[tag=ipe_place_01] run execute on vehicle run 
+      #data merge entity @s {Tags:["ipe_block","ipe_block_slab_platform"],block_state:{Name:"stone"},transformation:{translation:[0.0005f,0.0005f,0.0005f],scale:[0.999f,0.499f,0.999f]}}
+      #setblock ~ ~ ~ stone_slab
+    #execute if entity @s[tag=ipe_place_02] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_blocker"],block_state:{Name:"tuff"}}
 
-  execute if entity @s[tag=ipe_place_2] run
-    execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
-    summon slime ~0.5 ~ ~0.5 {Silent:1b,Invulnerable:1b,Glowing:1b,NoAI:1b,Team:"Editor",Health:1f,Size:0,active_effects:[{id:"minecraft:invisibility",amplifier:0,duration:-1,show_particles:0b}],attributes:[{id:"minecraft:scale",base:1.92}],Tags:["ipe_block"]}
-    execute if entity @s[tag=ipe_place_21] run setblock ~ ~ ~ slime_block
-    execute if entity @s[tag=ipe_place_21] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_slime"],block_state:{Name:"air"}}
-    execute if entity @s[tag=ipe_place_22] run setblock ~ ~ ~ honey_block
-    execute if entity @s[tag=ipe_place_22] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_honey"],block_state:{Name:"air"}}
+  #execute if entity @s[tag=ipe_place_1] run
+    #execute on vehicle run data merge entity @s {transformation:{translation:[0.3125f,0.3125f,0.3125f],scale:[0.375f,0.375f,0.375f]}}
+    #setblock ~ ~ ~ structure_void
+    #execute if entity @s[tag=ipe_place_10] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup0"],block_state:{Name:"gold_block"}}
+    #execute if entity @s[tag=ipe_place_11] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_pickup1"],block_state:{Name:"emerald_block"}}
+
+  #execute if entity @s[tag=ipe_place_2] run
+    #execute on vehicle run data merge entity @s {transformation:{translation:[0f,0f,0f],scale:[1f,1f,1f]}}
+    #summon slime ~0.5 ~ ~0.5 {Silent:1b,Invulnerable:1b,Glowing:1b,NoAI:1b,Team:"infpar_editor",Health:1f,Size:0,active_effects:[{id:"minecraft:invisibility",amplifier:0,duration:-1,show_particles:0b}],attributes:[{id:"minecraft:scale",base:1.92}],Tags:["ipe_block"]}
+    #execute if entity @s[tag=ipe_place_21] run setblock ~ ~ ~ slime_block
+    #execute if entity @s[tag=ipe_place_21] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_slime"],block_state:{Name:"air"}}
+    #execute if entity @s[tag=ipe_place_22] run setblock ~ ~ ~ honey_block
+    #execute if entity @s[tag=ipe_place_22] run execute on vehicle run data merge entity @s {Tags:["ipe_block","ipe_block_honey"],block_state:{Name:"air"}}
   # execute if entity @s[tag=ipe_place_8] run
   #   execute on vehicle run
   #     tag @s remove ipe_block_dst
@@ -85,20 +168,41 @@
 # converts data (infinite_parkour:calc jump.blocks) into blocks
 /load
   %FILE%/clear
-
   execute store result score dx math run data get entity @s Pos[0]
   scoreboard players add dx math 31
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
-  data modify storage infinite_parkour:calc build[{type:"platform"}].Tags set value ["ipe_place_0","ipe_place_00"]
-  data modify storage infinite_parkour:calc build[{type:"slab_platform"}].Tags set value ["ipe_place_0","ipe_place_01"]
-  data modify storage infinite_parkour:calc build[{type:"blocker"}].Tags set value ["ipe_place_0","ipe_place_02"]
-  data modify storage infinite_parkour:calc build[{type:"pickup0"}].Tags set value ["ipe_place_1","ipe_place_10"]
-  data modify storage infinite_parkour:calc build[{type:"pickup1"}].Tags set value ["ipe_place_1","ipe_place_11"]
-  data modify storage infinite_parkour:calc build[{type:"slime"}].Tags set value ["ipe_place_2","ipe_place_21"]
-  data modify storage infinite_parkour:calc build[{type:"honey"}].Tags set value ["ipe_place_2","ipe_place_22"]
+  # BELOW IS A DICTIONARY SEARCH, MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
+  data modify storage infinite_parkour:macro data.increment set value 0
+  data modify storage infinite_parkour:macro data.incrementnext set value 1
+  data modify storage infinite_parkour:macro data.length set from storage infinite_parkour:block_dictionary everything.length
+  data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
+  data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
+  %EMPTY%
+    $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
+    # Below is the only parts that are different between dictionary searches, the rest can be reused.
+    $data modify storage infinite_parkour:calc build[{type:"$(id)"}].Tags set value ["ipe_place_$(editor_bundle_id)","ipe_place_$(editor_bundle_id)$(editor_pos_in_bundle)"]
+    # End Section
+    $scoreboard players set #increment ip_data $(increment)
+    execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
+    execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
+    scoreboard players remove #increment ip_data 1
+    $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data
+  + with storage infinite_parkour:macro data
+  data remove storage infinite_parkour:macro data
+  scoreboard players reset #increment ip_data
+  scoreboard players reset #test ip_data
+
+  #data modify storage infinite_parkour:calc build[{type:"platform"}].Tags set value ["ipe_place_0","ipe_place_00"]
+  #data modify storage infinite_parkour:calc build[{type:"slab_platform"}].Tags set value ["ipe_place_0","ipe_place_01"]
+  #data modify storage infinite_parkour:calc build[{type:"blocker"}].Tags set value ["ipe_place_0","ipe_place_02"]
+  #data modify storage infinite_parkour:calc build[{type:"pickup0"}].Tags set value ["ipe_place_1","ipe_place_10"]
+  #data modify storage infinite_parkour:calc build[{type:"pickup1"}].Tags set value ["ipe_place_1","ipe_place_11"]
+  #data modify storage infinite_parkour:calc build[{type:"slime"}].Tags set value ["ipe_place_2","ipe_place_21"]
+  #data modify storage infinite_parkour:calc build[{type:"honey"}].Tags set value ["ipe_place_2","ipe_place_22"]
 
   data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
+  data modify storage infinite_parkour:calc Rot set value [0.0f,0.0f]
   %EMPTY%
     execute unless data storage infinite_parkour:calc build[0] run return 0
     execute unless data storage infinite_parkour:calc build[0].pos run return 0
@@ -111,9 +215,12 @@
     execute store result storage infinite_parkour:calc Pos[0] double 1 run scoreboard players get x math
     execute store result storage infinite_parkour:calc Pos[1] double 1 run scoreboard players get y math
     execute store result storage infinite_parkour:calc Pos[2] double 1 run scoreboard players get z math
+    
+    data modify storage infinite_parkour:calc Rot[0] set from storage infinite_parkour:calc build[0].Rot
 
     execute summon item_frame run
       data modify entity @s Pos set from storage infinite_parkour:calc Pos
+      data modify entity @s Rotation set from storage infinite_parkour:calc Rot
       data modify entity @s Tags set from storage infinite_parkour:calc build[0].Tags
       tag @s add ipe_place
     data remove storage infinite_parkour:calc build[0]
@@ -144,6 +251,7 @@
   execute positioned ~-0.5 ~-0.5 ~-0.5 as @e[type=block_display,dx=64.0,dy=64.0,dz=64.0,tag=ipe_block] run
     %FILE%/save/get_pos
     %FILE%/save/get_type
+    %FILE%/save/get_rotation
     data modify storage infinite_parkour:calc jump.blocks append from storage infinite_parkour:calc temp
     data remove storage infinite_parkour:calc temp
 
@@ -204,10 +312,59 @@
 
     
   /get_type
-    execute if entity @s[tag=ipe_block_platform] run data modify storage infinite_parkour:calc temp.type set value "platform"
-    execute if entity @s[tag=ipe_block_slab_platform] run data modify storage infinite_parkour:calc temp.type set value "slab_platform"
-    execute if entity @s[tag=ipe_block_blocker] run data modify storage infinite_parkour:calc temp.type set value "blocker"
-    execute if entity @s[tag=ipe_block_pickup0] run data modify storage infinite_parkour:calc temp.type set value "pickup0"
-    execute if entity @s[tag=ipe_block_pickup1] run data modify storage infinite_parkour:calc temp.type set value "pickup1"
-    execute if entity @s[tag=ipe_block_slime] run data modify storage infinite_parkour:calc temp.type set value "slime"
-    execute if entity @s[tag=ipe_block_honey] run data modify storage infinite_parkour:calc temp.type set value "honey"
+    # BELOW IS A DICTIONARY SEARCH, MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
+    data modify storage infinite_parkour:macro data2.increment set value 0
+    data modify storage infinite_parkour:macro data2.incrementnext set value 1
+    data modify storage infinite_parkour:macro data2.length set from storage infinite_parkour:block_dictionary everything.length
+    data modify storage infinite_parkour:macro data2.block_dictionary set from storage infinite_parkour:block_dictionary everything
+    data modify storage infinite_parkour:macro data2 merge from storage infinite_parkour:macro data2.block_dictionary.0
+    %EMPTY%
+      $data modify storage infinite_parkour:macro data2 merge from storage infinite_parkour:macro data2.block_dictionary.$(incrementnext)
+      # Below is the only parts that are different between dictionary searches, the rest can be reused.
+      $execute if entity @s[tag=ipe_block_$(id)] run data modify storage infinite_parkour:calc temp.type set value "$(id)"
+      # End Section
+      $scoreboard players set #increment ip_data $(increment)
+      execute store result storage infinite_parkour:macro data2.increment int 1 run scoreboard players add #increment ip_data 1
+      execute store result storage infinite_parkour:macro data2.incrementnext int 1 run scoreboard players add #increment ip_data 1
+      scoreboard players remove #increment ip_data 1
+      $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data2
+    + with storage infinite_parkour:macro data2
+    data remove storage infinite_parkour:macro data2
+    scoreboard players reset #increment ip_data
+    scoreboard players reset #test ip_data
+
+    # This old section has now been replaced with a Dictionary search. Please modify the dictionary instead of the code below.
+    #execute if entity @s[tag=ipe_block_platform] run data modify storage infinite_parkour:calc temp.type set value "platform"
+    #execute if entity @s[tag=ipe_block_slab_platform] run data modify storage infinite_parkour:calc temp.type set value "slab_platform"
+    #execute if entity @s[tag=ipe_block_blocker] run data modify storage infinite_parkour:calc temp.type set value "blocker"
+    #execute if entity @s[tag=ipe_block_pickup0] run data modify storage infinite_parkour:calc temp.type set value "pickup0"
+    #execute if entity @s[tag=ipe_block_pickup1] run data modify storage infinite_parkour:calc temp.type set value "pickup1"
+    #execute if entity @s[tag=ipe_block_slime] run data modify storage infinite_parkour:calc temp.type set value "slime"
+    #execute if entity @s[tag=ipe_block_honey] run data modify storage infinite_parkour:calc temp.type set value "honey"
+  
+  /get_rotation
+    # BELOW IS A DICTIONARY SEARCH, MODIFY THE DICTIONARY INSTEAD OF THE CODE BELOW
+    data modify storage infinite_parkour:macro data2.increment set value 0
+    data modify storage infinite_parkour:macro data2.incrementnext set value 1
+    data modify storage infinite_parkour:macro data2.length set from storage infinite_parkour:block_dictionary everything.length
+    data modify storage infinite_parkour:macro data2.block_dictionary set from storage infinite_parkour:block_dictionary everything
+    data modify storage infinite_parkour:macro data2 merge from storage infinite_parkour:macro data2.block_dictionary.0
+    %EMPTY%
+      $data modify storage infinite_parkour:macro data2 merge from storage infinite_parkour:macro data2.block_dictionary.$(incrementnext)
+      # Below is the only parts that are different between dictionary searches, the rest can be reused.
+      $execute if entity @s[tag=ipe_block_$(id)] if data storage infinite_parkour:macro data2.rotational run
+        execute store result score #test ip_data run data get entity @s Rotation[0]
+        execute store result storage infinite_parkour:calc temp.Rot float 1 run scoreboard players operation #test ip_data += 180 const
+        # Command for Yaw for when we implement it: data modify storage infinite_parkour:calc temp.rot[1] set value 0
+        # This currently doesn't work, and I'm not sure why. Might involve the Hologram.
+      + with storage infinite_parkour:macro data2
+      # End Section
+      $scoreboard players set #increment ip_data $(increment)
+      execute store result storage infinite_parkour:macro data2.increment int 1 run scoreboard players add #increment ip_data 1
+      execute store result storage infinite_parkour:macro data2.incrementnext int 1 run scoreboard players add #increment ip_data 1
+      scoreboard players remove #increment ip_data 1
+      $execute if score #increment ip_data matches ..$(length) run %FUNC% with storage infinite_parkour:macro data2
+    + with storage infinite_parkour:macro data2
+    data remove storage infinite_parkour:macro data2
+    scoreboard players reset #increment ip_data
+    scoreboard players reset #test ip_data

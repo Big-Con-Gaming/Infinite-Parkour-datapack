@@ -21,13 +21,17 @@ scoreboard objectives add ip_flight_cooldown dummy {"text":"Flight Cooldown"}
 scoreboard players set -1 const -1
 scoreboard players set 1 const 1
 scoreboard players set 2 const 2
+scoreboard players set 4 const 4
 scoreboard players set 5 const 5
 scoreboard players set 31 const 31
 scoreboard players set 64 const 64
 scoreboard players set 100 const 100
 scoreboard players set 128 const 128
+scoreboard players set 180 const 180
+scoreboard players set 200 const 200
 scoreboard players set 1024 const 1024
 scoreboard players set 8000 const 8000
+scoreboard players set 10000 const 10000
 
 gamerule commandModificationBlockLimit 999999999
 #Below is only for alpha release
