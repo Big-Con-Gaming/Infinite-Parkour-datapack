@@ -88,7 +88,6 @@
 
   data modify storage infinite_parkour:calc build set from storage infinite_parkour:calc jump.blocks
   %FILE%/add_block_states
-
   %FILE%/rec
 
   data remove storage infinite_parkour:calc build
@@ -150,8 +149,8 @@
     $execute if data storage infinite_parkour:macro search.override_display_width run data modify storage infinite_parkour:calc build[{type:"$(id)"}].override_display_width set from storage infinite_parkour:macro search.override_display_width
     data remove storage infinite_parkour:macro search.override_display_height
     data remove storage infinite_parkour:macro search.override_display_width
-    $data modify storage infinite_parkour:macro search merge from storage infinite_parkour:macro search.block_dictionary.$(incrementnext)
     # End Section
+    $data modify storage infinite_parkour:macro search merge from storage infinite_parkour:macro search.block_dictionary.$(incrementnext)
     $scoreboard players set #increment ip_data $(increment)
     execute store result storage infinite_parkour:macro search.increment int 1 run scoreboard players add #increment ip_data 1
     execute store result storage infinite_parkour:macro search.incrementnext int 1 run scoreboard players add #increment ip_data 1
@@ -227,6 +226,20 @@
   execute unless data storage infinite_parkour:calc build[0].override_display_width run scoreboard players set size_w math 16000
   scoreboard players set h_offset math 16000
   scoreboard players set w_offset math 16000
+  execute if data storage infinite_parkour:calc build[0].Rot run
+    execute store result score rot math run data get storage infinite_parkour:calc build[0].Rot
+    execute if score rot math matches 3 run scoreboard players operation x math += 16000 const
+    execute if score rot math matches 3 run scoreboard players operation z math += 16000 const
+    execute if score rot math matches 4 run scoreboard players operation z math += 16000 const
+    execute if score rot math matches 5 run scoreboard players operation x math += 16000 const
+    # How Minecraft's Facing values work
+    # 0 = Facing Down, 0f, 90f
+    # 1 = Facing Up, 0f -90f
+    # 2 = Facing North, Display South, 180f, 0f
+    # 3 = Facing South, Display North, 0f, 0f
+    # 4 = Facing West, Display East, 90f, 0f
+    # 5 = Facing East, Display West, 270f, 0f
+  execute unless data storage infinite_parkour:calc build[0].Rot run scoreboard players set rot math 0
   scoreboard players operation h_offset math -= size_h math
   scoreboard players operation w_offset math -= size_w math
   scoreboard players operation h_offset math /= 2 const
@@ -253,6 +266,11 @@
     execute store result storage infinite_parkour:calc transformation.scale[2] float 0.0000625 run scoreboard players get size_w math
     data modify entity @s transformation set from storage infinite_parkour:calc transformation
     data modify entity @s block_state set from storage infinite_parkour:calc build[0].block_state
+    execute if data storage infinite_parkour:calc build[0].Rot run
+      execute if score rot math matches 2 run data modify entity @s transformation.left_rotation set value [0.0f,0.0f,0.0f,1.0f]
+      execute if score rot math matches 3 run data modify entity @s transformation.left_rotation set value [0.0f,1.0f,0.0f,0.0f]
+      execute if score rot math matches 4 run data modify entity @s transformation.left_rotation set value [0.0f, 0.7071068f, 0.0f, 0.7071068f]
+      execute if score rot math matches 5 run data modify entity @s transformation.left_rotation set value [0.0f, -0.7071068f, 0.0f, 0.7071068f]
     ride @s mount @n[type=block_display,tag=ipe_hologram,distance=..0.1]
   data remove storage infinite_parkour:calc build[0]
   %FILE%/rec
@@ -279,3 +297,4 @@
   scoreboard players reset size_w math
   scoreboard players reset h_offset math
   scoreboard players reset w_offset math
+  scoreboard players reset rot math

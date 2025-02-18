@@ -32,6 +32,7 @@ scoreboard players set 200 const 200
 scoreboard players set 1024 const 1024
 scoreboard players set 8000 const 8000
 scoreboard players set 10000 const 10000
+scoreboard players set 16000 const 16000
 
 gamerule commandModificationBlockLimit 999999999
 #Below is only for alpha release
