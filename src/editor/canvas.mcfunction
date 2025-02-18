@@ -57,14 +57,23 @@
     $execute if entity @s[tag=ipe_place_$(editor_bundle_id)$(editor_pos_in_bundle)] run
       $setblock ~ ~ ~ $(physical_block)
       execute if data storage infinite_parkour:macro data.rotational run
-        execute store result score #test3 ip_data run data get entity @s Rotation[0]
-        execute if score #test3 ip_data matches 0 run data modify storage infinite_parkour:macro data.newdir set value "south"
-        execute if score #test3 ip_data matches 90 run data modify storage infinite_parkour:macro data.newdir set value "west"
-        execute if score #test3 ip_data matches 180 run data modify storage infinite_parkour:macro data.newdir set value "north"
-        execute if score #test3 ip_data matches 270 run data modify storage infinite_parkour:macro data.newdir set value "east"
-        scoreboard players operation #test3 ip_data += 180 const
-        execute store result storage infinite_parkour:macro data.normaldir float 1 run scoreboard players get #test3 ip_data
-        scoreboard players operation #test3 ip_data -= 180 const
+        execute store result score #test3 ip_data run data get entity @s Facing
+        execute if score #test3 ip_data matches 2 run data modify storage infinite_parkour:macro data.newdir set value "north"
+        execute if score #test3 ip_data matches 3 run data modify storage infinite_parkour:macro data.newdir set value "south"
+        execute if score #test3 ip_data matches 4 run data modify storage infinite_parkour:macro data.newdir set value "west"
+        execute if score #test3 ip_data matches 5 run data modify storage infinite_parkour:macro data.newdir set value "east"
+        # How Minecraft's Facing values work
+        # 0 = Facing Down 0f, 90f
+        # 1 = Facing Up 0f -90f
+        # 2 = Facing North, Display South 180f, 0f
+        # 3 = Facing South, Display North 0f, 0f
+        # 4 = Facing West, Display East 90f, 0f
+        # 5 = Facing East, Display West 270f, 0f
+        execute if score #test3 ip_data matches 2 run data modify storage infinite_parkour:macro data.normaldir set value 0
+        execute if score #test3 ip_data matches 3 run data modify storage infinite_parkour:macro data.normaldir set value 180
+        execute if score #test3 ip_data matches 4 run data modify storage infinite_parkour:macro data.normaldir set value 270
+        execute if score #test3 ip_data matches 5 run data modify storage infinite_parkour:macro data.normaldir set value 90
+        # The above are MEANT to be normals, meaning they are the REVERSE direction of the numbers commented above. These are the rotations needed for the block displays
         %EMPTY%
           $setblock ~ ~ ~ $(physical_block)[facing=$(newdir)]
           $execute on vehicle run data merge entity @s {Rotation:[$(normaldir)f,0.0f]}
@@ -93,10 +102,17 @@
       scoreboard players operation #test ip_data /= 2 const
       scoreboard players operation #test4 ip_data = #test ip_data
       execute if data storage infinite_parkour:macro data.rotational run
-        execute if score #test3 ip_data matches 0 run scoreboard players operation #test ip_data -= 10000 const
-        execute if score #test3 ip_data matches 0 run scoreboard players operation #test4 ip_data -= 10000 const
-        execute if score #test3 ip_data matches 90 run scoreboard players operation #test ip_data -= 10000 const
-        execute if score #test3 ip_data matches 270 run scoreboard players operation #test4 ip_data -= 10000 const
+        execute if score #test3 ip_data matches 3 run scoreboard players operation #test ip_data -= 10000 const
+        execute if score #test3 ip_data matches 3 run scoreboard players operation #test4 ip_data -= 10000 const
+        execute if score #test3 ip_data matches 4 run scoreboard players operation #test ip_data -= 10000 const
+        execute if score #test3 ip_data matches 5 run scoreboard players operation #test4 ip_data -= 10000 const
+        # How Minecraft's Facing values work
+        # 0 = Facing Down 0f, 90f
+        # 1 = Facing Up 0f -90f
+        # 2 = Facing North, Display South 180f, 0f
+        # 3 = Facing South, Display North 0f, 0f
+        # 4 = Facing West, Display East 90f, 0f
+        # 5 = Facing East, Display West 270f, 0f
       + with storage infinite_parkour:macro data
       execute store result storage infinite_parkour:macro data.translation_x float 0.0001 run scoreboard players get #test ip_data
       execute store result storage infinite_parkour:macro data.translation_z float 0.0001 run scoreboard players get #test4 ip_data
@@ -202,7 +218,7 @@
   #data modify storage infinite_parkour:calc build[{type:"honey"}].Tags set value ["ipe_place_2","ipe_place_22"]
 
   data modify storage infinite_parkour:calc Pos set value [0.0d,0.0d,0.0d]
-  data modify storage infinite_parkour:calc Rot set value [0.0f,0.0f]
+  data modify storage infinite_parkour:calc Rot set value 2
   %EMPTY%
     execute unless data storage infinite_parkour:calc build[0] run return 0
     execute unless data storage infinite_parkour:calc build[0].pos run return 0
@@ -216,11 +232,17 @@
     execute store result storage infinite_parkour:calc Pos[1] double 1 run scoreboard players get y math
     execute store result storage infinite_parkour:calc Pos[2] double 1 run scoreboard players get z math
     
-    data modify storage infinite_parkour:calc Rot[0] set from storage infinite_parkour:calc build[0].Rot
-
+    data modify storage infinite_parkour:calc Rot set from storage infinite_parkour:calc build[0].Rot
     execute summon item_frame run
       data modify entity @s Pos set from storage infinite_parkour:calc Pos
-      data modify entity @s Rotation set from storage infinite_parkour:calc Rot
+      data modify entity @s Facing set from storage infinite_parkour:calc Rot
+      # USE FACING INSTEAD OF ROTATION, THAT ACTUALLY MODIFYS THINGS
+      # 0 = Facing Down 0f, 90f
+      # 1 = Facing Up 0f -90f
+      # 2 = Facing North, Block South 180f, 0f
+      # 3 = Facing South, Block North 0f, 0f
+      # 4 = Facing West, Block East 90f, 0f
+      # 5 = Facing East, Block West 270f, 0f
       data modify entity @s Tags set from storage infinite_parkour:calc build[0].Tags
       tag @s add ipe_place
     data remove storage infinite_parkour:calc build[0]
@@ -350,15 +372,24 @@
     data modify storage infinite_parkour:macro data2.block_dictionary set from storage infinite_parkour:block_dictionary everything
     data modify storage infinite_parkour:macro data2 merge from storage infinite_parkour:macro data2.block_dictionary.0
     %EMPTY%
-      $data modify storage infinite_parkour:macro data2 merge from storage infinite_parkour:macro data2.block_dictionary.$(incrementnext)
       # Below is the only parts that are different between dictionary searches, the rest can be reused.
       $execute if entity @s[tag=ipe_block_$(id)] if data storage infinite_parkour:macro data2.rotational run
         execute store result score #test ip_data run data get entity @s Rotation[0]
-        execute store result storage infinite_parkour:calc temp.Rot float 1 run scoreboard players operation #test ip_data += 180 const
-        # Command for Yaw for when we implement it: data modify storage infinite_parkour:calc temp.rot[1] set value 0
-        # This currently doesn't work, and I'm not sure why. Might involve the Hologram.
+        # When we add vertical rotation (Yaw) the command below will need to be modified to include Facing 0 and 1
+        execute if score #test ip_data matches 0 run data modify storage infinite_parkour:calc temp.Rot set value 2
+        execute if score #test ip_data matches 90 run data modify storage infinite_parkour:calc temp.Rot set value 5
+        execute if score #test ip_data matches 180 run data modify storage infinite_parkour:calc temp.Rot set value 3
+        execute if score #test ip_data matches 270 run data modify storage infinite_parkour:calc temp.Rot set value 4
+        # How Minecraft's Facing value works:
+        # 0 = Facing Down 0f, 90f
+        # 1 = Facing Up 0f -90f
+        # 2 = Facing North, Block South 180f, 0f
+        # 3 = Facing South, Block North 0f, 0f
+        # 4 = Facing West, Block East 90f, 0f
+        # 5 = Facing East, Block West 270f, 0f
       + with storage infinite_parkour:macro data2
       # End Section
+      $data modify storage infinite_parkour:macro data2 merge from storage infinite_parkour:macro data2.block_dictionary.$(incrementnext)
       $scoreboard players set #increment ip_data $(increment)
       execute store result storage infinite_parkour:macro data2.increment int 1 run scoreboard players add #increment ip_data 1
       execute store result storage infinite_parkour:macro data2.incrementnext int 1 run scoreboard players add #increment ip_data 1
