@@ -7,7 +7,7 @@
 #  - ip_jump_next - for blocks in front of the player, currently scaling up
 #  - ip_jump_goal - for the block the player is aiming for
 #  - ip_jump_curr - for blocks the solid blocks (not including ip_jump_goal)
-#  - ip_jump_prev - for blockss behind the player, currently scaling down
+#  - ip_jump_prev - for blocks behind the player, currently scaling down
 
 # Spawns new block displays and markers
 # Needs to be called on marker[tag=ip_jump_goal]
@@ -24,8 +24,18 @@
     #Below multiples the X value by a scoreboard #jump_mirror_math within the math objective which will be set to either -1 or 1 from above. This mirrors the positions of the blocks across the X axis, and will be consistent per block within a jump.
     data modify storage infinite_parkour:macro pos set from storage infinite_parkour:calc temp_current_block.pos
     %FILE%/spawn/macro_pos
+    execute if data storage infinite_parkour:calc temp_current_block.Rot if score #jump_mirror_math math matches 1 run data modify storage infinite_parkour:macro data.rot set from storage infinite_parkour:calc temp_current_block.Rot
+    execute if data storage infinite_parkour:calc temp_current_block.Rot if score #jump_mirror_math math matches -1 run
+      execute store result score #test ip_data run data get storage infinite_parkour:calc temp_current_block.Rot
+      data modify storage infinite_parkour:macro data.rot set from storage infinite_parkour:calc temp_current_block.Rot
+      #execute if score #test ip_data matches 2 run data modify storage infinite_parkour:macro data.rot set value 3
+      #execute if score #test ip_data matches 3 run data modify storage infinite_parkour:macro data.rot set value 2
+      execute if score #test ip_data matches 4 run data modify storage infinite_parkour:macro data.rot set value 5
+      execute if score #test ip_data matches 5 run data modify storage infinite_parkour:macro data.rot set value 4
+      scoreboard players reset #test ip_data
+    execute unless data storage infinite_parkour:calc temp_current_block.Rot run data modify storage infinite_parkour:macro data.rot set value 2
     %EMPTY%
-      $execute positioned ~$(x) ~$(y) ~$(z) run %FILE%/spawn/place_jump_objects
+      $execute positioned ~$(x) ~$(y) ~$(z) run %FILE%/spawn/place_jump_objects with storage infinite_parkour:macro data
     + with storage infinite_parkour:macro data
     data remove storage infinite_parkour:macro data
     %FUNC%
@@ -59,6 +69,19 @@
     # Below is the only parts that are different between dictionary searches, the rest can be reused.
     $scoreboard players set #test ip_data $(override_theme)
     $execute if score #test ip_data matches 1 at @e[type=marker,tag=ip_block_$(id),distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"$(physical_block)"}}
+    $execute if data storage infinite_parkour:macro data.rotational as @e[type=marker,tag=ip_block_$(id),distance=..512] at @s run
+      execute if entity @s[tag=ip_rot_2] run data merge entity @n[type=block_display,distance=..0.1] {Rotation:[0.0f,0.0f]}
+      execute if entity @s[tag=ip_rot_3] run data merge entity @n[type=block_display,distance=..0.1] {Rotation:[180.0f,0.0f]}
+      execute if entity @s[tag=ip_rot_4] run data merge entity @n[type=block_display,distance=..0.1] {Rotation:[270.0f,0.0f]}
+      execute if entity @s[tag=ip_rot_5] run data merge entity @n[type=block_display,distance=..0.1] {Rotation:[90.0f,0.0f]}
+      # How Minecraft's Facing value works:
+      # 0 = Facing Down [0f, 90f]
+      # 1 = Facing Up [0f -90f]
+      # 2 = Facing North, Block South [180f, 0f]
+      # 3 = Facing South, Block North [0f, 0f]
+      # 4 = Facing West, Block East [90f, 0f]
+      # 5 = Facing East, Block West [270f, 0f]
+    + with storage infinite_parkour:macro data
     # End Section
     $scoreboard players set #increment ip_data $(increment)
     execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
@@ -103,10 +126,10 @@
     data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
     data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
     %EMPTY%
-      $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
       # Below is the only parts that are different between dictionary searches, the rest can be reused.
-      $execute if data storage infinite_parkour:calc temp_current_block{type:"$(id)"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_$(id)"]}
+      $execute if data storage infinite_parkour:calc temp_current_block{type:"$(id)"} run summon marker ~ ~ ~ {Tags:["ip_jump_next","ip_block_marker","ip_block_$(id)","ip_rot_$(rot)"]}
       # End Section
+      $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
       $scoreboard players set #increment ip_data $(increment)
       execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
       execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
@@ -153,13 +176,20 @@
     data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
     data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
     %EMPTY%
-      $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
       # Below is the only parts that are different between dictionary searches, the rest can be reused.
       #$scoreboard players set #test ip_data $(remove_display_on_place)
-      $execute if entity @s[tag=ip_block_$(id)] run setblock ~ ~ ~ $(physical_block)
+      $execute if entity @s[tag=ip_block_$(id)] unless data storage infinite_parkour:macro data.rotational run setblock ~ ~ ~ $(physical_block)
+      $execute if entity @s[tag=ip_block_$(id)] if data storage infinite_parkour:macro data.rotational run
+        $execute if entity @s[tag=ip_rot_2] run setblock ~ ~ ~ $(physical_block)[facing=north]
+        $execute if entity @s[tag=ip_rot_3] run setblock ~ ~ ~ $(physical_block)[facing=south]
+        $execute if entity @s[tag=ip_rot_4] run setblock ~ ~ ~ $(physical_block)[facing=west]
+        $execute if entity @s[tag=ip_rot_5] run setblock ~ ~ ~ $(physical_block)[facing=east]
+      + with storage infinite_parkour:macro data
       #if score #test ip_data matches 1
       #$execute unless score #test ip_data matches 1 if entity @s[tag=ip_block_$(id)] run setblock ~ ~ ~ minecraft:barrier
       # End Section
+      data remove storage infinite_parkour:macro data.rotational
+      $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
       $scoreboard players set #increment ip_data $(increment)
       execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
       execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
