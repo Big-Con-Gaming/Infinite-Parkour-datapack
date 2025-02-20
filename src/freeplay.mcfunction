@@ -171,7 +171,7 @@ execute at @s run
 
   title @s[team=ParkourPlayers] actionbar {"color":"#98a3dd","extra":["[",{"score":{"name":"@s","objective":"ip_score"}},"]"],"text":""}
   title @s[team=Highscore] actionbar [{"color":"#98a3dd","bold":true,"extra":["SCORE ",{"score":{"name":"@s","objective":"ip_score"}}],"text":""}, "    ", {"color":"#b5bad6","bold":true,"extra":["RECORD ",{"score":{"name":"@s","objective":"ip_highscore"}}],"text":""}]
-
+  execute as @e[type=item,distance=..64,tag=!ip_item] run kill @s
 
 /test_landed
   execute if entity @s[nbt={OnGround:1b}] run return 1
