@@ -94,6 +94,39 @@
                 "editor_block_display_outline":false,
                 "editor_item_desc":"{'text':'Slows the player down, can be used to ride walls','italic':false,'color':'gray'}"
             },
-            "length":7
+            "8":{
+                "id":"ice",
+                "physical_block":"minecraft:ice",
+                "override_theme":true,
+                "remove_display_on_place":true,
+                "editor_bundle_id":2,
+                "editor_pos_in_bundle":3,
+                "editor_display_block":"minecraft:ice",
+                "editor_block_display_outline":true,
+                "editor_item_desc":"{'text':'Gives the player less friction, can make for some slippery jumps','italic':false,'color':'gray'}"
+            },
+            "9":{
+                "id":"soul_sand",
+                "physical_block":"minecraft:soul_sand",
+                "override_theme":true,
+                "remove_display_on_place":true,
+                "editor_bundle_id":2,
+                "editor_pos_in_bundle":4,
+                "editor_display_block":"minecraft:soul_sand",
+                "editor_block_display_outline":true,
+                "editor_item_desc":"{'text':'Gives the player more friction, can make for some precise jumps','italic':false,'color':'gray'}"
+            },
+            "10":{
+                "id":"cobweb",
+                "physical_block":"minecraft:cobweb",
+                "override_theme":true,
+                "remove_display_on_place":true,
+                "editor_bundle_id":2,
+                "editor_pos_in_bundle":5,
+                "editor_display_block":"minecraft:cobweb",
+                "editor_block_display_outline":true,
+                "editor_item_desc":"{'text':'Makes the player really slow and allows them to pass through','italic':false,'color':'gray'}"
+            },
+            "length":10
     }
 }
