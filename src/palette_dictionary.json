@@ -1,0 +1,11 @@
+{
+    "everything":{
+        "0":{
+            "id":"default",
+            "platform":"minecraft:gold_block",
+            "blocker":"minecraft:yellow_stained_glass",
+            "slab_platform":"minecraft:bamboo_mosaic_slab"
+        },
+        "length":0
+    }
+}
