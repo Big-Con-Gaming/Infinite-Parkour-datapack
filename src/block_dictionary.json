@@ -13,8 +13,8 @@
             },
             "1":{
                 "id":"slab_platform",
-                "physical_block":"minecraft:bamboo_mosaic_slab",
-                "override_theme":true,
+                "physical_block":"minecraft:stone_slab",
+                "override_theme":false,
                 "remove_display_on_place":true,
                 "editor_bundle_id":0,
                 "editor_pos_in_bundle":1,
