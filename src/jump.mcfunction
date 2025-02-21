@@ -228,7 +228,6 @@
       data modify storage infinite_parkour:macro data.block_dictionary set from storage infinite_parkour:block_dictionary everything
       data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.0
       %EMPTY%
-        $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
         # Below is the only parts that are different between dictionary searches, the rest can be reused.
         $scoreboard players set #test ip_data $(remove_display_on_place)
         $scoreboard players set #test2 ip_data $(override_theme)
@@ -237,6 +236,7 @@
           $execute if score #test ip_data matches 1 if entity @s[nbt={block_state:{Name:"$(physical_block)"}}] run kill @s
         + with storage infinite_parkour:macro data
         # End Section
+        $data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
         $scoreboard players set #increment ip_data $(increment)
         execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
         execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
