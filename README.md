@@ -8,7 +8,8 @@ This project uses a custom build tool OfekN made (MinecraftScript.jar)<br> [And 
 )
 
 There are a couple of batch files for you to use:
-- [`built.bat`](./build.bat) - builds the project once, will also produce a zip file.
+- [`build.bat`](./build.bat) - builds the project once.
+- [`buildzip.bat`](./buildzip.bat) - builds the project once, will also produce a zip file.
 - [`autobuild.bat`](./autobuild.bat) automatically builds when the code changes, doesn't create a zip file.
 - [`clean.bat`](./clean.bat) deletes all generated files.
 ## About MinecraftScript
