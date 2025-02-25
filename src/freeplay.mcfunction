@@ -57,7 +57,7 @@ execute at @s run
 /credit_2s2s
   tellraw @s {"text":"Thanks to 2s2s","color":"white"}
 /credit_youtube
-  tellraw @p {"text":"Click here to visit the BigConGaming's youtube channel","underlined":true,"color":"red","clickEvent":{"action":"open_url","value":"https://www.youtube.com/@bigcongaming"},"hoverEvent":{"action":"show_text","contents":[{"text":"Click","bold":true,"color":"gray"}]}}
+  tellraw @p {"text":"Click here to visit the Big Con Gaming's youtube channel","underlined":true,"color":"red","clickEvent":{"action":"open_url","value":"https://www.youtube.com/@bigcongaming"},"hoverEvent":{"action":"show_text","contents":[{"text":"Click","bold":true,"color":"gray"}]}}
 /credit_discord
   tellraw @p {"text":"Click here to join the discord server","underlined":true,"color":"#5662F6","clickEvent":{"action":"open_url","value":"https://discord.gg/dnNu2xHWsQ"},"hoverEvent":{"action":"show_text","contents":[{"text":"Click","bold":true,"color":"gray"}]}}
 
@@ -131,6 +131,7 @@ execute at @s run
 /update_setting_pack
   execute store result storage infinite_parkour:calc lane.settings.jumppack_index int 1 run scoreboard players get #value math
   scoreboard players reset #value math
+  %FUNC%/setup_first_jump
 
 /setup_first_jump
   # for calculations
@@ -206,11 +207,14 @@ execute at @s run
     execute store result score py math run data get entity @s Pos[1]
     execute store result score by math run data get storage infinite_parkour:calc lane.min_jumps_y
     scoreboard players remove by math 3
-    execute if data entity @s {OnGround:1b} run return 0
     execute if score py math >= by math run
       tag @s remove ParkourFalling
       stopsound @s ambient minecraft:item.elytra.flying
     execute if score py math >= by math run return 0
+    execute if data entity @s {OnGround:1b} run
+      tag @s remove ParkourFalling
+      stopsound @s ambient minecraft:item.elytra.flying
+    execute if data entity @s {OnGround:1b} run return 0
 
     execute if entity @s[tag=!ParkourFalling] run
       tag @s add ParkourFalling
