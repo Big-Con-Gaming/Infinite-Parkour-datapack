@@ -69,7 +69,7 @@ execute at @s run
     %EMPTY%
       $execute as @a[nbt={UUID:$(player)},distance=0..] at @s run %FILE%/player_tick
     + with storage infinite_parkour:calc lane
-    %FILE%/lobby_tick
+    %FILE%/lobby_tick with storage infinite_parkour:calc lane
     data modify entity @s data set from storage infinite_parkour:calc lane
   data remove storage infinite_parkour:calc lane
 
@@ -105,11 +105,15 @@ execute at @s run
 
   execute unless data storage infinite_parkour:calc lane.settings.decorations run data modify storage infinite_parkour:calc lane.settings.decorations set value 1
   execute unless data storage infinite_parkour:calc lane.settings.jumppack_index run data modify storage infinite_parkour:calc lane.settings.jumppack_index set value 0
-  %EMPTY%
-    $data modify storage infinite_parkour:calc lane.settings.jumppack_id set from storage infinite_parkour:jumppack list[$(jumppack_index)].name
-  + with storage infinite_parkour:calc lane.settings
+  # The process below is now executed in player_tick instead of lobby_tick, as jumppack_id was needed to set the highscore
+  #%EMPTY%
+  #  $data modify storage infinite_parkour:calc lane.settings.jumppack_id set from storage infinite_parkour:jumppack list[$(jumppack_index)].name
+  #+ with storage infinite_parkour:calc lane.settings
+  data modify storage infinite_parkour:calc lane.settings.player set from storage infinite_parkour:calc lane.player
   execute positioned ~-6.49 1.3 0.5 run
     $data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"blue","text":"$(jumppack_id)"}'
+    $scoreboard objectives add iph_$(jumppack_id) dummy
+    $scoreboard players operation @a[nbt={UUID:$(player)},distance=0..] ip_highscore = @a[nbt={UUID:$(player)},distance=0..] iph_$(jumppack_id)
   + with storage infinite_parkour:calc lane.settings
 
 /is_clicked
@@ -250,4 +254,9 @@ execute at @s run
     team join Highscore @s
     scoreboard players set @s ip_score 0
   # Using unless in case the player doesn't have a high score yet
-  execute unless score @s ip_highscore > @s ip_score run scoreboard players operation @s ip_highscore = @s ip_score
+  %EMPTY%
+    $data modify storage infinite_parkour:calc lane.settings.jumppack_id set from storage infinite_parkour:jumppack list[$(jumppack_index)].name
+  + with storage infinite_parkour:calc lane.settings
+  %EMPTY%
+    $execute unless score @s iph_$(jumppack_id) > @s ip_score run scoreboard players operation @s iph_$(jumppack_id) = @s ip_score
+  + with storage infinite_parkour:calc lane.settings

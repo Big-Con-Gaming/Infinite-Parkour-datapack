@@ -21,6 +21,9 @@ function infinite_parkour:lane/free_all
   scoreboard objectives remove ip_lane
   scoreboard objectives remove ip_flight_cooldown
   scoreboard objectives remove ip_anim
+
+  #TO DO: Add a system to go through all iph_INSERTPACKID scoreboards and remove them.
+
   #Old scores
   scoreboard objectives remove Blocks
   scoreboard objectives remove HighScore
