@@ -14,6 +14,7 @@ scoreboard objectives add ip_data dummy {"text":"Data"}
 scoreboard objectives add ip_last_online dummy {"text":"Last Online"}
 scoreboard objectives add ip_lane dummy {"text":"Lane"}
 scoreboard objectives add ip_flight_cooldown dummy {"text":"Flight Cooldown"}
+scoreboard objectives add ip_anim dummy {"text":"Animation Frame Counter for Entities"}
 
 # scoreboard objectives setdisplay sidebar.team.yellow ip_score
 # scoreboard objectives setdisplay sidebar.team.gold ip_highscore
