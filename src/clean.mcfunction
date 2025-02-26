@@ -20,6 +20,7 @@ function infinite_parkour:lane/free_all
   scoreboard objectives remove ip_last_online
   scoreboard objectives remove ip_lane
   scoreboard objectives remove ip_flight_cooldown
+  scoreboard objectives remove ip_anim
   #Old scores
   scoreboard objectives remove Blocks
   scoreboard objectives remove HighScore
