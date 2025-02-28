@@ -14,3 +14,5 @@
     scoreboard players add #test ip_data 1
     tell Big_Con__ Iteration
     %FUNC%
+/retrieve
+  give @p written_book[written_book_content={title:"",author:"",pages:['{"nbt":"","storage":"jumppack_0.2_showcase:data"}']}] 1
