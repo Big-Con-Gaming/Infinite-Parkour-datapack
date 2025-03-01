@@ -1,0 +1,1 @@
+$data modify storage infinite_parkour:jumppack str set value '$(jumppack)'

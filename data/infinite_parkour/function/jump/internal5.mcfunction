@@ -1,0 +1,1 @@
+$execute at @e[type=marker,tag=ip_block_$(id),distance=..512] run data merge entity @n[type=block_display,distance=..0.1] {block_state:{Name:"$(physical_block)"}}

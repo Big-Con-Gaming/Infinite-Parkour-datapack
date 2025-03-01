@@ -1,0 +1,1 @@
+execute as @s at @s run function infinite_parkour:command/internal2

@@ -1,0 +1,1 @@
+$data modify storage infinite_parkour:jumppack jumppack set from storage jumppack_$(jumppack_id):data jumppack

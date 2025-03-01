@@ -1,0 +1,1 @@
+execute as @e[type=block_display,tag=ipe_hologram,dx=26,dy=0,dz=16] at @s run function infinite_parkour:editor/hologram/unload

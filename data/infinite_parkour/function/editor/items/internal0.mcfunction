@@ -1,0 +1,2 @@
+execute if entity @s[dx=64,dy=64,dz=29] run function infinite_parkour:editor/items/internal1
+execute unless entity @s[dx=64,dy=64,dz=29] positioned ~-1 0 -1 run function infinite_parkour:editor/items/internal2

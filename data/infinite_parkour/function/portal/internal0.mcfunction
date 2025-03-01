@@ -1,0 +1,1 @@
+execute if entity @s[nbt={Item:{id:"minecraft:gold_ingot"}}] run function infinite_parkour:portal/internal1

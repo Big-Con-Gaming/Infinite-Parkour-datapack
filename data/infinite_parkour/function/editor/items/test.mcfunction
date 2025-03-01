@@ -1,0 +1,2 @@
+item replace entity @s container.8 with writable_book[writable_book_content={pages:[{raw:"a"}]}]
+item replace entity @s container.8 with writable_book[writable_book_content={pages:[{raw:"Sign this book and type the name of the new pack."}]}]

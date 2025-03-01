@@ -1,0 +1,1 @@
+execute as @a run function infinite_parkour:player_saver/retrieve

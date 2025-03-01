@@ -1,0 +1,1 @@
+tellraw @s {"text":"Thanks to lags_kills","color":"white"}

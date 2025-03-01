@@ -1,0 +1,1 @@
+$execute on vehicle run data merge entity @s {transformation:{translation:[$(translation_x)f,$(translation_height)f,$(translation_z)f],scale:[$(override_display_width)f,$(override_display_height)f,$(override_display_width)f]}}

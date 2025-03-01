@@ -1,0 +1,1 @@
+execute in infinite_parkour:lane run function infinite_parkour:player_saver/internal1

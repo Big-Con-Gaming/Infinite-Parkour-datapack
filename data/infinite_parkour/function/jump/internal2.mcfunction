@@ -1,0 +1,1 @@
+$execute positioned ~$(x) ~$(y) ~$(z) run function infinite_parkour:jump/spawn/place_jump_objects with storage infinite_parkour:macro data

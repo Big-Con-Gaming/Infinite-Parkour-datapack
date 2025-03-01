@@ -1,0 +1,1 @@
+data merge entity @s {interpolation_duration:200,Tags:["ParkourDeco","ParkourDecoCarpet","ip_interpolate","ip_interpolate_2"],brightness:{sky:3,block:3},transformation:{translation:[-60.0f,-300.0f,-60.0f],scale:[60.0f, 60.0f, 60.0f]},block_state:{Name:"minecraft:gold_block"},view_range:50.0f}
