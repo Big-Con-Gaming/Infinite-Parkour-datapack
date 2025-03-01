@@ -1,0 +1,1 @@
+execute if dimension infinite_parkour:lane run function infinite_parkour:lane/exit

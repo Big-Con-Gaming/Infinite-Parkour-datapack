@@ -1,0 +1,1 @@
+$ride @s mount @n[type=horse,nbt={Owner:$(player_id)},distance=..5]

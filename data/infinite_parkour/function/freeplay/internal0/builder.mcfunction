@@ -1,0 +1,3 @@
+$summon text_display ~ -5.2 ~ {text:'[{"color":"$(color)","text":"$(name)"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
+$summon text_display ~ -5.45 ~ {text:'[{"color":"gray","text":"$(title)"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
+$summon interaction ~ -7 ~ {width:1.1,height:2,Tags:["_ip_interaction","freeplay/$(interaction)"]}

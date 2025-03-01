@@ -1,0 +1,1 @@
+$execute unless items entity @s container.$(i) item_frame if items block ~ ~ ~ container.$(j) item_frame run function infinite_parkour:editor/items/internal7 {i:$(i),j:$(j)}

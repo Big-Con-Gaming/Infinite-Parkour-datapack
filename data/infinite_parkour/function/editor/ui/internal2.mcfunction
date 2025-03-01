@@ -1,0 +1,1 @@
+execute as @e[type=interaction,distance=..0.10] at @s run function infinite_parkour:editor/ui/internal3

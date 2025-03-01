@@ -1,0 +1,2 @@
+data merge entity @s {interpolation_duration:100,Tags:["ParkourDeco","ParkourDecoOrb","ip_interpolate","ip_interpolate_3"],brightness:{sky:3,block:3},transformation: {left_rotation: [0.0f, 0.0f, 0.0f, 1.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [0.0f, 0.0f, 0.0000002f], translation: [0.0f, 0.0f, 0.0f]},block_state:{Name:"minecraft:gold_block"},view_range:50.0f}
+scoreboard players set @s ip_anim 0

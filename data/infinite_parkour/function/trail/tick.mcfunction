@@ -1,0 +1,1 @@
+execute as @e[type=marker,tag=ip_trail] at @s run function infinite_parkour:trail/internal0 with entity @s data

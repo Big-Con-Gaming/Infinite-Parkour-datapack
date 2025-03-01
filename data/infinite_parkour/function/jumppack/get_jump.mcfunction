@@ -1,0 +1,1 @@
+$data modify storage infinite_parkour:calc jump set from storage jumppack_$(jumppack_id):data jumppack.jumps[$(page)][$(row)][$(col)]

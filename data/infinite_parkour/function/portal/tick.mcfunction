@@ -1,0 +1,2 @@
+execute as @e[type=item] unless entity @s[nbt={Fire:-1s}] at @s align xyz positioned ~0.5 ~1.5 ~0.5 unless entity @n[type=interaction,tag=ip_portal,distance=..0.1] if function infinite_parkour:portal/test_structure run function infinite_parkour:portal/internal0
+execute as @e[type=interaction,tag=ip_portal] at @s run function infinite_parkour:portal/internal2

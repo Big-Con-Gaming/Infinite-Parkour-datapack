@@ -1,0 +1,2 @@
+$data merge entity @s[tag=ip_scale_up] {start_interpolation:0,transformation:{scale:[$(s)f,$(s)f,$(s)f],translation:[-$(s2)f,-$(s2)f,-$(s2)f]}}
+$data merge entity @s[tag=ip_scale_down] {start_interpolation:0,transformation:{scale:[$(d)f,$(d)f,$(d)f],translation:[-$(d2)f,-$(d2)f,-$(d2)f]}}

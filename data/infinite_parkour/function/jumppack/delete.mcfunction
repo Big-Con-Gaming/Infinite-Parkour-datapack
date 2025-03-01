@@ -1,0 +1,1 @@
+$data remove storage jumppack_$(jumppack_id):data jumppack

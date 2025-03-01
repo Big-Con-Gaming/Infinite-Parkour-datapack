@@ -1,0 +1,1 @@
+execute if dimension infinite_parkour:lane run function infinite_parkour:scale_parkour_block/internal1

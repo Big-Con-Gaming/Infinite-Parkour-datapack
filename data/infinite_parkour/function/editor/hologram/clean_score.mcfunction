@@ -1,0 +1,12 @@
+scoreboard players reset off_x math
+scoreboard players reset off_y math
+scoreboard players reset off_z math
+scoreboard players reset x math
+scoreboard players reset y math
+scoreboard players reset z math
+scoreboard players reset max_len math
+scoreboard players reset size_h math
+scoreboard players reset size_w math
+scoreboard players reset h_offset math
+scoreboard players reset w_offset math
+scoreboard players reset rot math
