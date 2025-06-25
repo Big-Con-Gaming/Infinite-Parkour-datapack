@@ -29,7 +29,7 @@
         scoreboard players operation @s ip_lane = #new ip_lane
       # TODO bring back after alpha
       # summon interaction ~ ~3 ~ {Tags:["ip_leave"],width:1.5,height:1}
-      # summon text_display ~ ~3.5 ~ {billboard:"center",alignment:"center",Tags:["ParkourLobbyLeave"],text:'[{"color":"yellow","text":"Click to Leave","bold":true}]'}
+      # summon text_display ~ ~3.5 ~ {billboard:"center",alignment:"center",Tags:["ParkourLobbyLeave"],text:[{color:"yellow",text:"Click to Leave",bold:true}]}
       data remove storage infinite_parkour:calc lane_player
 
 # This function needs to be called on the lane marker (tagged ip_lane_entry)

@@ -8,8 +8,8 @@
     execute if entity @s[nbt={Item:{id:"minecraft:gold_ingot"}}] run
       kill @s
       summon interaction ~ ~ ~ {Tags:["ip_portal","ip_portal_freeplay"],width:1.5}
-      summon text_display ~ ~.8 ~ {Tags:["ip_portal"],billboard:"center",alignment:"center",text:'{"color":"#FFFF55","text":"Click to enter"}'}
-      summon text_display ~ ~.5 ~ {Tags:["ip_portal"],billboard:"center",alignment:"center",text:'{"color":"#FFBB00","text":"Infinite Parkour Freeplay","bold":true}'}
+      summon text_display ~ ~.8 ~ {Tags:["ip_portal"],billboard:"center",alignment:"center",text:{color:"#FFFF55",text:"Click to enter"}}
+      summon text_display ~ ~.5 ~ {Tags:["ip_portal"],billboard:"center",alignment:"center",text:{color:"#FFBB00",text:"Infinite Parkour Freeplay",bold:true}}
   execute as @e[type=interaction,tag=ip_portal] at @s run
     execute if entity @s[tag=ip_portal_freeplay] run
       execute on attacker run function infinite_parkour:freeplay

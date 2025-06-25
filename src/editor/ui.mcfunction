@@ -1,8 +1,8 @@
 /spawn
   ## --pack selection-- ##
-  summon text_display ~31.5 37.0 -30.9 {text:'"Selected Pack"',transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
+  summon text_display ~31.5 37.0 -30.9 {text:"Selected Pack",transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
   execute positioned ~31.5 36.25 -30.9 summon text_display run
-    data merge entity @s {text:'"new_pack"',transformation: {scale: [1.5f, 1.5f, 1.5f]}}
+    data merge entity @s {text:"new_pack",transformation: {scale: [1.5f, 1.5f, 1.5f]}}
     tag @s add ipe_pack_name
     scoreboard players set @s ipe_index 0
 
@@ -14,9 +14,9 @@
 
 
   ## --page controls-- ##
-  summon text_display ~31.5 35 -30.9 {text:'"Page"',transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
+  summon text_display ~31.5 35 -30.9 {text:"Page",transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
   execute positioned ~31.5 34.25 -30.9 summon text_display run
-    data merge entity @s {text:'"0"',transformation: {scale: [1.5f, 1.5f, 1.5f]}}
+    data merge entity @s {text:"0",transformation: {scale: [1.5f, 1.5f, 1.5f]}}
     tag @s add ipe_page_num
     scoreboard players set @s ipe_index 0
 
@@ -29,7 +29,7 @@
 
   ## --leave button-- ##
   # TODO change back to infinite_parkour:player_saver/retrieve after the alpha
-  summon text_display ~31.5 33.4 -30.9 {text:'[{"color":"yellow","text":"Click to Leave","bold":true}]',transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
+  summon text_display ~31.5 33.4 -30.9 {text:[{color:"yellow",text:"Click to Leave",bold:true}],transformation: {scale: [1.5f, 1.5f, 1.5f], translation: [0.0f, 0.0f, 0.0f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], left_rotation: [0.0f, 0.0f, 0.0f, 1.0f]}}
   summon interaction ~31.5 33.3 -32.5 {width:3.4,height:0.6,Tags:["_ip_interaction","freeplay"]}
 
 /tick
@@ -65,7 +65,7 @@
 /update_page
   execute store result storage infinite_parkour:macro data.page int 1 run scoreboard players get @s ipe_index
   %EMPTY%
-    $data merge entity @s {text:'"$(page)"'}
+    $data merge entity @s {text:"$(page)"}
   + with storage infinite_parkour:macro data
   data remove storage infinite_parkour:macro data
   execute positioned ~-13 33 -20 align xyz run function infinite_parkour:editor/hologram/unload_all
@@ -82,7 +82,7 @@
 /update_pack_from_data
   # update text display
   %EMPTY%
-    $data merge entity @s {text:'"$(jumppack_id)"'}
+    $data merge entity @s {text:"$(jumppack_id)"}
   + with storage infinite_parkour:macro data
   # update in ipe_env
   execute positioned ~-31.5 0.0 0.0 as @n[type=marker,tag=ipe_env,distance=..0.1] run data modify entity @s data.jumppack_id set from storage infinite_parkour:macro data.jumppack_id

@@ -9,7 +9,7 @@
                 "editor_pos_in_bundle":0,
                 "editor_display_block":"minecraft:stone",
                 "editor_block_display_outline":true,
-                "editor_item_desc":"{'text':'Simple blocks the player will jump on','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Simple blocks the player will jump on',italic:false,color:gray}"
             },
             "1":{
                 "id":"slab_platform",
@@ -21,7 +21,7 @@
                 "editor_display_block":"minecraft:stone_slab",
                 "editor_block_display_outline":true,
                 "editor_display_height_offset":-0.0025,
-                "editor_item_desc":"{'text':'Simple slab the player will jump on','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Simple slab the player will jump on',italic:false,color:gray}"
             },
             "2":{
                 "id":"blocker",
@@ -32,7 +32,7 @@
                 "editor_pos_in_bundle":2,
                 "editor_display_block":"minecraft:tuff",
                 "editor_block_display_outline":true,
-                "editor_item_desc":"{'text':'Blocks to stop the player','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Blocks to stop the player',italic:false,color:gray}"
             },
             "3":{
                 "id":"pickup0",
@@ -45,7 +45,7 @@
                 "editor_block_display_outline":true,
                 "override_display_height": 0.375,
                 "override_display_width": 0.375,
-                "editor_item_desc":"{'text':'Currency for the player to pick up','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Currency for the player to pick up',italic:false,color:gray}"
             },
             "4":{
                 "id":"pickup1",
@@ -58,7 +58,7 @@
                 "editor_block_display_outline":true,
                 "override_display_height": 0.375,
                 "override_display_width": 0.375,
-                "editor_item_desc":"{'text':'Rarer currency for the player to pick up','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Rarer currency for the player to pick up',italic:false,color:gray}"
             },
             "5":{
                 "id":"ladder",
@@ -69,7 +69,7 @@
                 "editor_pos_in_bundle":0,
                 "editor_display_block":"minecraft:ladder",
                 "editor_block_display_outline":true,
-                "editor_item_desc":"{'text':'A useful way for the player to gain height','italic':false,'color':'gray'}",
+                "editor_item_desc":"{text:'A useful way for the player to gain height',italic:false,color:gray}",
                 "rotational":true
             },
             "6":{
@@ -81,7 +81,7 @@
                 "editor_pos_in_bundle":1,
                 "editor_display_block":"minecraft:air",
                 "editor_block_display_outline":false,
-                "editor_item_desc":"{'text':'Allows the player to bounce through a jump','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Allows the player to bounce through a jump',italic:false,color:gray}"
             },
             "7":{
                 "id":"honey",
@@ -92,7 +92,7 @@
                 "editor_pos_in_bundle":2,
                 "editor_display_block":"minecraft:air",
                 "editor_block_display_outline":false,
-                "editor_item_desc":"{'text':'Slows the player down, can be used to ride walls','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Slows the player down, can be used to ride walls',italic:false,color:gray}"
             },
             "8":{
                 "id":"ice",
@@ -103,7 +103,7 @@
                 "editor_pos_in_bundle":3,
                 "editor_display_block":"minecraft:ice",
                 "editor_block_display_outline":true,
-                "editor_item_desc":"{'text':'Gives the player less friction, can make for some slippery jumps','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Gives the player less friction, can make for some slippery jumps',italic:false,color:gray}"
             },
             "9":{
                 "id":"soul_sand",
@@ -114,7 +114,7 @@
                 "editor_pos_in_bundle":4,
                 "editor_display_block":"minecraft:soul_sand",
                 "editor_block_display_outline":true,
-                "editor_item_desc":"{'text':'Gives the player more friction, can make for some precise jumps','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Gives the player more friction, can make for some precise jumps',italic:false,color:gray}"
             },
             "10":{
                 "id":"cobweb",
@@ -125,7 +125,7 @@
                 "editor_pos_in_bundle":5,
                 "editor_display_block":"minecraft:cobweb",
                 "editor_block_display_outline":true,
-                "editor_item_desc":"{'text':'Makes the player really slow and allows them to pass through','italic':false,'color':'gray'}"
+                "editor_item_desc":"{text:'Makes the player really slow and allows them to pass through',italic:false,color:gray}"
             },
             "length":10
     }

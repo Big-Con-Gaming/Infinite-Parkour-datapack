@@ -23,7 +23,7 @@
     scoreboard players set #valid math 1
   + with storage infinite_parkour:macro data
   # tell if invalid
-  execute unless score #valid math matches 1 run tellraw @s {"text": "Invalid name", "color": "red"}
+  execute unless score #valid math matches 1 run tellraw @s {text: "Invalid name", color: "red"}
   # update if valid name
   execute if score #valid math matches 1 positioned 0.0 0.0 0.0 run
     execute positioned ~31.5 36.25 -30.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run
@@ -406,8 +406,8 @@
   ####################################
   
   %FILE%/give_bundle {slot:'17',color:'pink',name:'Modifiers',i:'8',inside:',"ipe_place_inside"',
-  + model0:'barrier',name0:'Delete',lore0:'\'{"text":"A quick way to clean up elements","italic":false,"color":"gray"}\'',
-  + model1:'redstone',name1:'Trail',lore1:'\'{"text":"Creates a trail between blocks","italic":false,"color":"gray"}\',\'{"text":"To remove break the starting block","italic":false,"color":"gray"}\'',
+  + model0:'barrier',name0:'Delete',lore0:'{text:"A quick way to clean up elements",italic:false,color:"gray"}',
+  + model1:'redstone',name1:'Trail',lore1:'{text:"Creates a trail between blocks",italic:false,color:"gray"},{text:"To remove break the starting block",italic:false,color:"gray"}',
   + model2:'air',name2:'2',lore2:'',
   + model3:'air',name3:'3',lore3:'',
   + model4:'air',name4:'4',lore4:'',
@@ -427,15 +427,15 @@
   item replace entity @s container.8 with writable_book[writable_book_content={pages:[{raw:"Sign this book and type the name of the new pack."}]}]
 
 /give_hologram_controls
-  item replace entity @s container.0 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply0"]},item_model="lead",item_name="Load",lore=['{"text":"Right click a hologram to load it","italic":false,"color":"gray"}']]
-  item replace entity @s container.1 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply1"]},item_model="writable_book",item_name="Save",lore=['{"text":"Right click a hologram to save into it","italic":false,"color":"gray"}']]
-  item replace entity @s container.2 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply2"]},item_model="tnt",item_name="Delete",lore=['{"text":"Right click a hologram to delete it","italic":false,"color":"gray"}']]
+  item replace entity @s container.0 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply0"]},item_model="lead",item_name="Load",lore=[{text:"Right click a hologram to load it",italic:false,color:"gray"}]]
+  item replace entity @s container.1 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply1"]},item_model="writable_book",item_name="Save",lore=[{text:"Right click a hologram to save into it",italic:false,color:"gray"}]]
+  item replace entity @s container.2 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply2"]},item_model="tnt",item_name="Delete",lore=[{text:"Right click a hologram to delete it",italic:false,color:"gray"}]]
   item replace entity @s container.3 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply3"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.4 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply4"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.5 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply5"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.6 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply6"]},item_model="air",item_name="''",lore=[]]
   item replace entity @s container.7 with item_frame[entity_data={id:"item_frame",Invisible:1b,Tags:["ipe_hologram_apply","ipe_hologram_apply7"]},item_model="air",item_name="''",lore=[]]
-  item replace entity @s container.8 with writable_book[item_model="chest",item_name="NewPack",lore=['{"text":"Use only lower cased letters,","italic":false,"color":"gray"}','{"text":"underscores, dashes or dots.","italic":false,"color":"gray"}'],writable_book_content={pages:[{raw:"§3Sign this book with the name of the new pack. §1Use only: §9lower cased letters, numbers, underscores, dashes or dots"}]}]
+  item replace entity @s container.8 with writable_book[item_model="chest",item_name="NewPack",lore=[{text:"Use only lower cased letters,",italic:false,color:"gray"},{text:"underscores, dashes or dots.",italic:false,color:"gray"}],writable_book_content={pages:[{raw:"§3Sign this book with the name of the new pack. §1Use only: §9lower cased letters, numbers, underscores, dashes or dots"}]}]
   item replace entity @s container.9 with air
   item replace entity @s container.10 with air
   item replace entity @s container.11 with air
