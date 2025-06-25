@@ -19,26 +19,26 @@ execute at @s run
   place template infinite_parkour:freeplay_bottom ~-15 ~-42 ~-15
   %FILE%/setup_first_jump
   # settings
-  summon text_display ~-6.49 3.2 0.5 {text:'{"color":"yellow","text":"Settings"}',transformation:{translation:[0,0,0],scale:[2,2,2],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 2.5 0.5 {text:'{"color":"white","text":"Decorations"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 2.2 0.5 {text:'{"color":"green","text":"on"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 3.2 0.5 {text:{color:"yellow",text:"Settings"},transformation:{translation:[0,0,0],scale:[2,2,2],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 2.5 0.5 {text:{color:"white",text:"Decorations"},transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 2.2 0.5 {text:{color:"green",text:"on"},transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon interaction ~-6.6 2.2 0.5 {width:0.4,height:0.25}
-  summon text_display ~-6.49 1.6 0.5 {text:'{"color":"white","text":"JumpPack"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 1.3 0.5 {text:'{"color":"blue","text":"loading..."}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 1.3 2.0 {text:'{"color":"green","text":"\\u2190"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
-  summon text_display ~-6.49 1.3 -1.0 {text:'{"color":"green","text":"\\u2192"}',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 1.6 0.5 {text:{color:"white",text:"JumpPack"},transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 1.3 0.5 {text:{color:"blue",text:"loading..."},transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 1.3 2.0 {text:{color:"green",text:"\u2190"},transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
+  summon text_display ~-6.49 1.3 -1.0 {text:{color:"green",text:"\u2192"},transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:1.57079,axis:[0,1,0]}}}
   summon interaction ~-6.6 1.3 2.0 {width:0.4,height:0.25}
   summon interaction ~-6.6 1.3 -1.0 {width:0.4,height:0.25}
   # editor
-  summon text_display ~13.0 1.6 0.5 {billboard:"vertical",text:'[{"color":"aqua","text":"Teleport to the "},{"color":"dark_aqua","text":"Editor"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
+  summon text_display ~13.0 1.6 0.5 {billboard:"vertical",text:[{color:"aqua",text:"Teleport to the "},{color:"dark_aqua",text:"Editor"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
   summon interaction ~13.0 0.0 0.5 {width:2,height:2}
   # credits
-  summon text_display ~-3.0 1.6 -5.5 {billboard:"vertical",text:'[{"color":"red","text":"Youtube Channel"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
+  summon text_display ~-3.0 1.6 -5.5 {billboard:"vertical",text:[{color:"red",text:"Youtube Channel"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
   summon interaction ~-3.05 0.0 -5.55 {width:1.1,height:2,Tags:["_ip_interaction","freeplay/credit_youtube"]}
-  summon text_display ~3.0 1.6 -5.5 {billboard:"vertical",text:'[{"color":"#5662F6","text":"Discord Server"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
+  summon text_display ~3.0 1.6 -5.5 {billboard:"vertical",text:[{color:"#5662F6",text:"Discord Server"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
   summon interaction ~2.95 0.0 -5.55 {width:1.1,height:2,Tags:["_ip_interaction","freeplay/credit_discord"]}
-  summon text_display ~-1.0 1.6 -7.5 {billboard:"vertical",text:'[{"color":"green","text":"OfekN"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
-  summon text_display ~1.0 1.6 -7.5 {billboard:"vertical",text:'[{"color":"green","text":"Big_Con__"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
+  summon text_display ~-1.0 1.6 -7.5 {billboard:"vertical",text:[{color:"green",text:"OfekN"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
+  summon text_display ~1.0 1.6 -7.5 {billboard:"vertical",text:[{color:"green",text:"Big_Con__"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
   # builders
   execute positioned ~-7.0 0 4.5 run %FUNC%/builder {color:"#5662F6","angle":0.78539,name:"Join us!",title:"on discord",interaction:"credit_discord"}
   execute positioned ~-5.0 0 3.5 run %FUNC%/builder {color:"#5662F6","angle":0,name:"Join us!",title:"on discord",interaction:"credit_discord"}
@@ -47,19 +47,19 @@ execute at @s run
   execute positioned ~-1.0 0 5.5 run %FUNC%/builder {color:"#eb8f8f","angle":-1.57079,name:"Flaming_Thunder_",title:"Head Builder",interaction:"credit_flaming"}
   execute positioned ~-3.0 0 7.5 run %FUNC%/builder {color:"#ebe58f","angle":3.14159,name:"2s2s",title:"Build Helper",interaction:"credit_2s2s"}
   /builder
-    $summon text_display ~ -5.2 ~ {text:'[{"color":"$(color)","text":"$(name)"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
-    $summon text_display ~ -5.45 ~ {text:'[{"color":"gray","text":"$(title)"}]',transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
+    $summon text_display ~ -5.2 ~ {text:[{color:"$(color)",text:"$(name)"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
+    $summon text_display ~ -5.45 ~ {text:[{color:"gray",text:"$(title)"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
     $summon interaction ~ -7 ~ {width:1.1,height:2,Tags:["_ip_interaction","freeplay/$(interaction)"]}
 /credit_lags
-  tellraw @s {"text":"Thanks to lags_kills","color":"white"}
+  tellraw @s {text:"Thanks to lags_kills",color:"white"}
 /credit_flaming
-  tellraw @s {"text":"Thanks to Flaming_Thunder_","color":"white"}
+  tellraw @s {text:"Thanks to Flaming_Thunder_",color:"white"}
 /credit_2s2s
-  tellraw @s {"text":"Thanks to 2s2s","color":"white"}
+  tellraw @s {text:"Thanks to 2s2s",color:"white"}
 /credit_youtube
-  tellraw @p {"text":"Click here to visit the Big Con Gaming's youtube channel","underlined":true,"color":"red","clickEvent":{"action":"open_url","value":"https://www.youtube.com/@bigcongaming"},"hoverEvent":{"action":"show_text","contents":[{"text":"Click","bold":true,"color":"gray"}]}}
+  tellraw @p {text:"Click here to visit the Big Con Gaming's youtube channel",underlined:true,color:"red",clickEvent:{action:"open_url",value:"https://www.youtube.com/@bigcongaming"},hoverEvent:{action:"show_text",contents:[{text:"Click",bold:true,color:"gray"}]}}
 /credit_discord
-  tellraw @p {"text":"Click here to join the discord server","underlined":true,"color":"#5662F6","clickEvent":{"action":"open_url","value":"https://discord.gg/dnNu2xHWsQ"},"hoverEvent":{"action":"show_text","contents":[{"text":"Click","bold":true,"color":"gray"}]}}
+  tellraw @p {text:"Click here to join the discord server",underlined:true,color:"#5662F6",clickEvent:{action:"open_url",value:"https://discord.gg/dnNu2xHWsQ"},hoverEvent:{action:"show_text",contents:[{text:"Click",bold:true,color:"gray"}]}}
 
 /tick
   function infinite_parkour:decorations/pre_tick
@@ -111,7 +111,7 @@ execute at @s run
   #+ with storage infinite_parkour:calc lane.settings
   data modify storage infinite_parkour:calc lane.settings.player set from storage infinite_parkour:calc lane.player
   execute positioned ~-6.49 1.3 0.5 run
-    $data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"blue","text":"$(jumppack_id)"}'
+    $data modify entity @n[type=text_display,distance=..0.1] text set value {color:"blue",text:"$(jumppack_id)"}
     $scoreboard objectives add iph_$(jumppack_id) dummy
     $scoreboard players operation @a[nbt={UUID:$(player)},distance=0..] ip_highscore = @a[nbt={UUID:$(player)},distance=0..] iph_$(jumppack_id)
   + with storage infinite_parkour:calc lane.settings
@@ -126,11 +126,11 @@ execute at @s run
   scoreboard players add #value math 1
   execute if
     execute if score #value math matches 1 run return 1
-    execute positioned ~0.11 ~ ~ run data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"red","text":"off"}'
+    execute positioned ~0.11 ~ ~ run data modify entity @n[type=text_display,distance=..0.1] text set value {color:"red",text:"off"}
     scoreboard players set #value math 0
     return 0
   + run
-    execute positioned ~0.11 ~ ~ run data modify entity @n[type=text_display,distance=..0.1] text set value '{"color":"green","text":"on"}'
+    execute positioned ~0.11 ~ ~ run data modify entity @n[type=text_display,distance=..0.1] text set value {color:"green",text:"on"}
 
 /update_setting_pack
   execute store result storage infinite_parkour:calc lane.settings.jumppack_index int 1 run scoreboard players get #value math
@@ -174,8 +174,8 @@ execute at @s run
 
   %FILE%/fall_tick
 
-  title @s[team=ParkourPlayers] actionbar {"color":"#98a3dd","extra":["[",{"score":{"name":"@s","objective":"ip_score"}},"]"],"text":""}
-  title @s[team=Highscore] actionbar [{"color":"#98a3dd","bold":true,"extra":["SCORE ",{"score":{"name":"@s","objective":"ip_score"}}],"text":""}, "    ", {"color":"#b5bad6","bold":true,"extra":["RECORD ",{"score":{"name":"@s","objective":"ip_highscore"}}],"text":""}]
+  title @s[team=ParkourPlayers] actionbar {color:"#98a3dd",extra:["[",{score:{name:"@s",objective:"ip_score"}},"]"],text:""}
+  title @s[team=Highscore] actionbar [{color:"#98a3dd",bold:true,extra:["SCORE ",{score:{"name":"@s","objective":"ip_score"}}],text:""}, "    ", {color:"#b5bad6",bold:true,extra:["RECORD ",{score:{name:"@s",objective:"ip_highscore"}}],text:""}]
   execute as @e[type=item,distance=..64,tag=!ip_item] run kill @s
 
 /test_landed
