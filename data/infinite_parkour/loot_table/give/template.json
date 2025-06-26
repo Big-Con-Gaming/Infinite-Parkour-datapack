@@ -1,0 +1,26 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "cookie",
+          "functions": [
+            {
+              "function": "set_components",
+              "components": {
+                "item_model": "barrier",
+                "item_name": "Template",
+                "rarity": "common",
+                
+                "!consumable": {},
+                "!food": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
