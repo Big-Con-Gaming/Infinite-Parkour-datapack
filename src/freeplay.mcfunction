@@ -76,7 +76,7 @@ execute at @s run
 # Lobby
 /lobby_tick
   execute if score #reset_lobby math matches 1 run
-    %FILE%/setup_first_jump
+    execute at @n[type=marker,tag=ip_lane_entry,distance=..512] run %FILE%/setup_first_jump
     scoreboard players reset #reset_lobby math
   # Settings board
   execute positioned ~-6.6 2.2 0.5 as @n[type=interaction,distance=..0.1] if %FILE%/is_clicked run
@@ -135,9 +135,19 @@ execute at @s run
 /update_setting_pack
   execute store result storage infinite_parkour:calc lane.settings.jumppack_index int 1 run scoreboard players get #value math
   scoreboard players reset #value math
-  %FUNC%/setup_first_jump
+  execute at @n[type=marker,tag=ip_lane_entry,distance=..512] run %FILE%/setup_first_jump
 
 /setup_first_jump
+  # Cleanup any remaining block displays and markers
+  execute positioned ~ 0.5 12.5 run kill @n[type=marker,tag=ip_block_marker,distance=..0.01]
+  execute positioned ~ -0.5 16.5 run
+    kill @n[type=marker,tag=ip_block_marker,distance=..0.01]
+    kill @n[type=marker,tag=ip_trail,distance=..0.01]
+    kill @n[type=block_display,tag=ip_block_display,distance=..0.01]
+  execute positioned ~ -0.5 19.5 run
+    kill @n[type=marker,tag=ip_block_marker,distance=..0.01]
+    kill @n[type=block_display,tag=ip_block_display,distance=..0.01]
+  
   # for calculations
   summon marker ~ 0.5 12.5 {Tags:["ip_jump_connect","ip_jump_curr","ip_block_marker","ip_block_reached"]}
   # first jump
