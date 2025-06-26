@@ -70,10 +70,10 @@
       $data merge entity @s {block_state:{Name:"$(physical_block)"}}
     + with entity @s data
   + with entity @s data
-  execute as @e[type=marker,tag=ip_jump_next,distance=..512,tag=ip_rot_2] run data merge entity @n[type=block_display,distance=..0.1] {Rotation:[0.0f,0.0f]}
-  execute as @e[type=marker,tag=ip_jump_next,distance=..512,tag=ip_rot_3] run data merge entity @n[type=block_display,distance=..0.1] {Rotation:[180.0f,0.0f]}
-  execute as @e[type=marker,tag=ip_jump_next,distance=..512,tag=ip_rot_4] run data merge entity @n[type=block_display,distance=..0.1] {Rotation:[270.0f,0.0f]}
-  execute as @e[type=marker,tag=ip_jump_next,distance=..512,tag=ip_rot_5] run data merge entity @n[type=block_display,distance=..0.1] {Rotation:[90.0f,0.0f]}
+  execute as @e[type=marker,tag=ip_jump_next,distance=..512,tag=ip_rot_2] at @s run data merge entity @n[type=block_display,distance=..0.01,tag=ip_block_display] {Rotation:[0.0f,0.0f]}
+  execute as @e[type=marker,tag=ip_jump_next,distance=..512,tag=ip_rot_3] at @s run data merge entity @n[type=block_display,distance=..0.01,tag=ip_block_display] {Rotation:[180.0f,0.0f]}
+  execute as @e[type=marker,tag=ip_jump_next,distance=..512,tag=ip_rot_4] at @s run data merge entity @n[type=block_display,distance=..0.01,tag=ip_block_display] {Rotation:[270.0f,0.0f]}
+  execute as @e[type=marker,tag=ip_jump_next,distance=..512,tag=ip_rot_5] at @s run data merge entity @n[type=block_display,distance=..0.01,tag=ip_block_display] {Rotation:[90.0f,0.0f]}
   # How Minecraft's Facing value works:
   # 0 = Facing Down [0f, 90f]
   # 1 = Facing Up [0f -90f]
