@@ -1,2 +1,0 @@
-function infinite_parkour:freeplay/setup_first_jump
-scoreboard players reset #reset_lobby math

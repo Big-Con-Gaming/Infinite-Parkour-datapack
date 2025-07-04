@@ -1,1 +1,0 @@
-$data modify storage infinite_parkour:macro data.jumppack_id set from storage infinite_parkour:jumppack list[$(index)].name

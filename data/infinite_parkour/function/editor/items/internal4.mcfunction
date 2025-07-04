@@ -1,2 +1,0 @@
-execute positioned ~31.5 36.25 -30.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run function infinite_parkour:editor/items/internal5
-execute positioned ~31.5 34.25 -30.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1] at @s run function infinite_parkour:editor/items/internal6

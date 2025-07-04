@@ -1,0 +1,74 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "item_frame",
+          "functions": [
+            {
+              "function": "set_components",
+              "components": {
+                "item_model": "minecraft:stone",
+                "item_name": "platform",
+                "rarity": "common",
+                "lore": [{"text":"Simple blocks the player will jump on","italic":false,"color":"gray"}],
+                "entity_data": {
+                  "id": "item_frame",
+                  "Silent": true,
+                  "data": {
+                      "id":"platform",
+                      "physical_block":"minecraft:barrier",
+                      "override_theme":false,
+                      "remove_display_on_place":false,
+                      "editor_bundle_id":0,
+                      "editor_pos_in_bundle":0,
+                      "editor_display_block":"minecraft:stone",
+                      "editor_block_display_outline":true
+                  },
+                  "Tags":["ip_block"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "item_frame",
+          "functions": [
+            {
+              "function": "set_components",
+              "components": {
+                "item_model": "minecraft:dirt",
+                "item_name": "platform2",
+                "rarity": "common",
+                "lore": [{"text":"Simple blocks the player will jump on","italic":false,"color":"gray"}],
+                "entity_data": {
+                  "id": "item_frame",
+                  "Silent": true,
+                  "data": {
+                      "id":"temporary",
+                      "physical_block":"minecraft:barrier",
+                      "override_theme":false,
+                      "remove_display_on_place":false,
+                      "editor_bundle_id":1,
+                      "editor_pos_in_bundle":0,
+                      "editor_display_block":"minecraft:stone",
+                      "editor_block_display_outline":true
+                  },
+                  "Tags":["ip_block"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

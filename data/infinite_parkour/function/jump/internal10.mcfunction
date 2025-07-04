@@ -1,2 +1,0 @@
-$execute if entity @s[tag=ip_block_$(id)] unless data storage infinite_parkour:macro data.rotational run setblock ~ ~ ~ $(physical_block)
-$execute if entity @s[tag=ip_block_$(id)] if data storage infinite_parkour:macro data.rotational run function infinite_parkour:jump/internal11 with storage infinite_parkour:macro data

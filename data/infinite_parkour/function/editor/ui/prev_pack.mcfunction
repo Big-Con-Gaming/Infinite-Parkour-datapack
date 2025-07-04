@@ -1,1 +1,0 @@
-execute positioned ~2 36.25 -30.9 as @n[type=text_display,tag=ipe_pack_name,distance=..0.1] at @s run function infinite_parkour:editor/ui/internal4

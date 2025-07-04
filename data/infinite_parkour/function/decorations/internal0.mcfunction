@@ -1,5 +1,0 @@
-tag @s remove ip_interpolate
-data merge entity @s[tag=ip_interpolate_0] {start_interpolation:-1,transformation:{translation:[20.0f,-350.0f,20.0f],left_rotation:[-0.075f,0.0f,0.075f,1f],right_rotation:[0.0f,0.0f,0.0f,1f],scale:[30.0f, 400.0f, 30.0f]}}
-data merge entity @s[tag=ip_interpolate_1] {start_interpolation:-1,transformation:{translation:[-80.0f,-350.0f,20.0f],left_rotation:[-0.075f,0.0f,-0.075f,1f],right_rotation:[0.0f,0.0f,0.0f,1f],scale:[30.0f, 400.0f, 30.0f]}}
-data merge entity @s[tag=ip_interpolate_2] {start_interpolation:-1,transformation:{translation:[-60.0f,-50.0f,-60.0f],left_rotation:[0.0f,0.0f,0.0f,1f],right_rotation:[0.0f,0.0f,0.0f,1f],scale:[60.0f, 60.0f, 60.0f]}}
-data merge entity @s[tag=ip_interpolate_3] {start_interpolation:-1,transformation: {left_rotation: [0.43320838f, -0.24985722f, 0.36228183f, 0.7865454f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [3.0f, 3.0f, 3.0000002f], translation: [0.37934613f, 0.22039092f, -2.560766f]}}

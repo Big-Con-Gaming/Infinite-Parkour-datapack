@@ -1,0 +1,67 @@
+{
+    "pools":[
+        {
+        "rolls":1,
+        "entries":[
+                {
+                    "type": "item",
+                    "name": "minecraft:green_bundle",
+                    "functions": [
+                        {
+                            "function": "set_components",
+                            "components": {
+                                "item_name": "Solid_Blocks",
+                                "custom_data": {
+                                    "id": 0,
+                                    "slot": 9
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+        "rolls":1,
+        "entries":[
+                {
+                    "type": "item",
+                    "name": "minecraft:yellow_bundle",
+                    "functions": [
+                        {
+                            "function": "set_components",
+                            "components": {
+                                "item_name": "Pickups",
+                                "custom_data": {
+                                    "id": 1,
+                                    "slot": 10
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+        "rolls":1,
+        "entries":[
+                {
+                    "type": "item",
+                    "name": "minecraft:red_bundle",
+                    "functions": [
+                        {
+                            "function": "set_components",
+                            "components": {
+                                "item_name": "Special_Blocks",
+                                "custom_data": {
+                                    "id": 2,
+                                    "slot": 11
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

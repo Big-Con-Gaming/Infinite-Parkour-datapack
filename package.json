@@ -1,0 +1,19 @@
+{
+  "name": "infinite-parkour",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "watch": "chokidar src --initial -c \"npm run build\"",
+    "build": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0"
+  },
+  "dependencies": {
+    "mcjspacker": "^0.3.0"
+  }
+}
+
