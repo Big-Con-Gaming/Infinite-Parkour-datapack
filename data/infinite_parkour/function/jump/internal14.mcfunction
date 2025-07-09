@@ -1,1 +1,2 @@
-$execute if score #test ip_data matches 1 if entity @s[nbt={block_state:{Name:"$(physical_block)"}}] run kill @s
+kill @n[type=block_display,distance=..0.01,tag=ip_block_display]
+kill @s

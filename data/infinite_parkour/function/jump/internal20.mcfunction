@@ -1,1 +1,0 @@
-function infinite_parkour:jump/remove

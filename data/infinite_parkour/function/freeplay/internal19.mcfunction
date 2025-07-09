@@ -1,2 +1,3 @@
-team join Highscore @s
-scoreboard players set @s ip_score 0
+setblock ~ ~ ~ air
+kill @n[type=block_display,distance=..0.9]
+kill @s

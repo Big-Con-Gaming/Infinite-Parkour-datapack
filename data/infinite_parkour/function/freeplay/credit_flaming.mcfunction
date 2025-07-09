@@ -1,1 +1,1 @@
-tellraw @s {"text":"Thanks to Flaming_Thunder_","color":"white"}
+tellraw @s {text:"Thanks to Flaming_Thunder_",color:"white"}
