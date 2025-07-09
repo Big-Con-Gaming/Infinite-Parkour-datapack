@@ -1,1 +1,1 @@
-$data merge entity @s {text:'"$(jumppack_id)"'}
+$data merge entity @s {text:"$(jumppack_id)"}

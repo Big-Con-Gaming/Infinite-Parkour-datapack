@@ -1,2 +1,2 @@
-tag @s add ParkourFalling
-playsound minecraft:item.elytra.flying ambient @s ~ ~ ~ 0.4 2
+tag @s remove ParkourFalling
+stopsound @s ambient minecraft:item.elytra.flying

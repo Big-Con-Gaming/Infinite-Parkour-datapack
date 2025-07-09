@@ -1,1 +1,1 @@
-tellraw @p {"text":"Click here to visit the Big Con Gaming's youtube channel","underlined":true,"color":"red","clickEvent":{"action":"open_url","value":"https://www.youtube.com/@bigcongaming"},"hoverEvent":{"action":"show_text","contents":[{"text":"Click","bold":true,"color":"gray"}]}}
+tellraw @p {text:"Click here to visit the Big Con Gaming's youtube channel",underlined:true,color:"red",clickEvent:{action:"open_url",value:"https://www.youtube.com/@bigcongaming"},hoverEvent:{action:"show_text",contents:[{text:"Click",bold:true,color:"gray"}]}}

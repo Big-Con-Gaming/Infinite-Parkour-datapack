@@ -1,5 +1,4 @@
-execute unless data storage infinite_parkour:calc jumps_y[0] run return 0
-execute store result score #candidate math run data get storage infinite_parkour:calc jumps_y[0]
-execute if score #candidate math < #min math run scoreboard players operation #min math = #candidate math
-data remove storage infinite_parkour:calc jumps_y[0]
-function infinite_parkour:jump/internal18
+kill @e[type=marker,tag=ip_trail_curr,distance=..512]
+tag @e[type=marker,tag=ip_trail,distance=..512] add ip_trail_curr
+function infinite_parkour:jump/update_min_y
+function infinite_parkour:jump/spawn

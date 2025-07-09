@@ -1,1 +1,1 @@
-$data merge entity @s {text:'"$(page)"'}
+$data merge entity @s {text:"$(page)"}

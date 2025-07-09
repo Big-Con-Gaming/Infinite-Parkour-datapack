@@ -1,1 +1,1 @@
-$data modify storage infinite_parkour:calc lane.settings.jumppack_id set from storage infinite_parkour:jumppack list[$(jumppack_index)].name
+team join ParkourPlayers @s

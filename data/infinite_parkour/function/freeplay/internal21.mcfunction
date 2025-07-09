@@ -1,1 +1,2 @@
-$execute unless score @s iph_$(jumppack_id) > @s ip_score run scoreboard players operation @s iph_$(jumppack_id) = @s ip_score
+team join Highscore @s
+scoreboard players set @s ip_score 0

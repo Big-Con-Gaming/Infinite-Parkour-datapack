@@ -9,7 +9,7 @@ scoreboard players reset #off math
 data modify storage infinite_parkour:calc jumps_y set from storage infinite_parkour:calc lane.jumps_y
 execute store result score #min math run data get storage infinite_parkour:calc jumps_y[0]
 data remove storage infinite_parkour:calc jumps_y[0]
-function infinite_parkour:jump/internal18
+function infinite_parkour:jump/internal15
 execute store result storage infinite_parkour:calc lane.min_jumps_y int 1 run scoreboard players get #min math
 data remove storage infinite_parkour:calc jumps_y
 scoreboard players reset #min math

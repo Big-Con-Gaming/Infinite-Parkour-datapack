@@ -1,1 +1,1 @@
-tellraw @p {"text":"Click here to join the discord server","underlined":true,"color":"#5662F6","clickEvent":{"action":"open_url","value":"https://discord.gg/dnNu2xHWsQ"},"hoverEvent":{"action":"show_text","contents":[{"text":"Click","bold":true,"color":"gray"}]}}
+tellraw @p {text:"Click here to join the discord server",underlined:true,color:"#5662F6",clickEvent:{action:"open_url",value:"https://discord.gg/dnNu2xHWsQ"},hoverEvent:{action:"show_text",contents:[{text:"Click",bold:true,color:"gray"}]}}

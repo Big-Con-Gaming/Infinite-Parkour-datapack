@@ -1,10 +1,8 @@
-$scoreboard players set #test ip_data $(remove_display_on_place)
-$scoreboard players set #test2 ip_data $(override_theme)
-$execute if score #test2 ip_data matches 0 run data modify storage infinite_parkour:macro data.physical_block set from storage infinite_parkour:palette_dictionary everything.0.$(id)
-function infinite_parkour:jump/internal14 with storage infinite_parkour:macro data
-$data modify storage infinite_parkour:macro data merge from storage infinite_parkour:macro data.block_dictionary.$(incrementnext)
-$scoreboard players set #increment ip_data $(increment)
-execute store result storage infinite_parkour:macro data.increment int 1 run scoreboard players add #increment ip_data 1
-execute store result storage infinite_parkour:macro data.incrementnext int 1 run scoreboard players add #increment ip_data 1
-scoreboard players remove #increment ip_data 1
-$execute if score #increment ip_data matches ..$(length) run function infinite_parkour:jump/internal13 with storage infinite_parkour:macro data
+setblock ~ ~ ~ air
+tag @n[type=block_display,distance=..0.1,tag=ip_block_display] add ip_scale_down
+scoreboard objectives add ip_temp dummy {text:"Temporary place to throw data, reset after every use please"}
+$scoreboard players set @s ip_temp $(remove_display_on_place)
+$execute if score @s ip_temp matches 1 run summon block_display ~ ~ ~ {interpolation_duration:1,Tags:["ip_block_display","ip_scale_down"],block_state:{Name:"$(physical_block)"},transformation:{scale:[0.0f,0.0f,0.0f],left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],translation:[0.0f,0.0f,0.0f]}}
+scoreboard objectives remove ip_temp
+tag @s remove ip_jump_curr
+tag @s add ip_jump_prev
