@@ -1,2 +1,0 @@
-execute if entity @e[dx=60,dy=60,dz=60,tag=!ParkourDeco] run data merge entity @s {block_state:{Name:"minecraft:yellow_stained_glass"}}
-execute unless entity @e[dx=60,dy=60,dz=60,tag=!ParkourDeco] run data merge entity @s {block_state:{Name:"minecraft:gold_block"}}

@@ -1,3 +1,0 @@
-function infinite_parkour:editor/items/update_pack_name
-function infinite_parkour:editor/items/give_hologram_controls
-tag @s remove ip_editor

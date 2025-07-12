@@ -1,1 +1,0 @@
-execute as @e[type=block_display,tag=ipe_hologram] run function infinite_parkour:editor/hologram/internal8

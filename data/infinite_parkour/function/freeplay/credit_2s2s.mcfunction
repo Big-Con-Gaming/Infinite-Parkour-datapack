@@ -1,1 +1,0 @@
-tellraw @s {text:"Thanks to 2s2s",color:"white"}

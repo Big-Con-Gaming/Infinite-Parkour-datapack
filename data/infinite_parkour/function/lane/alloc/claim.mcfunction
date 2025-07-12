@@ -1,1 +1,0 @@
-$execute in infinite_parkour:lane positioned $(lobby_x) 0 0 run function infinite_parkour:lane/internal2

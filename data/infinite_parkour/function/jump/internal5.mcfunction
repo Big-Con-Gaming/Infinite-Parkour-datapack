@@ -1,1 +1,0 @@
-$data merge entity @s {block_state:{Name:"$(physical_block)"}}

@@ -1,3 +1,0 @@
-execute in infinite_parkour:editor as @e[type=block_display,tag=ipe_hologram,distance=0..] at @s run tp @s ~ ~ ~ ~2 ~
-execute in infinite_parkour:editor as @a[distance=0..] at @s as @n[type=block_display,tag=ipe_hologram_loading,distance=..32] at @s run function infinite_parkour:editor/hologram/load
-execute in infinite_parkour:editor as @e[type=item_frame,tag=ipe_hologram_apply,distance=0..] at @s positioned ^ ^ ^-0.5 align xyz positioned ~0.5 ~0.5 ~0.5 run function infinite_parkour:editor/hologram/modify

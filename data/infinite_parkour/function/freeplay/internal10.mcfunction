@@ -1,1 +1,0 @@
-execute positioned ~0.11 ~ ~ run data modify entity @n[type=text_display,distance=..0.1] text set value {color:"green",text:"on"}
