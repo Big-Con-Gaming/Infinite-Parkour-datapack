@@ -26,6 +26,10 @@ def batch(commands):
 
 # === Execution ===
 
+c("gamerule logAdminCommands false")
+c("gamerule commandblockoutput false")
+c("gamerule sendCommandFeedback false")
+
 add_objectives([
     ("ip_score", "Infinite Parkour - Distance (M)"),
     ("ip_highscore", "Infinite Parkour - High Score"),
@@ -44,6 +48,7 @@ batch([
     "gamerule commandModificationBlockLimit 999999999",
     "gamerule doMobLoot false",
     "gamerule fallDamage false",
+    "gamerule keepInventory true",
 ])
 
 add_teams([
@@ -73,5 +78,4 @@ batch([
     "execute in infinite_parkour:lane run setblock 0 0 0 minecraft:barrel",
 ])
 import src.load_base_packs
-src.load_base_packs.main()
 #c("say §aFinished loading!")

@@ -6,4 +6,5 @@ with open("config.txt", "r") as file:
     port = int(file.readline().strip())
 setup(ip, password, port)
 
+
 from src.load import *

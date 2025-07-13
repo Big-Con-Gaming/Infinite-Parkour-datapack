@@ -12,15 +12,18 @@ def setup(_HOST, _PASSWORD, _PORT, _prefix=""):
     PORT = _PORT
     PREFIX = _prefix
     global mcr
-    with MCRcon(HOST, PASSWORD, port=PORT) as mcr:
-     mcr.command(PREFIX+"RCON connection established successfully.")
+    mcr = MCRcon(HOST, PASSWORD, port=PORT)
+    mcr.connect()
+    mcr.command(PREFIX+"RCON connection established successfully.")
     print(f"Setup complete. You can now use the MCRcon instance with the provided credentials: {HOST}, {PORT} and {PASSWORD}.")
     return True
 
 def c(command):
-    with MCRcon(HOST, PASSWORD, port=PORT) as mcr:
-     response = mcr.command(PREFIX+command)
+    response = mcr.command(PREFIX+command)
     return response
+
+def t(command):
+    print(command)
 
 def run_file(filename):
     with open(filename, "r") as file:
