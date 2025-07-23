@@ -1,3 +1,0 @@
-execute unless data storage infinite_parkour:jumppack list run data modify storage infinite_parkour:jumppack list set value []
-$execute if data storage jumppack_$(jumppack_id):data jumppack unless data storage infinite_parkour:jumppack list[{name:'$(jumppack_id)'}] run data modify storage infinite_parkour:jumppack list append value {name:'$(jumppack_id)'}
-$execute unless data storage jumppack_$(jumppack_id):data jumppack run data remove storage infinite_parkour:jumppack list[{name:'$(jumppack_id)'}]

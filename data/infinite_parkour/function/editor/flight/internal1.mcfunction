@@ -1,2 +1,0 @@
-execute unless score @s ip_flight_cooldown matches 1..5 run scoreboard players set @s ip_flight_cooldown 7
-execute if score @s ip_flight_cooldown matches 1..5 run function infinite_parkour:editor/flight/toggle_flying

@@ -1,4 +1,0 @@
-scoreboard players add @s ip_anim 1
-execute if score @s ip_anim matches 101 run data merge entity @s {start_interpolation:-1,transformation: {left_rotation: [0.43320838f, -0.24985722f, 0.36228183f, 0.7865454f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [3.0f, 3.0f, 3.0000002f], translation: [0.37934613f, 1.22039092f, -2.560766f]}}
-execute if score @s ip_anim matches 201 run data merge entity @s {start_interpolation:-1,transformation: {left_rotation: [0.43320838f, -0.24985722f, 0.36228183f, 0.7865454f], right_rotation: [0.0f, 0.0f, 0.0f, 1.0f], scale: [3.0f, 3.0f, 3.0000002f], translation: [0.37934613f, -1.22039092f, -2.560766f]}}
-execute if score @s ip_anim matches 201 run scoreboard players set @s ip_anim 0

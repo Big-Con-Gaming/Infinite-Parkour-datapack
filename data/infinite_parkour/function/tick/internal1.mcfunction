@@ -1,1 +1,0 @@
-execute align xyz positioned ~-200 ~-100 ~-10 if dimension infinite_parkour:lane run kill @e[tag=ParkourDeco,dx=400,dy=200,dz=5]

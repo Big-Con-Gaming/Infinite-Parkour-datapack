@@ -1,1 +1,0 @@
-execute positioned ~-1 34.25 -30.9 as @n[type=text_display,tag=ipe_page_num,distance=..0.1,scores={ipe_index=..6}] at @s run function infinite_parkour:editor/ui/internal7
