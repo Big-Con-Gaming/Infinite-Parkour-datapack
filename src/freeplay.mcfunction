@@ -41,19 +41,21 @@ execute at @s run
   summon text_display ~1.0 1.6 -7.5 {billboard:"vertical",text:[{color:"green",text:"Big_Con__"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:[0,0,0,1]}}
   # builders
   execute positioned ~-7.0 0 4.5 run %FUNC%/builder {color:"#5662F6","angle":0.78539,name:"Join us!",title:"on discord",interaction:"credit_discord"}
-  execute positioned ~-5.0 0 3.5 run %FUNC%/builder {color:"#5662F6","angle":0,name:"Join us!",title:"on discord",interaction:"credit_discord"}
+  execute positioned ~-5.0 0 3.5 run %FUNC%/builder {color:"#ebd68f","angle":0,name:"Mr_Books36",title:"Programmer",interaction:"credit_mr_books36"}
   execute positioned ~-5.0 0 7.5 run %FUNC%/builder {color:"#5662F6","angle":3.14159,name:"Join us!",title:"on discord",interaction:"credit_discord"}
   execute positioned ~-3.0 0 3.5 run %FUNC%/builder {color:"#ebd68f","angle":0,name:"lags_kills",title:"Suggestor",interaction:"credit_lags"}
-  execute positioned ~-1.0 0 5.5 run %FUNC%/builder {color:"#eb8f8f","angle":-1.57079,name:"Flaming_Thunder_",title:"Head Builder",interaction:"credit_flaming"}
+  execute positioned ~-1.0 0 5.5 run %FUNC%/builder {color:"#eb8f8f","angle":-1.57079,name:"Flaming_Thundxr_",title:"Head Builder",interaction:"credit_flaming"}
   execute positioned ~-3.0 0 7.5 run %FUNC%/builder {color:"#ebe58f","angle":3.14159,name:"2s2s",title:"Build Helper",interaction:"credit_2s2s"}
   /builder
     $summon text_display ~ -5.2 ~ {text:[{color:"$(color)",text:"$(name)"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
     $summon text_display ~ -5.45 ~ {text:[{color:"gray",text:"$(title)"}],transformation:{translation:[0,0,0],scale:[1,1,1],left_rotation:[0,0,0,1],right_rotation:{angle:$(angle),axis:[0,1,0]}}}
     $summon interaction ~ -7 ~ {width:1.1,height:2,Tags:["_ip_interaction","freeplay/$(interaction)"]}
+/credit_mr_books36
+  tellraw @s {text:"Thanks to Mr_Books36",color:"white"}
 /credit_lags
   tellraw @s {text:"Thanks to lags_kills",color:"white"}
 /credit_flaming
-  tellraw @s {text:"Thanks to Flaming_Thunder_",color:"white"}
+  tellraw @s {text:"Thanks to Flaming_Thundxr_",color:"white"}
 /credit_2s2s
   tellraw @s {text:"Thanks to 2s2s",color:"white"}
 /credit_youtube
