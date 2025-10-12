@@ -236,8 +236,7 @@
 
 /increment
   execute positioned ~-31.5 ~-31.5 ~-63.5 as @n[type=marker,dx=64,dy=64,dz=64,tag=ip_jump_connect,tag=ip_jump_curr] at @s run
-    execute positioned ~-31.5 ~-31.5 ~-63.5 as @n[type=marker,dx=64,dy=64,dz=64,tag=ip_jump_connect,tag=ip_jump_prev] at @s run
-      %FILE%/remove
+    execute positioned ~-31.5 ~-31.5 ~-63.5 as @n[type=marker,dx=64,dy=64,dz=64,tag=ip_jump_connect,tag=ip_jump_prev] at @s run %FILE%/remove
     %FILE%/break
   %FILE%/place
 
